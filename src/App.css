@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu&display=swap");
+
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+.particles {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+.App {
+  text-align: center;
+}
+
+.buttons > * {
+  font-size: 25px;
+  margin: 10px;
+}
+
+.input {
+  width: 45px;
+}
+
+.goal {
+  fill: rgb(211, 211, 211);
+  stroke: darkgray;
+  stroke-width: 2;
+}
+
+.player {
+  fill: rgb(204, 130, 238);
+  stroke: rgb(104, 56, 126);
+  stroke-width: 2;
+}
+
+.win {
+  animation: spin 3s linear;
+  font-size: 200px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

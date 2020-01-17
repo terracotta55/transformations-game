@@ -1,2 +1,2 @@
-# transformations-game
-Repo for transformations game single-page application including login, landing page and game canvas.
+# game-login
+login page for CBE's transformations math game
