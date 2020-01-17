@@ -11,12 +11,9 @@ const TriangleShape = (props) => {
 
   return (
     <>
-      {!props.animate ? (
-        <polygon className={props.triangleClassName}
-          points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}
-        >
-        </polygon>
-      ) : null}
+      <polygon className={props.triangleClassName}
+        points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}>
+      </polygon>
 
       {/* point labels */}
       {/* <text fontWeight="bold" x={cax} y={cay - (Math.sign(props.a.y) * 10)}>{`(${props.a.x}, ${props.a.y})`}</text> */}
