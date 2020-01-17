@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/transformations-game/static/css/main.36d9b608.chunk.css",
-    "main.js": "/transformations-game/static/js/main.d07b7606.chunk.js",
-    "main.js.map": "/transformations-game/static/js/main.d07b7606.chunk.js.map",
+    "main.css": "/transformations-game/static/css/main.9e378a6b.chunk.css",
+    "main.js": "/transformations-game/static/js/main.b5bd3c29.chunk.js",
+    "main.js.map": "/transformations-game/static/js/main.b5bd3c29.chunk.js.map",
     "runtime-main.js": "/transformations-game/static/js/runtime-main.624660e5.js",
     "runtime-main.js.map": "/transformations-game/static/js/runtime-main.624660e5.js.map",
     "static/css/2.eb45ad44.chunk.css": "/transformations-game/static/css/2.eb45ad44.chunk.css",
-    "static/js/2.a3e6b0f3.chunk.js": "/transformations-game/static/js/2.a3e6b0f3.chunk.js",
-    "static/js/2.a3e6b0f3.chunk.js.map": "/transformations-game/static/js/2.a3e6b0f3.chunk.js.map",
+    "static/js/2.18082e8b.chunk.js": "/transformations-game/static/js/2.18082e8b.chunk.js",
+    "static/js/2.18082e8b.chunk.js.map": "/transformations-game/static/js/2.18082e8b.chunk.js.map",
     "index.html": "/transformations-game/index.html",
-    "precache-manifest.3d60bc861a4878e549cfcd7b65c25ad4.js": "/transformations-game/precache-manifest.3d60bc861a4878e549cfcd7b65c25ad4.js",
+    "precache-manifest.cacd9b5c08a34bbef5f969835c50380c.js": "/transformations-game/precache-manifest.cacd9b5c08a34bbef5f969835c50380c.js",
     "service-worker.js": "/transformations-game/service-worker.js",
     "static/css/2.eb45ad44.chunk.css.map": "/transformations-game/static/css/2.eb45ad44.chunk.css.map",
-    "static/css/main.36d9b608.chunk.css.map": "/transformations-game/static/css/main.36d9b608.chunk.css.map",
-    "static/js/2.a3e6b0f3.chunk.js.LICENSE": "/transformations-game/static/js/2.a3e6b0f3.chunk.js.LICENSE"
+    "static/css/main.9e378a6b.chunk.css.map": "/transformations-game/static/css/main.9e378a6b.chunk.css.map",
+    "static/js/2.18082e8b.chunk.js.LICENSE": "/transformations-game/static/js/2.18082e8b.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.624660e5.js",
     "static/css/2.eb45ad44.chunk.css",
-    "static/js/2.a3e6b0f3.chunk.js",
-    "static/css/main.36d9b608.chunk.css",
-    "static/js/main.d07b7606.chunk.js"
+    "static/js/2.18082e8b.chunk.js",
+    "static/css/main.9e378a6b.chunk.css",
+    "static/js/main.b5bd3c29.chunk.js"
   ]
 }
