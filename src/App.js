@@ -9,6 +9,7 @@ import Canvas from "./components/Game/Canvas";
 import Particles from "react-particles-js";
 
 const particlesOptions = {
+  /*
   particles: {
     number: {
       value: 100
@@ -35,14 +36,16 @@ const particlesOptions = {
       }
     }
   }
-
-  //   Number: {
-  //     value: 190,
-  //     density: {
-  //       enable: true,
-  //       value_area: 900
-  //     }
-  //   }
+*/
+  /*
+    Number: {
+      value: 190,
+      density: {
+        enable: true,
+        value_area: 900
+      }
+    }
+    */
 };
 
 class App extends Component {
@@ -90,11 +93,11 @@ class App extends Component {
     return (
       <Fragment>
         <div className="App">
-          <Particles
+          {/* <Particles
             style={{ color: "red" }}
             className="particles"
             params={particlesOptions}
-          />
+          /> */}
 
           <Navigation
             isSignedIn={this.state.isSignedIn}
