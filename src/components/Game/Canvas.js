@@ -232,7 +232,7 @@ class Canvas extends Component {
             value={this.state.translateY}
           />
           <button onClick={() => this.handleTranslate()}>Translation</button>
-          <button onClick={() => this.handleRotate(90)}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleRotate(90)}>Rotate +90° ↻ </button>
           <button onClick={() => this.handleRotate(-90)}>Rotate 90° ↻ </button>
           <button onClick={() => this.handleReflect("x")}>
             Reflect on x-axis
