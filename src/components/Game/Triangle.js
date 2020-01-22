@@ -3,6 +3,7 @@ export class Triangle {
         this.a = { x: ax, y: ay };
         this.b = { x: bx, y: by };
         this.c = { x: cx, y: cy };
+        this.completed = false;
     }
 
     translate(tx, ty) {
