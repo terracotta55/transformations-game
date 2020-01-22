@@ -3,6 +3,7 @@ import TriangleShape from './TriangleShape.js';
 import { Triangle } from './Triangle.js';
 import { evaluateMatch, evaluateBoundary } from './evaluate.js';
 import Animation from './Animation.js';
+import AnimateCompletion from "./AnimateCompletion.js";
 
 class Canvas extends Component {
   constructor(props) {
@@ -183,16 +184,19 @@ class Canvas extends Component {
     //   win = "WIN!"
     // }
 
+    //refactor to not check completed goals or use counter (filter possibly?)
+    let goalCounter = 0;
     for (let goal of this.tangram) {
-      console.log(goal);
       if (evaluateMatch(this.player, goal)) {
         //complete goal
         //disable goal
         goal.completed = true;
+        goalCounter = 2;
         this.player = this.initializePlayer();
       }
     }
 
+    console.log(goalCounter);
 
     return (
       <>
@@ -229,6 +233,14 @@ class Canvas extends Component {
           ) : null}
 
           {/* <text className={win === "WIN!" ? "win" : null} x="300" y="500">{win}</text> */}
+
+          {goalCounter === 2 ? <AnimateCompletion /> : null}
+          {/* <AnimateCompletion
+            triangleClassName={"completgit e"}
+            a={this.goal.a}
+            b={this.goal.b}
+            c={this.goal.c}
+          /> */}
 
         </svg>
         <br />
