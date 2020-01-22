@@ -12,4 +12,20 @@ export const evaluateMatch = (player, goal) => {
         }
     }
     return true;
+
 }
+export const evaluateBoundary = player => {
+    for (let pCoord in player) {
+      if (
+        player[pCoord].x > 10 ||
+        player[pCoord].x < -10 ||
+        player[pCoord].y > 10 ||
+        player[pCoord].y < -10
+      ) {
+        console.log("x: ", player[pCoord].x, "y: ", player[pCoord].y);
+        return true;
+        break;
+      }
+    }
+    return false;
+  };

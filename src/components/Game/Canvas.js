@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TriangleShape from './TriangleShape.js';
 import { Triangle } from './Triangle.js';
-import { evaluateMatch } from './evaluate.js';
+import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
 import Animation from './Animation.js';
 
 class Canvas extends Component {
@@ -109,6 +109,23 @@ class Canvas extends Component {
     }
     return yNumbers;
   }
+  checkBound = () => {
+    if (!evaluateBoundary(this.player)) {
+      console.log(this.player);
+
+      return !this.state.animate ? (
+        <TriangleShape
+          triangleClassName={"player"}
+          a={this.player.a}
+          b={this.player.b}
+          c={this.player.c}
+          animate={this.state.animate}
+        />
+      ) : null;
+    } else {
+      return alert("Outside boundary");
+    }
+  };
 
   render() {
 
@@ -116,7 +133,8 @@ class Canvas extends Component {
     if (evaluateMatch(this.player, this.goal)) {
       win = "WIN!"
     }
-    
+   
+  
     return (
       <>
         <svg width="1000" height="1000" style={{backgroundColor: "white"}}>
@@ -131,8 +149,9 @@ class Canvas extends Component {
           <text x="980" y="515">10</text>
 
           <TriangleShape triangleClassName={"goal"} a={this.goal.a} b={this.goal.b} c={this.goal.c} />
+        {this.checkBound()}
 
-          {!this.state.animate ? (
+          {/* {!this.state.animate ? (
             <TriangleShape triangleClassName={"player"}
               a={this.player.a} b={this.player.b} c={this.player.c}
               animate={this.state.animate} />
@@ -149,7 +168,7 @@ class Canvas extends Component {
               reflectAxis={this.state.reflectAxis}
               translateX={Number(this.state.translateX)}
               translateY={Number(this.state.translateY)} />
-          ) : null}
+          ) : null} */}
 
           <text className={win === "WIN!" ? "win" : null} x="300" y="500">{win}</text>
 
@@ -159,11 +178,11 @@ class Canvas extends Component {
         <div className="buttons">
           x:<input className="input" type="number" onChange={this.handleOnChange} name={"translateX"} value={this.state.translateX} />
           y:<input className="input" type="number" onChange={this.handleOnChange} name={"translateY"} value={this.state.translateY} />
-          <button onClick={() => this.handleTranslate()}>Translate</button>
-          <button onClick={() => this.handleRotate(90)}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleRotate(-90)}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleReflect("x")}>Reflect on x-axis</button>
-          <button onClick={() => this.handleReflect("y")}>Reflect on y-axis</button>
+          <button onClick={() => this.handleTranslate()} disabled={this.state.animate? true : false}>Translate</button>
+          <button onClick={() => this.handleRotate(90)}disabled={this.state.animate? true : false}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleRotate(-90)}disabled={this.state.animate? true : false}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleReflect("x")}disabled={this.state.animate? true : false}>Reflect on x-axis</button>
+          <button onClick={() => this.handleReflect("y")}disabled={this.state.animate? true : false}>Reflect on y-axis</button>
           <span>Move: {this.state.moveCounter}</span>
         </div>
       </>
