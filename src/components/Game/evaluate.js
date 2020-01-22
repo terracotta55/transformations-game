@@ -46,6 +46,21 @@ export const evaluateMatch = (player, goal) => {
     }
     console.log("MATCH")
     return true;
+<<<<<<< HEAD
+
+}
+export const evaluateBoundary = player => {
+    for (let pCoord in player) {
+      if (
+        player[pCoord].x > 10 ||
+        player[pCoord].x < -10 ||
+        player[pCoord].y > 10 ||
+        player[pCoord].y < -10
+      ) {
+        console.log("x: ", player[pCoord].x, "y: ", player[pCoord].y);
+        return true;
+        break;
+=======
 }
 
 export const evaluateBoundary = player => {
@@ -58,6 +73,7 @@ export const evaluateBoundary = player => {
         player[pPoint].y < -10
       ) {
         return true;
+>>>>>>> master
       }
     }
     return false;

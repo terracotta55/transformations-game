@@ -215,7 +215,6 @@ class Canvas extends Component {
               animate={this.state.animate} />
           ) : null}
 
-      
           {this.state.animate ? (
             <Animation
               triangleClassName={"player"}
@@ -237,11 +236,11 @@ class Canvas extends Component {
         <div className="buttons">
           x:<input className="input" type="number" onChange={this.handleOnChange} name={"translateX"} value={this.state.translateX} />
           y:<input className="input" type="number" onChange={this.handleOnChange} name={"translateY"} value={this.state.translateY} />
-          <button onClick={() => this.handleTranslate()}>Translate</button>
-          <button onClick={() => this.handleRotate(90)}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleRotate(-90)}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleReflect("x")}>Reflect on x-axis</button>
-          <button onClick={() => this.handleReflect("y")}>Reflect on y-axis</button>
+          <button onClick={() => this.handleTranslate()} disabled={this.state.animate? true : false}>Translate</button>
+          <button onClick={() => this.handleRotate(90)}disabled={this.state.animate? true : false}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleRotate(-90)}disabled={this.state.animate? true : false}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleReflect("x")}disabled={this.state.animate? true : false}>Reflect on x-axis</button>
+          <button onClick={() => this.handleReflect("y")}disabled={this.state.animate? true : false}>Reflect on y-axis</button>
           <span>Move: {this.state.moveCounter}</span>
         </div>
       </>
