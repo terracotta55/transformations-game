@@ -13,3 +13,17 @@ export const evaluateMatch = (player, goal) => {
     }
     return true;
 }
+
+export const evaluateBoundary = player => {
+    for (let pCoord in player) {
+      if (
+        player[pCoord].x > 10 ||
+        player[pCoord].x < -10 ||
+        player[pCoord].y > 10 ||
+        player[pCoord].y < -10
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
