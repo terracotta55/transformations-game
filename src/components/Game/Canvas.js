@@ -15,10 +15,11 @@ class Canvas extends Component {
       reflectAxis: "",
       animate: null,
       moveCounter: 0,
+      score: 0,
       outside: false
     }
     this.tangram = this.initializeGoals();
-    // this.goal = new Triangle(7, -6, 5, -8, 7, -8);
+    this.players = this.initializePlayers();
     this.player = this.initializePlayer();
   }
 
@@ -26,16 +27,29 @@ class Canvas extends Component {
     //need props parameter to pass in goal object
     //map through and initialize each goal triangle
     const goals = [];
-    
-    goals.push(new Triangle(7, -6, 5, -6, 5, -8));
-    goals.push(new Triangle(7, -6, 5, -8, 7, -8));
+
+    goals.push(new Triangle(9, -6, 5, -8, 9, -8));
+    goals.push(new Triangle(5, -6, 5, -8, 9, -6));
+    goals.push(new Triangle(7, -4, 5, -6, 9, -6));
+
     return goals;
   }
 
-  initializePlayer = () => {
+  initializePlayers = () => {
     //randomize coordinates
     //randomize color?
-    return new Triangle(-6, 5, -6, 3, -4, 3)
+
+    const players = [];
+
+    players.push(new Triangle(-5, 6, -5, 8, -9, 6));
+    players.push(new Triangle(-5, 6, -5, 8, -9, 6));
+    players.push(new Triangle(-5, 6, -7, 8, -9, 6));
+
+    return players;
+  }
+
+  initializePlayer = () => {
+    return this.players.pop();
   }
 
   handleOnChange = event => {
@@ -44,12 +58,12 @@ class Canvas extends Component {
     });
   }
 
-  handleTranslate = async () => {
-    await this.setState(state => ({
+  handleTranslate = () => {
+    this.setState({
       animate: "translate"
-    }));
+    });
 
-    await setTimeout(() => {
+    setTimeout(() => {
       this.player.translate(
         Number(this.state.translateX),
         Number(this.state.translateY)
@@ -59,8 +73,6 @@ class Canvas extends Component {
         animate: null,
         moveCounter: state.moveCounter + 1,
         outside: bound,
-        translateX: "",
-        translateY: ""
       }));
     }, 650);
 
@@ -77,31 +89,20 @@ class Canvas extends Component {
           animate: null,
           moveCounter: state.moveCounter + 1,
           outside: false
-          // translateX: "", enable later
-          // translateY: "",
         }));
       }
     }, 650);
+
+    setTimeout(() => {
+      this.setState({
+        translateX: "",
+        translateY: ""
+      });
+    }, 650);
   };
 
-  // handleTranslate = async () => {
-  //   await this.setState(state => ({
-  //     animate: "translate"
-  //   }));
-
-  //   setTimeout(() => {
-  //     this.player.translate(Number(this.state.translateX), Number(this.state.translateY));
-  //     this.setState(state => ({
-  //       animate: null,
-  //       moveCounter: state.moveCounter + 1
-  //       //translateX: "", enable later
-  //       //translateY: "",
-  //     }));
-  //   }, 650);
-  // };
-
-  handleRotate = async (deg) => {
-    await this.setState(state => ({
+  handleRotate = (deg) => {
+    this.setState(state => ({
       animate: "rotate",
       rotateDeg: deg
     }));
@@ -115,8 +116,8 @@ class Canvas extends Component {
     }, 650);
   }
 
-  handleReflect = async (axis) => {
-    await this.setState(state => ({
+  handleReflect = (axis) => {
+    this.setState(state => ({
       animate: "reflect",
       reflectAxis: axis
     }));
@@ -129,7 +130,6 @@ class Canvas extends Component {
       }));
     }, 650);
   }
-
 
   renderColumns = () => {
     let columns = [];
@@ -179,24 +179,19 @@ class Canvas extends Component {
 
   render() {
 
-    // let win = "";
-    // if (evaluateMatch(this.player, this.goal)) {
-    //   win = "WIN!"
-    // }
-
-    //refactor to not check completed goals or use counter (filter possibly?)
-    let goalCounter = 0;
+    let win = true;
     for (let goal of this.tangram) {
-      if (evaluateMatch(this.player, goal)) {
-        //complete goal
-        //disable goal
-        goal.completed = true;
-        goalCounter = 2;
-        this.player = this.initializePlayer();
+      if (!goal.completed) {
+        if (evaluateMatch(this.player, goal)) {
+          //complete goal
+          //disable goal
+          goal.completed = true;
+          this.player = this.initializePlayer();
+          break;
+        }
+        win = false;
       }
     }
-
-    console.log(goalCounter);
 
     return (
       <>
@@ -213,10 +208,10 @@ class Canvas extends Component {
 
           {this.renderTangram()}
 
-          {!this.state.animate ? (
+          {!this.state.animate && !win ? (
             <TriangleShape triangleClassName={"player"}
               a={this.player.a} b={this.player.b} c={this.player.c}
-              animate={this.state.animate} />
+            />
           ) : null}
 
           {this.state.animate ? (
@@ -232,15 +227,7 @@ class Canvas extends Component {
               translateY={Number(this.state.translateY)} />
           ) : null}
 
-          {/* <text className={win === "WIN!" ? "win" : null} x="300" y="500">{win}</text> */}
-
-          {goalCounter === 2 ? <AnimateCompletion /> : null}
-          {/* <AnimateCompletion
-            triangleClassName={"completgit e"}
-            a={this.goal.a}
-            b={this.goal.b}
-            c={this.goal.c}
-          /> */}
+          {win ? <AnimateCompletion /> : null}
 
         </svg>
         <br />
@@ -248,11 +235,11 @@ class Canvas extends Component {
         <div className="buttons">
           x:<input className="input" type="number" onChange={this.handleOnChange} name={"translateX"} value={this.state.translateX} />
           y:<input className="input" type="number" onChange={this.handleOnChange} name={"translateY"} value={this.state.translateY} />
-          <button onClick={() => this.handleTranslate()} disabled={this.state.animate? true : false}>Translate</button>
-          <button onClick={() => this.handleRotate(90)}disabled={this.state.animate? true : false}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleRotate(-90)}disabled={this.state.animate? true : false}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleReflect("x")}disabled={this.state.animate? true : false}>Reflect on x-axis</button>
-          <button onClick={() => this.handleReflect("y")}disabled={this.state.animate? true : false}>Reflect on y-axis</button>
+          <button onClick={() => this.handleTranslate()} disabled={this.state.animate ? true : false}>Translate</button>
+          <button onClick={() => this.handleRotate(90)} disabled={this.state.animate ? true : false}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleRotate(-90)} disabled={this.state.animate ? true : false}>Rotate 90° ↻ </button>
+          <button onClick={() => this.handleReflect("x")} disabled={this.state.animate ? true : false}>Reflect on x-axis</button>
+          <button onClick={() => this.handleReflect("y")} disabled={this.state.animate ? true : false}>Reflect on y-axis</button>
           <span>Move: {this.state.moveCounter}</span>
         </div>
       </>
