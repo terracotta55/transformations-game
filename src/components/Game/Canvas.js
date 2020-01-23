@@ -280,7 +280,7 @@ class Canvas extends Component {
                 href="#0"
                 onClick={() => this.handleRotate(90)}
               >
-                Rotate 90° ↻
+                Rotate +90° ↻
               </a>
               <a
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
