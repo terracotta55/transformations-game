@@ -6,7 +6,7 @@ const Rank = ({ name, score }) => {
     <Fragment>
       <div className="f1 white">{`Hello ${name}! Welcome back.`}</div>
       <div
-        style={{ color: "yellow" }}
+        style={{ color: "#FFD700" }}
         className="f2 white"
       >{`Your score is: ${score}`}</div>
     </Fragment>
