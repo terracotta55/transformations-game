@@ -1,9 +1,11 @@
-import React, { Component, Fragment } from "react";
-import TriangleShape from "./TriangleShape.js";
-import { Triangle } from "./Triangle.js";
-import { evaluateMatch } from "./evaluate.js";
-import Animation from "./Animation.js";
+import React, { Component } from 'react';
+import TriangleShape from './TriangleShape.js';
+import { Triangle } from './Triangle.js';
+import { evaluateMatch, evaluateBoundary } from './evaluate.js';
+import Animation from './Animation.js';
+import AnimateCompletion from "./AnimateCompletion.js";
 import Tilt from "react-tilt";
+
 
 class Canvas extends Component {
   constructor(props) {
@@ -14,10 +16,42 @@ class Canvas extends Component {
       rotateDeg: "",
       reflectAxis: "",
       animate: null,
-      moveCounter: 0
-    };
-    this.goal = new Triangle(7, -6, 5, -8, 7, -8);
-    this.player = new Triangle(-4, 3, -4, 1, -2, 1);
+      moveCounter: 0,
+      score: 0,
+      outside: false
+    }
+    this.tangram = this.initializeGoals();
+    this.players = this.initializePlayers();
+    this.player = this.initializePlayer();
+  }
+
+  initializeGoals = () => {
+    //need props parameter to pass in goal object
+    //map through and initialize each goal triangle
+    const goals = [];
+
+    goals.push(new Triangle(9, -6, 5, -8, 9, -8));
+    goals.push(new Triangle(5, -6, 5, -8, 9, -6));
+    goals.push(new Triangle(7, -4, 5, -6, 9, -6));
+
+    return goals;
+  }
+
+  initializePlayers = () => {
+    //randomize coordinates
+    //randomize color?
+
+    const players = [];
+
+    players.push(new Triangle(-5, 6, -5, 8, -9, 6));
+    players.push(new Triangle(-5, 6, -5, 8, -9, 6));
+    players.push(new Triangle(-5, 6, -7, 8, -9, 6));
+
+    return players;
+  }
+
+  initializePlayer = () => {
+    return this.players.pop();
   }
 
   handleOnChange = event => {
@@ -26,27 +60,51 @@ class Canvas extends Component {
     });
   };
 
-  handleTranslate = async () => {
-    await this.setState(state => ({
+  handleTranslate = () => {
+    this.setState({
       animate: "translate"
-    }));
+    });
 
     setTimeout(() => {
       this.player.translate(
         Number(this.state.translateX),
         Number(this.state.translateY)
       );
+      let bound = evaluateBoundary(this.player);
       this.setState(state => ({
         animate: null,
-        moveCounter: state.moveCounter + 1
-        //translateX: "", enable later
-        //translateY: "",
+        moveCounter: state.moveCounter + 1,
+        outside: bound,
       }));
+    }, 650);
+
+    setTimeout(() => {
+      if (this.state.outside === true) {
+        this.setState(state => ({
+          animate: "translate"
+        }));
+        this.player.translate(
+          Number(-this.state.translateX),
+          Number(-this.state.translateY)
+        );
+        this.setState(state => ({
+          animate: null,
+          moveCounter: state.moveCounter + 1,
+          outside: false
+        }));
+      }
+    }, 650);
+
+    setTimeout(() => {
+      this.setState({
+        translateX: "",
+        translateY: ""
+      });
     }, 650);
   };
 
-  handleRotate = async deg => {
-    await this.setState(state => ({
+  handleRotate = (deg) => {
+    this.setState(state => ({
       animate: "rotate",
       rotateDeg: deg
     }));
@@ -60,8 +118,8 @@ class Canvas extends Component {
     }, 650);
   };
 
-  handleReflect = async axis => {
-    await this.setState(state => ({
+  handleReflect = (axis) => {
+    this.setState(state => ({
       animate: "reflect",
       reflectAxis: axis
     }));
@@ -73,7 +131,7 @@ class Canvas extends Component {
         moveCounter: state.moveCounter + 1
       }));
     }, 650);
-  };
+  }
 
   renderColumns = () => {
     let columns = [];
@@ -141,12 +199,29 @@ class Canvas extends Component {
     return yNumbers;
   };
 
-  render() {
-    let win = "";
-    if (evaluateMatch(this.player, this.goal)) {
-      win = "WIN!";
-    }
+  renderTangram = () => {
+    let counter = 0;
+    return this.tangram.map(goal => {
+      counter = counter + 1;
+      return <TriangleShape key={counter} triangleClassName={goal.completed ? "completed" : "goal"} a={goal.a} b={goal.b} c={goal.c} />
+    })
+  }
 
+  render() {
+        let win = true;
+    for (let goal of this.tangram) {
+      if (!goal.completed) {
+        if (evaluateMatch(this.player, goal)) {
+          //complete goal
+          //disable goal
+          goal.completed = true;
+          this.player = this.initializePlayer();
+          break;
+        }
+        win = false;
+      }
+    }
+  
     return (
       <Fragment>
         <div className="container">
@@ -173,73 +248,40 @@ class Canvas extends Component {
             </Tilt>
           </div>
           <div className="svg-div">
-            <svg
-              width="1000"
-              height="1000"
-              style={{ backgroundColor: "white" }}
-            >
-              {this.renderColumns()}
-              {this.renderRows()}
-              <line
-                x1="500"
-                x2="500"
-                y1="0"
-                y2="1000"
-                stroke="black"
-                strokeWidth="3"
-              />
-              <line
-                x1="0"
-                x2="1000"
-                y1="500"
-                y2="500"
-                stroke="black"
-                strokeWidth="3"
-              />
+           <svg width="1000" height="1000" style={{ backgroundColor: "white" }}>
+          {this.renderColumns()}
+          {this.renderRows()}
+          <line x1="500" x2="500" y1="0" y2="1000" stroke="black" strokeWidth="3" />
+          <line x1="0" x2="1000" y1="500" y2="500" stroke="black" strokeWidth="3" />
 
-              {this.renderXNumbers()}
-              {this.renderYNumbers()}
-              <text x="505" y="15">
-                10
-              </text>
-              <text x="980" y="515">
-                10
-              </text>
+          {this.renderXNumbers()}
+          {this.renderYNumbers()}
+          <text x="505" y="15">10</text>
+          <text x="980" y="515">10</text>
 
-              <TriangleShape
-                triangleClassName={"goal"}
-                a={this.goal.a}
-                b={this.goal.b}
-                c={this.goal.c}
-              />
+          {this.renderTangram()}
 
-              {!this.state.animate ? (
-                <TriangleShape
-                  triangleClassName={"player"}
-                  a={this.player.a}
-                  b={this.player.b}
-                  c={this.player.c}
-                  animate={this.state.animate}
-                />
-              ) : null}
+          {!this.state.animate && !win ? (
+            <TriangleShape triangleClassName={"player"}
+              a={this.player.a} b={this.player.b} c={this.player.c}
+            />
+          ) : null}
 
-              {this.state.animate ? (
-                <Animation
-                  triangleClassName={"player"}
-                  a={this.player.a}
-                  b={this.player.b}
-                  c={this.player.c}
-                  animate={this.state.animate}
-                  rotateDeg={this.state.rotateDeg}
-                  reflectAxis={this.state.reflectAxis}
-                  translateX={Number(this.state.translateX)}
-                  translateY={Number(this.state.translateY)}
-                />
-              ) : null}
+          {this.state.animate ? (
+            <Animation
+              triangleClassName={"player"}
+              a={this.player.a}
+              b={this.player.b}
+              c={this.player.c}
+              animate={this.state.animate}
+              rotateDeg={this.state.rotateDeg}
+              reflectAxis={this.state.reflectAxis}
+              translateX={Number(this.state.translateX)}
+              translateY={Number(this.state.translateY)} />
+          ) : null}
 
-              <text className={win === "WIN!" ? "win" : null} x="300" y="500">
-                {win}
-              </text>
+          {win ? <AnimateCompletion /> : null}
+
             </svg>
           </div>
           <div className="buttons-div">
@@ -272,6 +314,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleTranslate()}
+                disabled={this.state.animate ? true : false}
               >
                 Translate
               </a>
@@ -279,6 +322,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleRotate(90)}
+                disabled={this.state.animate ? true : false}
               >
                 Rotate 90° ↻
               </a>
@@ -286,6 +330,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleRotate(-90)}
+                disabled={this.state.animate ? true : false}
               >
                 Rotate 90° ↻
               </a>
@@ -293,6 +338,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleReflect("x")}
+                disabled={this.state.animate ? true : false}
               >
                 Reflect on x-axis
               </a>
@@ -300,6 +346,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleReflect("y")}
+                disabled={this.state.animate ? true : false}
               >
                 Reflect on y-axis
               </a>
