@@ -4,6 +4,8 @@ import { Triangle } from './Triangle.js';
 import { evaluateMatch, evaluateBoundary } from './evaluate.js';
 import Animation from './Animation.js';
 import AnimateCompletion from "./AnimateCompletion.js";
+import Tilt from "react-tilt";
+
 
 class Canvas extends Component {
   constructor(props) {
@@ -56,7 +58,7 @@ class Canvas extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-  }
+  };
 
   handleTranslate = () => {
     this.setState({
@@ -114,7 +116,7 @@ class Canvas extends Component {
         moveCounter: state.moveCounter + 1
       }));
     }, 650);
-  }
+  };
 
   handleReflect = (axis) => {
     this.setState(state => ({
@@ -134,40 +136,68 @@ class Canvas extends Component {
   renderColumns = () => {
     let columns = [];
     for (let i = 0; i <= 1000; i = i + 50) {
-      columns.push(<line key={i} x1={i} x2={i} y1="0" y2="1000" stroke="gray" strokeWidth="1" />)
+      columns.push(
+        <line
+          key={i}
+          x1={i}
+          x2={i}
+          y1="0"
+          y2="1000"
+          stroke="gray"
+          strokeWidth="1"
+        />
+      );
     }
     return columns;
-  }
+  };
 
   renderRows = () => {
     let rows = [];
     for (let i = 0; i <= 1000; i = i + 50) {
-      rows.push(<line key={i} x1="0" x2="1000" y1={i} y2={i} stroke="gray" strokeWidth="1" />)
+      rows.push(
+        <line
+          key={i}
+          x1="0"
+          x2="1000"
+          y1={i}
+          y2={i}
+          stroke="gray"
+          strokeWidth="1"
+        />
+      );
     }
     return rows;
-  }
+  };
 
   renderXNumbers = () => {
     let xNumbers = [];
     let counter = -10;
     for (let i = 2; i <= 1000; i = i + 50) {
-      xNumbers.push(<text key={i} x={i} y="515">{counter}</text>)
+      xNumbers.push(
+        <text key={i} x={i} y="515">
+          {counter}
+        </text>
+      );
       counter = counter + 1;
     }
     return xNumbers;
-  }
+  };
 
   renderYNumbers = () => {
     let yNumbers = [];
     let counter = 10;
     for (let i = -2; i <= 1000; i = i + 50) {
       if (counter !== 0) {
-        yNumbers.push(<text key={i} x="505" y={i}>{counter}</text>)
+        yNumbers.push(
+          <text key={i} x="505" y={i}>
+            {counter}
+          </text>
+        );
       }
       counter = counter - 1;
     }
     return yNumbers;
-  }
+  };
 
   renderTangram = () => {
     let counter = 0;
@@ -178,8 +208,7 @@ class Canvas extends Component {
   }
 
   render() {
-
-    let win = true;
+        let win = true;
     for (let goal of this.tangram) {
       if (!goal.completed) {
         if (evaluateMatch(this.player, goal)) {
@@ -192,10 +221,34 @@ class Canvas extends Component {
         win = false;
       }
     }
-
+  
     return (
-      <>
-        <svg width="1000" height="1000" style={{ backgroundColor: "white" }}>
+      <Fragment>
+        <div className="container">
+          <div className="info-div yellow">
+            <p>Player Info:</p>
+            <Tilt
+              className="new-tilt br3"
+              options={{ max: 55 }}
+              style={{ height: 280, width: 250 }}
+            >
+              <article class="flex flex-column mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
+                <div class="tc">
+                  <img
+                    src="https://udayton.edu/0/img/generic-profile.png"
+                    class="br-100 h3 w3 dib"
+                    title="Profile Photo"
+                  />
+                  <h1 class="f4 black">Jimmy Butler</h1>
+                  <hr class="mw3 bb bw1 b--black-10" />
+                </div>
+                <p class="lh-copy measure center f6 gray">Score: 2050</p>
+                <p class="lh-copy measure center f6 gray">Level: 3</p>
+              </article>
+            </Tilt>
+          </div>
+          <div className="svg-div">
+           <svg width="1000" height="1000" style={{ backgroundColor: "white" }}>
           {this.renderColumns()}
           {this.renderRows()}
           <line x1="500" x2="500" y1="0" y2="1000" stroke="black" strokeWidth="3" />
@@ -229,20 +282,88 @@ class Canvas extends Component {
 
           {win ? <AnimateCompletion /> : null}
 
-        </svg>
-        <br />
+            </svg>
+          </div>
+          <div className="buttons-div">
+            <div className="buttons">
+              <div className="btn-txt-div">
+                <div className="flex flex-row">
+                  <div className="btn-txt pr2">x-move:</div>
+                  <input
+                    className="input"
+                    type="number"
+                    onChange={this.handleOnChange}
+                    name={"translateX"}
+                    value={this.state.translateX}
+                  />
+                </div>
+                <br />
+                <div className="flex flex-row">
+                  <div className="btn-txt pr2">y-move:</div>
+                  <input
+                    className="input"
+                    type="number"
+                    onChange={this.handleOnChange}
+                    name={"translateY"}
+                    value={this.state.translateY}
+                  />
+                </div>
+              </div>
 
-        <div className="buttons">
-          x:<input className="input" type="number" onChange={this.handleOnChange} name={"translateX"} value={this.state.translateX} />
-          y:<input className="input" type="number" onChange={this.handleOnChange} name={"translateY"} value={this.state.translateY} />
-          <button onClick={() => this.handleTranslate()} disabled={this.state.animate ? true : false}>Translate</button>
-          <button onClick={() => this.handleRotate(90)} disabled={this.state.animate ? true : false}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleRotate(-90)} disabled={this.state.animate ? true : false}>Rotate 90° ↻ </button>
-          <button onClick={() => this.handleReflect("x")} disabled={this.state.animate ? true : false}>Reflect on x-axis</button>
-          <button onClick={() => this.handleReflect("y")} disabled={this.state.animate ? true : false}>Reflect on y-axis</button>
-          <span>Move: {this.state.moveCounter}</span>
+              <a
+                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                href="#0"
+                onClick={() => this.handleTranslate()}
+                disabled={this.state.animate ? true : false}
+              >
+                Translate
+              </a>
+              <a
+                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                href="#0"
+                onClick={() => this.handleRotate(90)}
+                disabled={this.state.animate ? true : false}
+              >
+                Rotate 90° ↻
+              </a>
+              <a
+                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                href="#0"
+                onClick={() => this.handleRotate(-90)}
+                disabled={this.state.animate ? true : false}
+              >
+                Rotate 90° ↻
+              </a>
+              <a
+                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                href="#0"
+                onClick={() => this.handleReflect("x")}
+                disabled={this.state.animate ? true : false}
+              >
+                Reflect on x-axis
+              </a>
+              <a
+                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                href="#0"
+                onClick={() => this.handleReflect("y")}
+                disabled={this.state.animate ? true : false}
+              >
+                Reflect on y-axis
+              </a>
+              <article className="mw5 mw6-ns hidden mv4 moves">
+                <h1 className="f5 bg-gray white mv0 pv2 ph3">
+                  Number of Moves
+                </h1>
+                <div className="pa3 bg-yellow">
+                  <p className="f6 f5-ns lh-copy measure mv0">
+                    {this.state.moveCounter}
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
-      </>
+      </Fragment>
     );
   }
 }
