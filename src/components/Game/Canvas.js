@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import TriangleShape from './TriangleShape.js';
-import { Triangle } from './Triangle.js';
-import { evaluateMatch, evaluateBoundary } from './evaluate.js';
-import tangrams from './tangrams.js'
+import React, { Component } from "react";
+import TriangleShape from "./TriangleShape.js";
+import { Triangle } from "./Triangle.js";
+import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
+import tangrams from "./tangrams.js";
 
-import Animation from './Animation.js';
+import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
 import Tilt from "react-tilt";
-
 
 class Canvas extends Component {
   constructor(props) {
@@ -21,31 +20,31 @@ class Canvas extends Component {
       moveCounter: 0,
       score: 0,
       outside: false
-    }
+    };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
     this.player = this.initializePlayer();
   }
 
-  initializeGoals = (level) => {
+  initializeGoals = level => {
     return tangrams[level].pieces.map(goal => {
       return new Triangle(goal);
-    })
-  }
+    });
+  };
 
-  initializePlayers = (level) => {
+  initializePlayers = level => {
     //randomize coordinates
     //randomize color?
 
     //for now just flips signs
     return tangrams[level].pieces.map(player => {
       return new Triangle(player.map(coordinates => -coordinates));
-    })
-  }
+    });
+  };
 
   initializePlayer = () => {
     return this.players.pop();
-  }
+  };
 
   handleOnChange = event => {
     this.setState({
@@ -67,7 +66,7 @@ class Canvas extends Component {
       this.setState(state => ({
         animate: null,
         moveCounter: state.moveCounter + 1,
-        outside: bound,
+        outside: bound
       }));
     }, 650);
 
@@ -96,7 +95,7 @@ class Canvas extends Component {
     }, 650);
   };
 
-  handleRotate = (deg) => {
+  handleRotate = deg => {
     this.setState(state => ({
       animate: "rotate",
       rotateDeg: deg
@@ -111,7 +110,7 @@ class Canvas extends Component {
     }, 650);
   };
 
-  handleReflect = (axis) => {
+  handleReflect = axis => {
     this.setState(state => ({
       animate: "reflect",
       reflectAxis: axis
@@ -124,7 +123,7 @@ class Canvas extends Component {
         moveCounter: state.moveCounter + 1
       }));
     }, 650);
-  }
+  };
 
   renderColumns = () => {
     let columns = [];
@@ -196,9 +195,17 @@ class Canvas extends Component {
     let counter = 0;
     return this.goals.map(goal => {
       counter = counter + 1;
-      return <TriangleShape key={counter} triangleClassName={goal.completed ? "completed" : "goal"} a={goal.a} b={goal.b} c={goal.c} />
-    })
-  }
+      return (
+        <TriangleShape
+          key={counter}
+          triangleClassName={goal.completed ? "completed" : "goal"}
+          a={goal.a}
+          b={goal.b}
+          c={goal.c}
+        />
+      );
+    });
+  };
 
   render() {
     let win = true;
@@ -240,22 +247,47 @@ class Canvas extends Component {
             </Tilt>
           </div>
           <div className="svg-div">
-            <svg width="1000" height="1000" style={{ backgroundColor: "white" }}>
+            <svg
+              width="1000"
+              height="1000"
+              style={{ backgroundColor: "white" }}
+            >
               {this.renderColumns()}
               {this.renderRows()}
-              <line x1="500" x2="500" y1="0" y2="1000" stroke="black" strokeWidth="3" />
-              <line x1="0" x2="1000" y1="500" y2="500" stroke="black" strokeWidth="3" />
+              <line
+                x1="500"
+                x2="500"
+                y1="0"
+                y2="1000"
+                stroke="black"
+                strokeWidth="3"
+              />
+              <line
+                x1="0"
+                x2="1000"
+                y1="500"
+                y2="500"
+                stroke="black"
+                strokeWidth="3"
+              />
 
               {this.renderXNumbers()}
               {this.renderYNumbers()}
-              <text x="505" y="15">10</text>
-              <text x="980" y="515">10</text>
+              <text x="505" y="15">
+                10
+              </text>
+              <text x="980" y="515">
+                10
+              </text>
 
               {this.rendergoals()}
 
               {!this.state.animate && !win ? (
-                <TriangleShape triangleClassName={"player"}
-                  a={this.player.a} b={this.player.b} c={this.player.c}
+                <TriangleShape
+                  triangleClassName={"player"}
+                  a={this.player.a}
+                  b={this.player.b}
+                  c={this.player.c}
                 />
               ) : null}
 
@@ -269,11 +301,16 @@ class Canvas extends Component {
                   rotateDeg={this.state.rotateDeg}
                   reflectAxis={this.state.reflectAxis}
                   translateX={Number(this.state.translateX)}
-                  translateY={Number(this.state.translateY)} />
+                  translateY={Number(this.state.translateY)}
+                />
               ) : null}
 
-              {win ? <AnimateCompletion path={tangrams[this.props.level].path} pathX={tangrams[this.props.level].pathX}/> : null}
-
+              {win ? (
+                <AnimateCompletion
+                  path={tangrams[this.props.level].path}
+                  pathX={tangrams[this.props.level].pathX}
+                />
+              ) : null}
             </svg>
           </div>
           <div className="buttons-div">
@@ -316,7 +353,7 @@ class Canvas extends Component {
                 onClick={() => this.handleRotate(90)}
                 disabled={this.state.animate ? true : false}
               >
-                Rotate 90° ↻
+                Rotate +90° &#8635;
               </button>
               <button
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
@@ -324,7 +361,7 @@ class Canvas extends Component {
                 onClick={() => this.handleRotate(-90)}
                 disabled={this.state.animate ? true : false}
               >
-                Rotate 90° ↻
+                Rotate -90° &#8634;
               </button>
               <button
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
