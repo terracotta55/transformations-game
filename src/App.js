@@ -6,47 +6,58 @@ import Rank from "./components/Rank/Rank";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Canvas from "./components/Game/Canvas";
-// import Particles from "react-particles-js";
+import Particles from "react-particles-js";
 
-// const particlesOptions = {
-//   particles: {
-//     number: {
-//       value: 100
-//     },
-//     size: {
-//       value: 5
-//     },
-//     line_linked: {
-//       shadow: {
-//         enable: true,
-//         color: "yellow",
-//         blur: 2
-//       }
-//     }
-//   },
-//   move: {
-//     speed: 50
-//   },
-//   interactivity: {
-//     events: {
-//       onhover: {
-//         enable: true,
-//         mode: "repulse"
-//       }
-//     }
-//   }
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 100,
+      color: "black",
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  }
+};
+/*
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 100
+    },
+    size: {
+      value: 5
+    },
+    line_linked: {
+      shadow: {
+        enable: true,
+        color: "yellow",
+        blur: 2
+      }
+    }
+  },
+  move: {
+    speed: 50
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+        mode: "repulse"
+      }
+    }
+  },
 
-  
-//     Number: {
-//       value: 190,
-//       density: {
-//         enable: true,
-//         value_area: 900
-//       }
-//     }
-  
-// };
-
+  Number: {
+    value: 190,
+    density: {
+      enable: true,
+      value_area: 900
+    }
+  }
+};
+*/
 class App extends Component {
   constructor() {
     super();
@@ -92,27 +103,27 @@ class App extends Component {
     this.setState({ route: route });
   };
 
-  // onRouteChange = route => {
-  //   if (route === "signout") {
-  //     this.setState({ isSignedIn: false });
-  //   } else if (route === "home") {
-  //     this.setState({ isSignedIn: true });
-  //   } else if (route === "game") {
-  //     this.setState({ isSignedIn: true });
-  //   }
-  //   this.setState({ route: route });
-  // };
-
+  /*
+  onRouteChange = route => {
+    if (route === "signout") {
+      this.setState({ isSignedIn: false });
+    } else if (route === "home") {
+      this.setState({ isSignedIn: true });
+    } else if (route === "game") {
+      this.setState({ isSignedIn: true });
+    }
+    this.setState({ route: route });
+  };
+*/
   render() {
     return (
       <Fragment>
         <div className="App">
-          {/* <Particles
+          <Particles
             style={{ color: "red" }}
             className="particles"
             params={particlesOptions}
-          /> */}
-
+          />
           <Navigation
             isSignedIn={this.state.isSignedIn}
             onRouteChange={this.onRouteChange}
