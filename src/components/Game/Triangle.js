@@ -1,5 +1,7 @@
 export class Triangle {
-    constructor(ax, ay, bx, by, cx, cy) {
+    constructor(coordinates) {
+        const [ ax, ay, bx, by, cx, cy ] = coordinates;
+
         this.a = { x: ax, y: ay };
         this.b = { x: bx, y: by };
         this.c = { x: cx, y: cy };

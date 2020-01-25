@@ -6,7 +6,7 @@ class AnimateCompletion extends Component {
     return (
       <>
         <Spring
-          from={{ x: 900 }}
+          from={{ x: this.props.pathX }}
           to={{ x: 0 }}
           config={{
             duration: 3000
@@ -17,10 +17,10 @@ class AnimateCompletion extends Component {
               fill="none"
               stroke="yellow"
               strokeWidth="5"
-              strokeDasharray={900}
+              strokeDasharray={props.x}
               strokeDashoffset={props.x}
             >
-              <path d="M850 700 L750 800 L 750 900 L 950 900 L 950 800 Z" />
+              <path d={this.props.path} />
             </animated.svg>
           )}
         </Spring>
