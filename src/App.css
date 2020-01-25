@@ -72,6 +72,12 @@ body {
   height: 32px;
 }
 
+.completed {
+  fill: rgb(112, 214, 175);
+  stroke: rgb(70, 151, 120);
+  stroke-width: 3;
+}
+
 .goal {
   fill: rgb(211, 211, 211);
   stroke: darkgray;
@@ -83,6 +89,8 @@ body {
   stroke: rgb(104, 56, 126);
   stroke-width: 2;
 }
+
+
 
 .win {
   animation: spin 3s linear;
@@ -96,4 +104,10 @@ body {
   to {
     transform: rotate(359deg);
   }
+}
+
+.levels {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
 }
