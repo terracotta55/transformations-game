@@ -1,7 +1,8 @@
 import { Triangle } from './triangle.js'
+import tangrams from './tangrams.js'
 
 test('translate()', () => {
-    const triangle = new Triangle(-5, 5, -5, 3, -3, 3);
+    const triangle = new Triangle([-5, 5, -5, 3, -3, 3]);
     
     triangle.translate(2,-2);
 
@@ -11,7 +12,7 @@ test('translate()', () => {
 });
 
 test('rotate()', () => {
-    const triangle = new Triangle(-4, 3, -4, 1, -2, 1);
+    const triangle = new Triangle([-4, 3, -4, 1, -2, 1]);
 
     expect(triangle.a).toEqual({x: -4, y: 3});
     expect(triangle.b).toEqual({x: -4, y: 1});
@@ -32,7 +33,7 @@ test('rotate()', () => {
 });
 
 test('reflect()', () => {
-    const triangle = new Triangle(-4, 3, -4, 1, -2, 1);
+    const triangle = new Triangle([-4, 3, -4, 1, -2, 1]);
     
     triangle.reflect("x");
 
