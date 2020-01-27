@@ -27,8 +27,17 @@ class Canvas extends Component {
     //map through and initialize each goal triangle
     const goals = [];
     
-    goals.push(new Triangle(7, -6, 5, -6, 5, -8));
-    goals.push(new Triangle(7, -6, 5, -8, 7, -8));
+    // goals.push(new Triangle(7, -6, 5, -6, 5, -8));
+    // goals.push(new Triangle(7, -6, 5, -8, 7, -8));
+    goals.push(new Triangle(2, -10, 6, -10, 6, -6));
+    goals.push(new Triangle(6, -10, 8, -10, 8, -8));
+    goals.push(new Triangle(8, -10, 10, -8, 8, -8));
+    goals.push(new Triangle(3, -9, 6, -6, 3, -3));
+    goals.push(new Triangle(3, -6, 3, -4, 3, -3));
+    goals.push(new Triangle(3, -3, 1, -2, 3, -1));
+    goals.push(new Triangle(3, -3, 5, -2, 3, -1));
+    goals.push(new Triangle(1, -2, 1, 0, 3, -1));
+    goals.push(new Triangle(3, -1, 5, -2, 5, 0));
     return goals;
   }
 
