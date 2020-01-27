@@ -9,7 +9,19 @@ import Canvas from "./components/Game/Canvas";
 import Particles from "react-particles-js";
 
 const particlesOptions = {
-  /*
+  particles: {
+    number: {
+      value: 100,
+      color: "black",
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    }
+  }
+};
+/*
+const particlesOptions = {
   particles: {
     number: {
       value: 100
@@ -35,19 +47,17 @@ const particlesOptions = {
         mode: "repulse"
       }
     }
-  }
-*/
-  /*
-    Number: {
-      value: 190,
-      density: {
-        enable: true,
-        value_area: 900
-      }
-    }
-    */
-};
+  },
 
+  Number: {
+    value: 190,
+    density: {
+      enable: true,
+      value_area: 900
+    }
+  }
+};
+*/
 class App extends Component {
   constructor() {
     super();
@@ -56,6 +66,7 @@ class App extends Component {
       isSignedIn: false,
       name: "Jimmy",
       score: 2050,
+      level: 0,
       user: {
         id: "",
         name: "",
@@ -78,6 +89,21 @@ class App extends Component {
     });
   };
 
+  onRouteChange = (route, levelSelect) => {
+    if (route === "signout") {
+      this.setState({ isSignedIn: false });
+    } else if (route === "home") {
+      this.setState({ isSignedIn: true });
+    } else if (route === "game") {
+      this.setState({
+        isSignedIn: true,
+        level: levelSelect
+      });
+    }
+    this.setState({ route: route });
+  };
+
+  /*
   onRouteChange = route => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
@@ -88,24 +114,23 @@ class App extends Component {
     }
     this.setState({ route: route });
   };
-
+*/
   render() {
     return (
       <Fragment>
         <div className="App">
-          {/* <Particles
+          <Particles
             style={{ color: "red" }}
             className="particles"
             params={particlesOptions}
-          /> */}
-
+          />
           <Navigation
             isSignedIn={this.state.isSignedIn}
             onRouteChange={this.onRouteChange}
           />
           {this.state.route === "home" ? (
             <div>
-              <Logo />
+              <Logo onRouteChange={this.onRouteChange} />
               <Rank name={this.state.name} score={this.state.score} />
             </div>
           ) : this.state.route === "signin" ? (
@@ -114,6 +139,7 @@ class App extends Component {
             <Canvas
               style={{ backgroundColor: "white" }}
               onRouteChange={this.onRouteChange}
+              level={this.state.level}
             />
           ) : (
             <Register
