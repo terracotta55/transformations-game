@@ -31,6 +31,26 @@ export const Logo = ({ onRouteChange }) => {
             />
           </div>
         </Tilt>
+        <Tilt
+          className="Tilt br3 shadow-5 pa1"
+          options={{ max: 55 }}
+          style={{ height: 240, width: 250 }}
+        >
+          <div className="Tilt-inner">
+            {" "}
+            <img
+              style={{
+                paddingTop: "5px",
+                paddingBottom: "5px",
+                height: 220,
+                width: 230
+              }}
+              alt="logo"
+              src={game_logo_1}
+              onClick={() => onRouteChange("game", "tree")}
+            />
+          </div>
+        </Tilt>
 
         <Tilt
           className="Tilt br3 shadow-5 pa1"
