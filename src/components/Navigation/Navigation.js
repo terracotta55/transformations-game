@@ -7,10 +7,10 @@ export const Navigation = ({ onRouteChange, isSignedIn }) => {
       <Fragment>
         <nav style={{ display: "flex", justifyContent: "flex-end" }}>
           <p
-            onClick={() => onRouteChange("game")}
+            onClick={() => onRouteChange("home")}
             className="f3 dim pointer link underline fw6 ph0 mh0 yellow mh3"
           >
-            Play Game
+            Go Home
           </p>
           <p
             onClick={() => onRouteChange("signout")}

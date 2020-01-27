@@ -105,3 +105,9 @@ body {
     transform: rotate(359deg);
   }
 }
+
+.levels {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}

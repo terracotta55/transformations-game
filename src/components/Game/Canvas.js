@@ -353,7 +353,7 @@ class Canvas extends Component {
                 onClick={() => this.handleRotate(90)}
                 disabled={this.state.animate ? true : false}
               >
-                Rotate 90° ↻
+                Rotate +90° &#8635;
               </button>
               <button
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
@@ -361,7 +361,7 @@ class Canvas extends Component {
                 onClick={() => this.handleRotate(-90)}
                 disabled={this.state.animate ? true : false}
               >
-                Rotate 90° ↻
+                Rotate -90° &#8634;
               </button>
               <button
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
