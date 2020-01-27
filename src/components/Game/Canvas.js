@@ -309,6 +309,7 @@ class Canvas extends Component {
                 <AnimateCompletion
                   path={tangrams[this.props.level].path}
                   pathX={tangrams[this.props.level].pathX}
+                  strokeDasharray={tangrams[this.props.level].strokeDasharray}
                 />
               ) : null}
             </svg>

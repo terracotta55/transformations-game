@@ -6,7 +6,8 @@ const tangrams = {
       [7, -4, 5, -6, 9, -6]
     ],
     path: "M850 700 L750 800 L 750 900 L 950 900 L 950 800 Z",
-    pathX: 900
+    pathX: 850,
+    strokeDasharray: 900
   },
 
   boat: {
@@ -21,7 +22,8 @@ const tangrams = {
     ],
     path:
       "M800 0 L800 150 L 1000 350 L 950 350 L 800 500 L 700 500 L 550 350 L 800 350 L 800 300 L 500 300 Z",
-    pathX: 2000
+    pathX: 2100,
+    strokeDasharray: 2200
   },
 
   fish: {
@@ -39,7 +41,8 @@ const tangrams = {
     ],
     path:
       "M750 50 L 750 100 L850 200 L 950 100 L 950 400 L 850 300 L 750 400 L 750 450 L 550 250 Z",
-    pathX: 1400
+    pathX: 1500,
+    strokeDasharray: 1600
   },
 
   cat: {
@@ -56,7 +59,8 @@ const tangrams = {
     ],
     path:
       "M550 500 L 650 550 L 750 500 L 750 600 L 650 650 L 800 800 L 800 1000 L 900 900 L 1000 900 L 900 1000 L 600 1000 L 650 950 L 650 800 L 550 700 L650 650 L 550 600 Z",
-    pathX: 2200
+    pathX: 2100,
+    strokeDasharray: 2200
   }
 };
 

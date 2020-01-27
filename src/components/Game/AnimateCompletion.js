@@ -18,7 +18,7 @@ class AnimateCompletion extends Component {
               fill="none"
               stroke="yellow"
               strokeWidth="5"
-              strokeDasharray={props.x}
+              strokeDasharray={this.props.strokeDasharray}
               strokeDashoffset={props.x}
             >
               <path d={this.props.path} />
