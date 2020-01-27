@@ -119,11 +119,11 @@ class App extends Component {
     return (
       <Fragment>
         <div className="App">
-          <Particles
+          {/* <Particles
             style={{ color: "red" }}
             className="particles"
             params={particlesOptions}
-          />
+          /> */}
           <Navigation
             isSignedIn={this.state.isSignedIn}
             onRouteChange={this.onRouteChange}
