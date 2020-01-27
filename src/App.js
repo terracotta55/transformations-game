@@ -64,7 +64,8 @@ class App extends Component {
     this.state = {
       route: "signin", // there are 4 routes: signin (default), signout, home, game
       isSignedIn: false,
-      name: "Jimmy",
+      // name: "Jimmy",
+      username: "",
       score: 2050,
       level: 0,
       user: {
@@ -103,6 +104,9 @@ class App extends Component {
     this.setState({ route: route });
   };
 
+  getUsername = dataFromSignIn => {
+    this.setState({ username: dataFromSignIn });
+  };
   /*
   onRouteChange = route => {
     if (route === "signout") {
@@ -131,15 +135,20 @@ class App extends Component {
           {this.state.route === "home" ? (
             <div>
               <Logo onRouteChange={this.onRouteChange} />
-              <Rank name={this.state.name} score={this.state.score} />
+              <Rank name={this.state.username} score={this.state.score} />
             </div>
           ) : this.state.route === "signin" ? (
-            <SignIn addUser={this.addUser} onRouteChange={this.onRouteChange} />
+            <SignIn
+              addUser={this.addUser}
+              onRouteChange={this.onRouteChange}
+              getUsername={this.getUsername}
+            />
           ) : this.state.route === "game" ? (
             <Canvas
               style={{ backgroundColor: "white" }}
               onRouteChange={this.onRouteChange}
               level={this.state.level}
+              username={this.state.username}
             />
           ) : (
             <Register

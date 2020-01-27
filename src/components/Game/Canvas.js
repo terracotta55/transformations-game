@@ -238,7 +238,7 @@ class Canvas extends Component {
                     title="Profile Photo"
                     alt="Profile"
                   />
-                  <h1 className="f4 black">Jimmy Butler</h1>
+                  <h1 className="f4 black">{this.props.username}</h1>
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
                 <p className="lh-copy measure center f6 gray">Score: 2050</p>
