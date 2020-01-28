@@ -250,7 +250,7 @@ class Canvas extends Component {
             <svg
               width="1000"
               height="1000"
-              style={{ backgroundColor: "white" }}
+              // style={{ backgroundImage: "url:"sand.jpg"" }} /*Image by Nikola Belopitov from "https://pixabay.com/?*/
             >
               {this.renderColumns()}
               {this.renderRows()}

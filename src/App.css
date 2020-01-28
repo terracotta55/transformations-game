@@ -90,8 +90,6 @@ body {
   stroke-width: 2;
 }
 
-
-
 .win {
   animation: spin 3s linear;
   font-size: 200px;
@@ -110,4 +108,9 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+}
+
+.svg-div {
+  background-image: url("./components/Game/images/sand.jpg");
+  background-size: cover;
 }

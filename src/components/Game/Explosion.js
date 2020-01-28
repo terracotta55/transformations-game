@@ -9,7 +9,7 @@ class ReactExplode extends Component {
           size="800"
           delay={3}
           repeatDelay={0.1}
-          repeat={3}
+          repeat={2}
           color="#A0E6FF"
         />
       </svg>
