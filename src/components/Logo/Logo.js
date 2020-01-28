@@ -5,6 +5,7 @@ import game_logo_1 from "./Logo1.png";
 import game_logo_2 from "./Logo2.png";
 import game_logo_3 from "./Logo3.png";
 import game_logo_4 from "./Logo4.png";
+import game_logo_5 from "./Logo5.png";
 const Fragment = React.Fragment;
 
 export const Logo = ({ onRouteChange }) => {
@@ -25,7 +26,7 @@ export const Logo = ({ onRouteChange }) => {
                 height: 220,
                 width: 230
               }}
-              alt="logo"
+              alt="house-logo"
               src={game_logo_1}
               onClick={() => onRouteChange("game", "house")}
             />
@@ -45,8 +46,8 @@ export const Logo = ({ onRouteChange }) => {
                 height: 220,
                 width: 230
               }}
-              alt="logo"
-              src={game_logo_1}
+              alt="tree-logo"
+              src={game_logo_2}
               onClick={() => onRouteChange("game", "tree")}
             />
           </div>
@@ -67,7 +68,7 @@ export const Logo = ({ onRouteChange }) => {
                 width: 230
               }}
               alt="logo"
-              src={game_logo_2}
+              src={game_logo_3}
               onClick={() => onRouteChange("game", "boat")}
             />
           </div>
@@ -88,7 +89,7 @@ export const Logo = ({ onRouteChange }) => {
                 width: 230
               }}
               alt="logo"
-              src={game_logo_3}
+              src={game_logo_4}
               onClick={() => onRouteChange("game", "fish")}
             />
           </div>
@@ -109,7 +110,7 @@ export const Logo = ({ onRouteChange }) => {
                 width: 230
               }}
               alt="logo"
-              src={game_logo_4}
+              src={game_logo_5}
               onClick={() => onRouteChange("game", "cat")}
             />
           </div>

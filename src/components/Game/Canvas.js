@@ -21,14 +21,13 @@ class Canvas extends Component {
       totalMoves: 0,
       score: 0,
       outside: false,
-      color: "",
+      color: ""
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
     this.player = this.players.pop();
     this.colors = [];
   }
-
 
   initializeGoals = level => {
     return tangrams[level].pieces.map(goal => {
@@ -43,13 +42,13 @@ class Canvas extends Component {
   };
 
   componentDidMount = () => {
-    this.colors = shuffle(colorPalette)
+    this.colors = shuffle(colorPalette);
 
     this.setState({
       color: this.colors.pop(),
       start: true
     });
-  }
+  };
 
   reInitializePlayer = () => {
     if (this.players.length) {
@@ -232,16 +231,16 @@ class Canvas extends Component {
 
   addScore = () => {
     this.setState(state => ({
-      score: state.score + (200 - (50 * (this.state.moveCounter - 1)))
+      score: state.score + (200 - 50 * (this.state.moveCounter - 1))
     }));
-  }
+  };
 
   render() {
     let win = true;
 
     for (let goal of this.goals) {
       if (!goal.completed) {
-        console.log("eval")
+        console.log("eval");
         if (evaluateMatch(this.player, goal)) {
           goal.completed = true;
 
@@ -261,7 +260,7 @@ class Canvas extends Component {
     return (
       <>
         <div className="container">
-          <div className="info-div yellow">
+          <div className="info-div">
             <p>Player Info:</p>
             <Tilt
               className="new-tilt br3"
@@ -279,8 +278,12 @@ class Canvas extends Component {
                   <h1 className="f4 black">{this.props.username}</h1>
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
-                <p className="lh-copy measure center f6 gray">Current Score: {this.state.score}</p>
-                <p className="lh-copy measure center f6 gray">Best Score: {this.props.bestScore}</p>
+                <p className="lh-copy measure center f6 gray">
+                  Current Score: {this.state.score}
+                </p>
+                <p className="lh-copy measure center f6 gray">
+                  Best Score: {this.props.bestScore}
+                </p>
               </article>
             </Tilt>
           </div>
@@ -372,7 +375,7 @@ class Canvas extends Component {
               </div>
 
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleTranslate()}
                 disabled={this.state.animate || win ? true : false}
@@ -380,7 +383,7 @@ class Canvas extends Component {
                 Translate
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleRotate(90)}
                 disabled={this.state.animate || win ? true : false}
@@ -388,7 +391,7 @@ class Canvas extends Component {
                 Rotate +90° &#8635;
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleRotate(-90)}
                 disabled={this.state.animate || win ? true : false}
@@ -396,7 +399,7 @@ class Canvas extends Component {
                 Rotate -90° &#8634;
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleReflect("x")}
                 disabled={this.state.animate || win ? true : false}
@@ -404,7 +407,7 @@ class Canvas extends Component {
                 Reflect on x-axis
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleReflect("y")}
                 disabled={this.state.animate || win ? true : false}
@@ -415,7 +418,7 @@ class Canvas extends Component {
                 <h1 className="f5 bg-gray white mv0 pv2 ph3">
                   Number of Moves
                 </h1>
-                <div className="pa3 bg-yellow">
+                <div className="pa3">
                   <p className="f6 f5-ns lh-copy measure mv0">
                     {this.state.totalMoves}
                   </p>

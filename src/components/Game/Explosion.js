@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Explosion from "react-explode/Explosion9"; /* change foe Explosion1 to 10 for different effects  */
+import Explosion from "react-explode/Explosion3"; /* change foe Explosion1 to 10 for different effects  */
 
 class ReactExplode extends Component {
   render() {
@@ -10,7 +10,7 @@ class ReactExplode extends Component {
           delay={3}
           repeatDelay={0.1}
           repeat={2}
-          color="#A0E6FF"
+          color="white"
         />
       </svg>
     );

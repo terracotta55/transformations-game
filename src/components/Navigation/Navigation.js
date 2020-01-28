@@ -8,13 +8,13 @@ export const Navigation = ({ onRouteChange, isSignedIn }) => {
         <nav style={{ display: "flex", justifyContent: "flex-end" }}>
           <p
             onClick={() => onRouteChange("home")}
-            className="f3 dim pointer link underline fw6 ph0 mh0 yellow mh3"
+            className="f3 dim pointer link underline fw6 ph0 mh0  mh3"
           >
             Go Home
           </p>
           <p
             onClick={() => onRouteChange("signout")}
-            className="f3 dim pointer link underline fw6 ph0 mh0 yellow mh3"
+            className="f3 dim pointer link underline fw6 ph0 mh0  mh3"
           >
             Sign Out
           </p>
