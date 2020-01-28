@@ -20,9 +20,6 @@ body {
   font-size: 2rem;
   font-weight: bold;
   margin-left: 15px;
-}
-
-.svg-div {
   align-items: center;
 }
 
@@ -64,6 +61,7 @@ body {
 
 .btn-txt {
   font-size: 1.2rem;
+  color: white;
 }
 
 .input {
@@ -85,7 +83,7 @@ body {
 }
 
 .player {
-  fill: rgb(204, 130, 238);
+  /* fill: rgb(204, 130, 238); */
   stroke: rgb(104, 56, 126);
   stroke-width: 2;
 }

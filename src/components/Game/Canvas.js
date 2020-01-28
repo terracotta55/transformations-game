@@ -19,7 +19,7 @@ class Canvas extends Component {
       animate: null,
       moveCounter: 0,
       score: 0,
-      outside: false,
+      outside: false
       // color: colorPalette.pop //not working
     };
     this.goals = this.initializeGoals(this.props.level);
@@ -169,7 +169,7 @@ class Canvas extends Component {
     let counter = -10;
     for (let i = 2; i <= 1000; i = i + 50) {
       xNumbers.push(
-        <text key={i} x={i} y="515">
+        <text key={i} x={i} y="515" font-weight="bold">
           {counter}
         </text>
       );
@@ -184,7 +184,7 @@ class Canvas extends Component {
     for (let i = -2; i <= 1000; i = i + 50) {
       if (counter !== 0) {
         yNumbers.push(
-          <text key={i} x="505" y={i}>
+          <text key={i} x="505" y={i} font-weight="bold">
             {counter}
           </text>
         );
@@ -251,11 +251,7 @@ class Canvas extends Component {
             </Tilt>
           </div>
           <div className="svg-div">
-            <svg
-              width="1000"
-              height="1000"
-              // style={{ backgroundImage: "url:"sand.jpg"" }} /*Image by Nikola Belopitov from "https://pixabay.com/?*/
-            >
+            <svg width="1000" height="1000">
               {this.renderColumns()}
               {this.renderRows()}
               <line
@@ -274,18 +270,15 @@ class Canvas extends Component {
                 stroke="black"
                 strokeWidth="3"
               />
-
               {this.renderXNumbers()}
               {this.renderYNumbers()}
-              <text x="505" y="15">
+              <text x="505" y="15" font-weight="bold">
                 10
               </text>
-              <text x="980" y="515">
+              <text x="980" y="515" font-weight="bold">
                 10
               </text>
-
               {this.rendergoals()}
-
               {!this.state.animate && !win ? (
                 <TriangleShape
                   triangleClassName={"player"}
@@ -295,7 +288,6 @@ class Canvas extends Component {
                   c={this.player.c}
                 />
               ) : null}
-
               {this.state.animate ? (
                 <Animation
                   triangleClassName={"player"}
@@ -310,7 +302,6 @@ class Canvas extends Component {
                   translateY={Number(this.state.translateY)}
                 />
               ) : null}
-
               {win ? (
                 <AnimateCompletion
                   path={tangrams[this.props.level].path}
