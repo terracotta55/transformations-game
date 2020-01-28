@@ -6,7 +6,21 @@ const tangrams = {
       [7, -4, 5, -6, 9, -6]
     ],
     path: "M850 700 L750 800 L 750 900 L 950 900 L 950 800 Z",
-    pathX: 900
+    pathX: 850,
+    strokeDasharray: 900
+  },
+  tree: {
+    pieces: [
+      [-5, -2, -6, -3, -4, -3],
+      [-5, -3, -7, -5, -3, -5],
+      [-5, -5, -8, -8, -2, -8],
+      [-6, -8, -6, -10, -4, -10],
+      [-6, -8, -4, -8, -4, -10]
+    ],
+    path:
+      "M250 600 L200 650 L250 650 L 150 750 L250 750 L 100 900 L 200 900 L 200 1000 L300 1000 L 300 900 L 400 900 L 250 750 L350 750 L 250 650 L 300 650 Z",
+    pathX: 2100,
+    strokeDasharray: 2200
   },
 
   boat: {
@@ -21,7 +35,8 @@ const tangrams = {
     ],
     path:
       "M800 0 L800 150 L 1000 350 L 950 350 L 800 500 L 700 500 L 550 350 L 800 350 L 800 300 L 500 300 Z",
-    pathX: 2000
+    pathX: 2100,
+    strokeDasharray: 2200
   },
 
   fish: {
@@ -39,7 +54,8 @@ const tangrams = {
     ],
     path:
       "M750 50 L 750 100 L850 200 L 950 100 L 950 400 L 850 300 L 750 400 L 750 450 L 550 250 Z",
-    pathX: 1400
+    pathX: 1500,
+    strokeDasharray: 1600
   },
 
   cat: {
@@ -56,8 +72,37 @@ const tangrams = {
     ],
     path:
       "M550 500 L 650 550 L 750 500 L 750 600 L 650 650 L 800 800 L 800 1000 L 900 900 L 1000 900 L 900 1000 L 600 1000 L 650 950 L 650 800 L 550 700 L650 650 L 550 600 Z",
-    pathX: 2200
+    pathX: 2100,
+    strokeDasharray: 2200
   }
 };
 
 export default tangrams;
+
+export const colorPalette = [
+  "#FC766AFF",
+  "#783937FF",
+  "#F1AC88FF",
+  "#F6EA7BFF",
+  "#FFBA52FF",
+  "#E683A9FF",
+  "#F65058FF",
+  "#FBDE44FF",
+  "#28334AFF",
+  "#95DBE5FF",
+  "#078282FF",
+  "#339E66FF",
+  "#643E46FF",
+  "#BA0020FF",
+  "#EE2737FF"
+];
+
+export const shuffle = (array) => {
+  let array2 = array.slice();
+  for (let i = array2.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array2[i], array2[j]] = [array2[j], array2[i]];
+  }
+  return array2;
+}
+

@@ -5,10 +5,14 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      signInUser: "",
       signInEmail: "",
       signInPassword: ""
     };
   }
+  onUserChange = e => {
+    this.setState({ signInUser: e.target.value });
+  };
   onEmailChange = e => {
     this.setState({ signInEmail: e.target.value });
   };
@@ -17,6 +21,7 @@ class SignIn extends React.Component {
   };
   onSubmitSignIn = () => {
     this.props.onRouteChange("home");
+    this.props.getUsername(this.state.signInUser);
   };
   render() {
     // const { onRouteChange } = this.props;
@@ -27,6 +32,18 @@ class SignIn extends React.Component {
             <div className="measure">
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                 <legend className="f2 fw6 ph0 mh0 white">Sign In</legend>
+                <div className="mt3">
+                  <label className="db fw6 lh-copy f4 white" htmlFor="username">
+                    Username
+                  </label>
+                  <input
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    type="text"
+                    name="username"
+                    id="username"
+                    onChange={this.onUserChange}
+                  />
+                </div>
                 <div className="mt3">
                   <label
                     className="db fw6 lh-copy f4 white"

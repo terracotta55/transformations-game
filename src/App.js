@@ -9,63 +9,55 @@ import Canvas from "./components/Game/Canvas";
 import Particles from "react-particles-js";
 
 const particlesOptions = {
-  particles: {
-    number: {
-      value: 100,
-      color: "black",
-      density: {
-        enable: true,
-        value_area: 800
+  "particles": {
+    "number": {
+      "value": 30,
+      "density": {
+        "enable": false,
+        "value_area": 0
       }
+    },
+    "opacity": {
+      "value": 1,
+      "random": false,
+      "anim": {
+        "enable": false
+      }
+    },
+    "size": {
+      "value": 0,
+      "random": false,
+      "anim": {
+        "enable": false
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 250,
+      "color": "#ffffff",
+      "opacity": 1,
+      "width": 2.5
+    },
+    "move": {
+      "enable": false,
     }
-  }
+  },
 };
-/*
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 100
-    },
-    size: {
-      value: 5
-    },
-    line_linked: {
-      shadow: {
-        enable: true,
-        color: "yellow",
-        blur: 2
-      }
-    }
-  },
-  move: {
-    speed: 50
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: true,
-        mode: "repulse"
-      }
-    }
-  },
 
-  Number: {
-    value: 190,
-    density: {
-      enable: true,
-      value_area: 900
-    }
-  }
-};
-*/
 class App extends Component {
   constructor() {
     super();
     this.state = {
       route: "signin", // there are 4 routes: signin (default), signout, home, game
       isSignedIn: false,
-      name: "Jimmy",
-      score: 2050,
+      // name: "Jimmy",
+      username: "",
+      totalScore: 0,
+      houseScore: 0,
+      treeScore: 0,
+      boatScore: 0,
+      fishScore: 0,
+      catScore: 0,
       level: 0,
       user: {
         id: "",
@@ -83,7 +75,7 @@ class App extends Component {
         id: data.id,
         name: data.name,
         email: data.email,
-        score: data.score,
+        totalScore: data.totalScore,
         joined: data.joined
       }
     });
@@ -103,6 +95,9 @@ class App extends Component {
     this.setState({ route: route });
   };
 
+  getUsername = dataFromSignIn => {
+    this.setState({ username: dataFromSignIn });
+  };
   /*
   onRouteChange = route => {
     if (route === "signout") {
@@ -115,6 +110,16 @@ class App extends Component {
     this.setState({ route: route });
   };
 */
+
+  updateScore = (score) => {
+    console.log(score)
+    if (score > this.state[`${this.state.level}Score`]) {
+      this.setState(state => ({
+        [`${state.level}Score`]: score
+      }));
+    }
+  }
+
   render() {
     return (
       <Fragment>
@@ -131,22 +136,37 @@ class App extends Component {
           {this.state.route === "home" ? (
             <div>
               <Logo onRouteChange={this.onRouteChange} />
-              <Rank name={this.state.name} score={this.state.score} />
+              <Rank name={this.state.username} totalScore={this.state.totalScore} />
+              <div className="highscores">
+                <h3>Best Scores:</h3>
+                <p>House: {this.state.houseScore}</p>
+                <p>Tree: {this.state.treeScore}</p>
+                <p>Boat: {this.state.boatScore}</p>
+                <p>Fish: {this.state.fishScore}</p>
+                <p>Cat: {this.state.catScore}</p>
+              </div>
             </div>
           ) : this.state.route === "signin" ? (
-            <SignIn addUser={this.addUser} onRouteChange={this.onRouteChange} />
+            <SignIn
+              addUser={this.addUser}
+              onRouteChange={this.onRouteChange}
+              getUsername={this.getUsername}
+            />
           ) : this.state.route === "game" ? (
             <Canvas
               style={{ backgroundColor: "white" }}
               onRouteChange={this.onRouteChange}
               level={this.state.level}
+              username={this.state.username}
+              bestScore={this.state[`${this.state.level}Score`]}
+              updateScore={(score) => this.updateScore(score)}
             />
           ) : (
-            <Register
-              addUser={this.addUser}
-              onRouteChange={this.onRouteChange}
-            />
-          )}
+                  <Register
+                    addUser={this.addUser}
+                    onRouteChange={this.onRouteChange}
+                  />
+                )}
         </div>
       </Fragment>
     );

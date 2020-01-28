@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TriangleShape from "./TriangleShape.js";
 import { Triangle } from "./Triangle.js";
 import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
-import tangrams from "./tangrams.js";
+import tangrams, { colorPalette, shuffle } from "./tangrams.js";
 
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
@@ -18,13 +18,17 @@ class Canvas extends Component {
       reflectAxis: "",
       animate: null,
       moveCounter: 0,
+      totalMoves: 0,
       score: 0,
-      outside: false
+      outside: false,
+      color: "",
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
-    this.player = this.initializePlayer();
+    this.player = this.players.pop();
+    this.colors = [];
   }
+
 
   initializeGoals = level => {
     return tangrams[level].pieces.map(goal => {
@@ -33,17 +37,32 @@ class Canvas extends Component {
   };
 
   initializePlayers = level => {
-    //randomize coordinates
-    //randomize color?
-
-    //for now just flips signs
     return tangrams[level].pieces.map(player => {
       return new Triangle(player.map(coordinates => -coordinates));
     });
   };
 
-  initializePlayer = () => {
-    return this.players.pop();
+  componentDidMount = () => {
+    this.colors = shuffle(colorPalette)
+
+    this.setState({
+      color: this.colors.pop(),
+      start: true
+    });
+  }
+
+  reInitializePlayer = () => {
+    if (this.players.length) {
+      const player = this.players.pop();
+      player.randomizeLocation();
+
+      this.setState({
+        color: this.colors.pop(),
+        moveCounter: 0
+      });
+
+      return player;
+    }
   };
 
   handleOnChange = event => {
@@ -66,12 +85,13 @@ class Canvas extends Component {
       this.setState(state => ({
         animate: null,
         moveCounter: state.moveCounter + 1,
+        totalMoves: state.totalMoves + 1,
         outside: bound
       }));
     }, 650);
 
     setTimeout(() => {
-      if (this.state.outside === true) {
+      if (this.state.outside) {
         this.setState(state => ({
           animate: "translate"
         }));
@@ -81,7 +101,7 @@ class Canvas extends Component {
         );
         this.setState(state => ({
           animate: null,
-          moveCounter: state.moveCounter + 1,
+          moveCounter: state.moveCounter + 1, //extra move penalty
           outside: false
         }));
       }
@@ -102,10 +122,11 @@ class Canvas extends Component {
     }));
 
     setTimeout(() => {
-      this.player.rotate(0, 0, deg);
+      this.player.rotate(deg);
       this.setState(state => ({
         animate: null,
-        moveCounter: state.moveCounter + 1
+        moveCounter: state.moveCounter + 1,
+        totalMoves: state.totalMoves + 1
       }));
     }, 650);
   };
@@ -120,7 +141,8 @@ class Canvas extends Component {
       this.player.reflect(axis);
       this.setState(state => ({
         animate: null,
-        moveCounter: state.moveCounter + 1
+        moveCounter: state.moveCounter + 1,
+        totalMoves: state.totalMoves + 1
       }));
     }, 650);
   };
@@ -166,7 +188,7 @@ class Canvas extends Component {
     let counter = -10;
     for (let i = 2; i <= 1000; i = i + 50) {
       xNumbers.push(
-        <text key={i} x={i} y="515">
+        <text key={i} x={i} y="515" fontWeight="bold">
           {counter}
         </text>
       );
@@ -181,7 +203,7 @@ class Canvas extends Component {
     for (let i = -2; i <= 1000; i = i + 50) {
       if (counter !== 0) {
         yNumbers.push(
-          <text key={i} x="505" y={i}>
+          <text key={i} x="505" y={i} fontWeight="bold">
             {counter}
           </text>
         );
@@ -199,6 +221,7 @@ class Canvas extends Component {
         <TriangleShape
           key={counter}
           triangleClassName={goal.completed ? "completed" : "goal"}
+          color={this.state.color}
           a={goal.a}
           b={goal.b}
           c={goal.c}
@@ -207,17 +230,32 @@ class Canvas extends Component {
     });
   };
 
+  addScore = () => {
+    this.setState(state => ({
+      score: state.score + (200 - (50 * (this.state.moveCounter - 1)))
+    }));
+  }
+
   render() {
     let win = true;
+
     for (let goal of this.goals) {
       if (!goal.completed) {
+        console.log("eval")
         if (evaluateMatch(this.player, goal)) {
           goal.completed = true;
-          this.player = this.initializePlayer();
+
+          this.addScore();
+
+          this.player = this.reInitializePlayer();
           break;
         }
         win = false;
       }
+    }
+
+    if (win) {
+      this.props.updateScore(this.state.score);
     }
 
     return (
@@ -238,20 +276,16 @@ class Canvas extends Component {
                     title="Profile Photo"
                     alt="Profile"
                   />
-                  <h1 className="f4 black">Jimmy Butler</h1>
+                  <h1 className="f4 black">{this.props.username}</h1>
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
-                <p className="lh-copy measure center f6 gray">Score: 2050</p>
-                <p className="lh-copy measure center f6 gray">Level: 3</p>
+                <p className="lh-copy measure center f6 gray">Current Score: {this.state.score}</p>
+                <p className="lh-copy measure center f6 gray">Best Score: {this.props.bestScore}</p>
               </article>
             </Tilt>
           </div>
           <div className="svg-div">
-            <svg
-              width="1000"
-              height="1000"
-              style={{ backgroundColor: "white" }}
-            >
+            <svg width="1000" height="1000">
               {this.renderColumns()}
               {this.renderRows()}
               <line
@@ -270,30 +304,28 @@ class Canvas extends Component {
                 stroke="black"
                 strokeWidth="3"
               />
-
               {this.renderXNumbers()}
               {this.renderYNumbers()}
-              <text x="505" y="15">
+              <text x="505" y="15" fontWeight="bold">
                 10
               </text>
-              <text x="980" y="515">
+              <text x="980" y="515" fontWeight="bold">
                 10
               </text>
-
               {this.rendergoals()}
-
               {!this.state.animate && !win ? (
                 <TriangleShape
                   triangleClassName={"player"}
+                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
                 />
               ) : null}
-
               {this.state.animate ? (
                 <Animation
                   triangleClassName={"player"}
+                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -304,11 +336,11 @@ class Canvas extends Component {
                   translateY={Number(this.state.translateY)}
                 />
               ) : null}
-
               {win ? (
                 <AnimateCompletion
                   path={tangrams[this.props.level].path}
                   pathX={tangrams[this.props.level].pathX}
+                  strokeDasharray={tangrams[this.props.level].strokeDasharray}
                 />
               ) : null}
             </svg>
@@ -343,7 +375,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleTranslate()}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Translate
               </button>
@@ -351,7 +383,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleRotate(90)}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Rotate +90° &#8635;
               </button>
@@ -359,7 +391,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleRotate(-90)}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Rotate -90° &#8634;
               </button>
@@ -367,7 +399,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleReflect("x")}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Reflect on x-axis
               </button>
@@ -375,7 +407,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleReflect("y")}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Reflect on y-axis
               </button>
@@ -385,7 +417,7 @@ class Canvas extends Component {
                 </h1>
                 <div className="pa3 bg-yellow">
                   <p className="f6 f5-ns lh-copy measure mv0">
-                    {this.state.moveCounter}
+                    {this.state.totalMoves}
                   </p>
                 </div>
               </article>
