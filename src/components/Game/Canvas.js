@@ -242,7 +242,7 @@ class Canvas extends Component {
                     title="Profile Photo"
                     alt="Profile"
                   />
-                  <h1 className="f4 black">Jimmy Butler</h1>
+                  <h1 className="f4 black">{this.props.username}</h1>
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
                 <p className="lh-copy measure center f6 gray">Score: 2050</p>
@@ -254,7 +254,7 @@ class Canvas extends Component {
             <svg
               width="1000"
               height="1000"
-            // style={{ backgroundColor: "white" }}
+              // style={{ backgroundImage: "url:"sand.jpg"" }} /*Image by Nikola Belopitov from "https://pixabay.com/?*/
             >
               {this.renderColumns()}
               {this.renderRows()}
@@ -315,6 +315,7 @@ class Canvas extends Component {
                 <AnimateCompletion
                   path={tangrams[this.props.level].path}
                   pathX={tangrams[this.props.level].pathX}
+                  strokeDasharray={tangrams[this.props.level].strokeDasharray}
                 />
               ) : null}
             </svg>
