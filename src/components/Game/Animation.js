@@ -45,6 +45,7 @@ class Animation extends Component {
           {props => (
             <polygon className={this.props.triangleClassName}
               points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}
+              fill={this.props.color}
               transform={props.transform}
               transform-origin="500 500"
             ></polygon>
