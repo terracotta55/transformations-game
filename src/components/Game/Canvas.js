@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TriangleShape from "./TriangleShape.js";
 import { Triangle } from "./Triangle.js";
 import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
-import tangrams, { colorPalette } from "./tangrams.js";
+import tangrams, { colorPalette, shuffle } from "./tangrams.js";
 
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
@@ -18,6 +18,7 @@ class Canvas extends Component {
       reflectAxis: "",
       animate: null,
       moveCounter: 0,
+      totalMoves: 0,
       score: 0,
       outside: false,
       color: "",
@@ -41,17 +42,8 @@ class Canvas extends Component {
     });
   };
 
-  shuffle = (array) => {
-    let array2 = array.slice();
-    for (let i = array2.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array2[i], array2[j]] = [array2[j], array2[i]];
-    }
-    return array2;
-  }
-
   componentDidMount = () => {
-    this.colors = this.shuffle(colorPalette)
+    this.colors = shuffle(colorPalette)
 
     this.setState({
       color: this.colors.pop(),
@@ -65,7 +57,8 @@ class Canvas extends Component {
       player.randomizeLocation();
 
       this.setState({
-        color: this.colors.pop()
+        color: this.colors.pop(),
+        moveCounter: 0
       });
 
       return player;
@@ -92,6 +85,7 @@ class Canvas extends Component {
       this.setState(state => ({
         animate: null,
         moveCounter: state.moveCounter + 1,
+        totalMoves: state.totalMoves + 1,
         outside: bound
       }));
     }, 650);
@@ -107,7 +101,7 @@ class Canvas extends Component {
         );
         this.setState(state => ({
           animate: null,
-          moveCounter: state.moveCounter + 1,
+          moveCounter: state.moveCounter + 1, //extra move penalty
           outside: false
         }));
       }
@@ -131,7 +125,8 @@ class Canvas extends Component {
       this.player.rotate(deg);
       this.setState(state => ({
         animate: null,
-        moveCounter: state.moveCounter + 1
+        moveCounter: state.moveCounter + 1,
+        totalMoves: state.totalMoves + 1
       }));
     }, 650);
   };
@@ -146,7 +141,8 @@ class Canvas extends Component {
       this.player.reflect(axis);
       this.setState(state => ({
         animate: null,
-        moveCounter: state.moveCounter + 1
+        moveCounter: state.moveCounter + 1,
+        totalMoves: state.totalMoves + 1
       }));
     }, 650);
   };
@@ -234,6 +230,12 @@ class Canvas extends Component {
     });
   };
 
+  addScore = () => {
+    this.setState(state => ({
+      score: state.score + (200 - (50 * (this.state.moveCounter - 1)))
+    }));
+  }
+
   render() {
     let win = true;
 
@@ -242,11 +244,18 @@ class Canvas extends Component {
         console.log("eval")
         if (evaluateMatch(this.player, goal)) {
           goal.completed = true;
+
+          this.addScore();
+
           this.player = this.reInitializePlayer();
           break;
         }
         win = false;
       }
+    }
+
+    if (win) {
+      this.props.updateScore(this.state.score);
     }
 
     return (
@@ -270,8 +279,8 @@ class Canvas extends Component {
                   <h1 className="f4 black">{this.props.username}</h1>
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
-                <p className="lh-copy measure center f6 gray">Score: 2050</p>
-                <p className="lh-copy measure center f6 gray">Level: 3</p>
+                <p className="lh-copy measure center f6 gray">Current Score: {this.state.score}</p>
+                <p className="lh-copy measure center f6 gray">Best Score: {this.props.bestScore}</p>
               </article>
             </Tilt>
           </div>
@@ -408,7 +417,7 @@ class Canvas extends Component {
                 </h1>
                 <div className="pa3 bg-yellow">
                   <p className="f6 f5-ns lh-copy measure mv0">
-                    {this.state.moveCounter}
+                    {this.state.totalMoves}
                   </p>
                 </div>
               </article>

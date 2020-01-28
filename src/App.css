@@ -112,3 +112,8 @@ body {
   background-image: url("./components/Game/images/sand.jpg");
   background-size: cover;
 }
+
+.highscores {
+  color: white;
+  font-size: larger;
+}
