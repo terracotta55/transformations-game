@@ -12,6 +12,7 @@ const TriangleShape = (props) => {
   return (
     <>
       <polygon className={props.triangleClassName}
+        fill={props.color}
         points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}>
       </polygon>
 

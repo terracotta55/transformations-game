@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TriangleShape from "./TriangleShape.js";
 import { Triangle } from "./Triangle.js";
 import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
-import tangrams from "./tangrams.js";
+import tangrams, { colorPalette } from "./tangrams.js";
 
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
@@ -19,11 +19,13 @@ class Canvas extends Component {
       animate: null,
       moveCounter: 0,
       score: 0,
-      outside: false
+      outside: false,
+      // color: colorPalette.pop //not working
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
     this.player = this.initializePlayer();
+    // this.color = colorPalette.pop(); //not working
   }
 
   initializeGoals = level => {
@@ -33,17 +35,18 @@ class Canvas extends Component {
   };
 
   initializePlayers = level => {
-    //randomize coordinates
-    //randomize color?
-
-    //for now just flips signs
     return tangrams[level].pieces.map(player => {
       return new Triangle(player.map(coordinates => -coordinates));
     });
   };
 
   initializePlayer = () => {
-    return this.players.pop();
+    if (this.players.length) {
+      const player = this.players.pop();
+      player.randomizeLocation();
+
+      return player;
+    }
   };
 
   handleOnChange = event => {
@@ -71,7 +74,7 @@ class Canvas extends Component {
     }, 650);
 
     setTimeout(() => {
-      if (this.state.outside === true) {
+      if (this.state.outside) {
         this.setState(state => ({
           animate: "translate"
         }));
@@ -102,7 +105,7 @@ class Canvas extends Component {
     }));
 
     setTimeout(() => {
-      this.player.rotate(0, 0, deg);
+      this.player.rotate(deg);
       this.setState(state => ({
         animate: null,
         moveCounter: state.moveCounter + 1
@@ -199,6 +202,7 @@ class Canvas extends Component {
         <TriangleShape
           key={counter}
           triangleClassName={goal.completed ? "completed" : "goal"}
+          color={this.state.color}
           a={goal.a}
           b={goal.b}
           c={goal.c}
@@ -285,6 +289,7 @@ class Canvas extends Component {
               {!this.state.animate && !win ? (
                 <TriangleShape
                   triangleClassName={"player"}
+                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -294,6 +299,7 @@ class Canvas extends Component {
               {this.state.animate ? (
                 <Animation
                   triangleClassName={"player"}
+                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -344,7 +350,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleTranslate()}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Translate
               </button>
@@ -352,7 +358,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleRotate(90)}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Rotate +90° &#8635;
               </button>
@@ -360,7 +366,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleRotate(-90)}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Rotate -90° &#8634;
               </button>
@@ -368,7 +374,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleReflect("x")}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Reflect on x-axis
               </button>
@@ -376,7 +382,7 @@ class Canvas extends Component {
                 className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
                 href="#0"
                 onClick={() => this.handleReflect("y")}
-                disabled={this.state.animate ? true : false}
+                disabled={this.state.animate || win ? true : false}
               >
                 Reflect on y-axis
               </button>

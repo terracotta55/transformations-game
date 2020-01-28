@@ -78,3 +78,22 @@ const tangrams = {
 };
 
 export default tangrams;
+
+export const colorPalette = [
+  "#FC766AFF",
+  "#783937FF",
+  "#F1AC88FF",
+  "#F6EA7BFF",
+  "#FFBA52FF",
+  "#E683A9FF",
+  "#F65058FF",
+  "#FBDE44FF",
+  "#28334AFF",
+  "#95DBE5FF",
+  "#078282FF",
+  "#339E66FF",
+  "#643E46FF",
+  "#BA0020FF",
+  "#EE2737FF"
+];
+
