@@ -21,6 +21,7 @@ body {
   font-weight: bold;
   margin-left: 15px;
   align-items: center;
+  color: #95dbe5ff;
 }
 
 .moves {
@@ -71,14 +72,14 @@ body {
 }
 
 .completed {
-  fill: rgb(112, 214, 175);
-  stroke: rgb(70, 151, 120);
+  /* fill: rgb(112, 214, 175);
+  stroke: rgb(70, 151, 120); */
   stroke-width: 3;
 }
 
 .goal {
-  fill: rgb(211, 211, 211);
-  stroke: darkgray;
+  /* fill: rgb(211, 211, 211); */
+  /* stroke: #28334aff; */
   stroke-width: 2;
 }
 
@@ -111,4 +112,12 @@ body {
 .svg-div {
   background-image: url("./components/Game/images/sand.jpg");
   background-size: cover;
+}
+
+.f3 {
+  color: #95dbe5ff;
+}
+.f6,
+.pa3 {
+  background-color: #95dbe5ff;
 }

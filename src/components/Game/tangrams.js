@@ -72,28 +72,9 @@ const tangrams = {
     ],
     path:
       "M550 500 L 650 550 L 750 500 L 750 600 L 650 650 L 800 800 L 800 1000 L 900 900 L 1000 900 L 900 1000 L 600 1000 L 650 950 L 650 800 L 550 700 L650 650 L 550 600 Z",
-    pathX: 2100,
-    strokeDasharray: 2200
+    pathX: 2300,
+    strokeDasharray: 2400
   }
 };
 
 export default tangrams;
-
-export const colorPalette = [
-  "#FC766AFF",
-  "#783937FF",
-  "#F1AC88FF",
-  "#F6EA7BFF",
-  "#FFBA52FF",
-  "#E683A9FF",
-  "#F65058FF",
-  "#FBDE44FF",
-  "#28334AFF",
-  "#95DBE5FF",
-  "#078282FF",
-  "#339E66FF",
-  "#643E46FF",
-  "#BA0020FF",
-  "#EE2737FF"
-];
-

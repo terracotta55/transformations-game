@@ -202,7 +202,6 @@ class Canvas extends Component {
         <TriangleShape
           key={counter}
           triangleClassName={goal.completed ? "completed" : "goal"}
-          color={this.state.color}
           a={goal.a}
           b={goal.b}
           c={goal.c}
@@ -227,7 +226,7 @@ class Canvas extends Component {
     return (
       <>
         <div className="container">
-          <div className="info-div yellow">
+          <div className="info-div">
             <p>Player Info:</p>
             <Tilt
               className="new-tilt br3"
@@ -246,7 +245,6 @@ class Canvas extends Component {
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
                 <p className="lh-copy measure center f6 gray">Score: 2050</p>
-                <p className="lh-copy measure center f6 gray">Level: 3</p>
               </article>
             </Tilt>
           </div>
@@ -282,7 +280,6 @@ class Canvas extends Component {
               {!this.state.animate && !win ? (
                 <TriangleShape
                   triangleClassName={"player"}
-                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -291,7 +288,6 @@ class Canvas extends Component {
               {this.state.animate ? (
                 <Animation
                   triangleClassName={"player"}
-                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -307,6 +303,7 @@ class Canvas extends Component {
                   path={tangrams[this.props.level].path}
                   pathX={tangrams[this.props.level].pathX}
                   strokeDasharray={tangrams[this.props.level].strokeDasharray}
+                  fill={tangrams[this.props.level].fill}
                 />
               ) : null}
             </svg>
@@ -338,7 +335,7 @@ class Canvas extends Component {
               </div>
 
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleTranslate()}
                 disabled={this.state.animate || win ? true : false}
@@ -346,7 +343,7 @@ class Canvas extends Component {
                 Translate
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleRotate(90)}
                 disabled={this.state.animate || win ? true : false}
@@ -354,7 +351,7 @@ class Canvas extends Component {
                 Rotate +90° &#8635;
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleRotate(-90)}
                 disabled={this.state.animate || win ? true : false}
@@ -362,7 +359,7 @@ class Canvas extends Component {
                 Rotate -90° &#8634;
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleReflect("x")}
                 disabled={this.state.animate || win ? true : false}
@@ -370,7 +367,7 @@ class Canvas extends Component {
                 Reflect on x-axis
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black bg-yellow"
+                className="f6 link dim ph3 pv2 mb2 dib black "
                 href="#0"
                 onClick={() => this.handleReflect("y")}
                 disabled={this.state.animate || win ? true : false}
@@ -381,7 +378,7 @@ class Canvas extends Component {
                 <h1 className="f5 bg-gray white mv0 pv2 ph3">
                   Number of Moves
                 </h1>
-                <div className="pa3 bg-yellow">
+                <div className="pa3">
                   <p className="f6 f5-ns lh-copy measure mv0">
                     {this.state.moveCounter}
                   </p>

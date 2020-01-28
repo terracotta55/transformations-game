@@ -1,20 +1,19 @@
-import React from 'react';
+import React from "react";
 
-const TriangleShape = (props) => {
-  const cax = (10 + props.a.x) * 50
-  const cay = (10 - props.a.y) * 50
-  const cbx = (10 + props.b.x) * 50
-  const cby = (10 - props.b.y) * 50
-  const ccx = (10 + props.c.x) * 50
-  const ccy = (10 - props.c.y) * 50
-
+const TriangleShape = props => {
+  const cax = (10 + props.a.x) * 50;
+  const cay = (10 - props.a.y) * 50;
+  const cbx = (10 + props.b.x) * 50;
+  const cby = (10 - props.b.y) * 50;
+  const ccx = (10 + props.c.x) * 50;
+  const ccy = (10 - props.c.y) * 50;
 
   return (
     <>
-      <polygon className={props.triangleClassName}
-        fill={props.color}
-        points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}>
-      </polygon>
+      <polygon
+        className={props.triangleClassName}
+        points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}
+      ></polygon>
 
       {/* point labels */}
       {/* <text fontWeight="bold" x={cax} y={cay - (Math.sign(props.a.y) * 10)}>{`(${props.a.x}, ${props.a.y})`}</text> */}
@@ -22,6 +21,6 @@ const TriangleShape = (props) => {
         <text font-weight="bold" x={ccx} y={ccy - (Math.sign(props.c.y) * 10)}>{`(${props.c.x}, ${props.c.y})`}</text> */}
     </>
   );
-}
+};
 
 export default TriangleShape;
