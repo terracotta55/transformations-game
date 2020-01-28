@@ -121,3 +121,8 @@ body {
 .pa3 {
   background-color: #95dbe5ff;
 }
+
+.highscores {
+  color: white;
+  font-size: larger;
+}

@@ -96,3 +96,12 @@ export const colorPalette = [
   "#BA0020FF",
   "#EE2737FF"
 ];
+
+export const shuffle = array => {
+  let array2 = array.slice();
+  for (let i = array2.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array2[i], array2[j]] = [array2[j], array2[i]];
+  }
+  return array2;
+};

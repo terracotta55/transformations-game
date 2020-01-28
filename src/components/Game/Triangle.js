@@ -55,17 +55,18 @@ export class Triangle {
             { method: "rotate", params: 90 },
             { method: "rotate", params: -90 },
             { method: "reflect", params: "x" },
-            { method: "reflect", params: "y" }];
+            { method: "reflect", params: "y" },
+            { method: "rotate", params: 0 }];
 
-            const clone = cloneDeep(this);
         do {
-            const trans = transformations[Math.floor(Math.random() * 4)];
+            var clone = cloneDeep(this);
+            const trans = transformations[Math.floor(Math.random() * 5)];
             console.log(trans)
-        
+
             clone[trans.method](trans.params);
-            clone.translate((Math.round(Math.random() - 0.5) * 6), (Math.round(Math.random() - 0.5) * 6));
+            // clone.translate(Math.round((Math.random() - 0.5) * 6), Math.round((Math.random() - 0.5) * 6));
             console.log(clone.a, clone.b, clone.c);
-        } while (evaluateBoundary(this));
+        } while (evaluateBoundary(clone));
         this.a = clone.a;
         this.b = clone.b;
         this.c = clone.c;

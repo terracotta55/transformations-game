@@ -52,7 +52,12 @@ class App extends Component {
       isSignedIn: false,
       // name: "Jimmy",
       username: "",
-      score: 2050,
+      totalScore: 0,
+      houseScore: 0,
+      treeScore: 0,
+      boatScore: 0,
+      fishScore: 0,
+      catScore: 0,
       level: 0,
       user: {
         id: "",
@@ -70,7 +75,7 @@ class App extends Component {
         id: data.id,
         name: data.name,
         email: data.email,
-        score: data.score,
+        totalScore: data.totalScore,
         joined: data.joined
       }
     });
@@ -105,6 +110,16 @@ class App extends Component {
     this.setState({ route: route });
   };
 */
+
+  updateScore = (score) => {
+    console.log(score)
+    if (score > this.state[`${this.state.level}Score`]) {
+      this.setState(state => ({
+        [`${state.level}Score`]: score
+      }));
+    }
+  }
+
   render() {
     return (
       <Fragment>
@@ -121,7 +136,15 @@ class App extends Component {
           {this.state.route === "home" ? (
             <div>
               <Logo onRouteChange={this.onRouteChange} />
-              <Rank name={this.state.username} score={this.state.score} />
+              <Rank name={this.state.username} totalScore={this.state.totalScore} />
+              <div className="highscores">
+                <h3>Best Scores:</h3>
+                <p>House: {this.state.houseScore}</p>
+                <p>Tree: {this.state.treeScore}</p>
+                <p>Boat: {this.state.boatScore}</p>
+                <p>Fish: {this.state.fishScore}</p>
+                <p>Cat: {this.state.catScore}</p>
+              </div>
             </div>
           ) : this.state.route === "signin" ? (
             <SignIn
@@ -135,13 +158,15 @@ class App extends Component {
               onRouteChange={this.onRouteChange}
               level={this.state.level}
               username={this.state.username}
+              bestScore={this.state[`${this.state.level}Score`]}
+              updateScore={(score) => this.updateScore(score)}
             />
           ) : (
-            <Register
-              addUser={this.addUser}
-              onRouteChange={this.onRouteChange}
-            />
-          )}
+                  <Register
+                    addUser={this.addUser}
+                    onRouteChange={this.onRouteChange}
+                  />
+                )}
         </div>
       </Fragment>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 const Fragment = React.Fragment;
 
-const Rank = ({ name, score }) => {
+const Rank = ({ name, totalScore }) => {
   return (
     <Fragment>
       <div className="f1 white">{`Hello ${name}! Welcome back.`}</div>
@@ -9,7 +9,7 @@ const Rank = ({ name, score }) => {
         // style={{ color: "#FFD700" }}
         style={{ color: "#95dbe5ff" }}
         className="f2 white"
-      >{`Your score is: ${score}`}</div>
+      >{`Your score is: ${totalScore}`}</div>
     </Fragment>
   );
 };
