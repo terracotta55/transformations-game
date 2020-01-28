@@ -19,14 +19,15 @@ class Canvas extends Component {
       animate: null,
       moveCounter: 0,
       score: 0,
-      outside: false
-      // color: colorPalette.pop //not working
+      outside: false,
+      color: "",
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
-    this.player = this.initializePlayer();
-    // this.color = colorPalette.pop(); //not working
+    this.player = this.players.pop();
+    this.colors = [];
   }
+
 
   initializeGoals = level => {
     return tangrams[level].pieces.map(goal => {
@@ -40,10 +41,32 @@ class Canvas extends Component {
     });
   };
 
-  initializePlayer = () => {
+  shuffle = (array) => {
+    let array2 = array.slice();
+    for (let i = array2.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array2[i], array2[j]] = [array2[j], array2[i]];
+    }
+    return array2;
+  }
+
+  componentDidMount = () => {
+    this.colors = this.shuffle(colorPalette)
+
+    this.setState({
+      color: this.colors.pop(),
+      start: true
+    });
+  }
+
+  reInitializePlayer = () => {
     if (this.players.length) {
       const player = this.players.pop();
       player.randomizeLocation();
+
+      this.setState({
+        color: this.colors.pop()
+      });
 
       return player;
     }
@@ -169,7 +192,7 @@ class Canvas extends Component {
     let counter = -10;
     for (let i = 2; i <= 1000; i = i + 50) {
       xNumbers.push(
-        <text key={i} x={i} y="515" font-weight="bold">
+        <text key={i} x={i} y="515" fontWeight="bold">
           {counter}
         </text>
       );
@@ -184,7 +207,7 @@ class Canvas extends Component {
     for (let i = -2; i <= 1000; i = i + 50) {
       if (counter !== 0) {
         yNumbers.push(
-          <text key={i} x="505" y={i} font-weight="bold">
+          <text key={i} x="505" y={i} fontWeight="bold">
             {counter}
           </text>
         );
@@ -213,11 +236,13 @@ class Canvas extends Component {
 
   render() {
     let win = true;
+
     for (let goal of this.goals) {
       if (!goal.completed) {
+        console.log("eval")
         if (evaluateMatch(this.player, goal)) {
           goal.completed = true;
-          this.player = this.initializePlayer();
+          this.player = this.reInitializePlayer();
           break;
         }
         win = false;
@@ -272,10 +297,10 @@ class Canvas extends Component {
               />
               {this.renderXNumbers()}
               {this.renderYNumbers()}
-              <text x="505" y="15" font-weight="bold">
+              <text x="505" y="15" fontWeight="bold">
                 10
               </text>
-              <text x="980" y="515" font-weight="bold">
+              <text x="980" y="515" fontWeight="bold">
                 10
               </text>
               {this.rendergoals()}
