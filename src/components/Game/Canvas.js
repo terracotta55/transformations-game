@@ -20,14 +20,13 @@ class Canvas extends Component {
       moveCounter: 0,
       score: 0,
       outside: false,
-      color: "",
+      color: ""
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
     this.player = this.players.pop();
     this.colors = [];
   }
-
 
   initializeGoals = level => {
     return tangrams[level].pieces.map(goal => {
@@ -41,23 +40,23 @@ class Canvas extends Component {
     });
   };
 
-  shuffle = (array) => {
+  shuffle = array => {
     let array2 = array.slice();
     for (let i = array2.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array2[i], array2[j]] = [array2[j], array2[i]];
     }
     return array2;
-  }
+  };
 
   componentDidMount = () => {
-    this.colors = this.shuffle(colorPalette)
+    this.colors = this.shuffle(colorPalette);
 
     this.setState({
       color: this.colors.pop(),
       start: true
     });
-  }
+  };
 
   reInitializePlayer = () => {
     if (this.players.length) {
@@ -225,6 +224,7 @@ class Canvas extends Component {
         <TriangleShape
           key={counter}
           triangleClassName={goal.completed ? "completed" : "goal"}
+          color={this.state.color}
           a={goal.a}
           b={goal.b}
           c={goal.c}
@@ -238,7 +238,7 @@ class Canvas extends Component {
 
     for (let goal of this.goals) {
       if (!goal.completed) {
-        console.log("eval")
+        console.log("eval");
         if (evaluateMatch(this.player, goal)) {
           goal.completed = true;
           this.player = this.reInitializePlayer();
@@ -305,6 +305,7 @@ class Canvas extends Component {
               {!this.state.animate && !win ? (
                 <TriangleShape
                   triangleClassName={"player"}
+                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -313,6 +314,7 @@ class Canvas extends Component {
               {this.state.animate ? (
                 <Animation
                   triangleClassName={"player"}
+                  color={this.state.color}
                   a={this.player.a}
                   b={this.player.b}
                   c={this.player.c}
@@ -328,7 +330,6 @@ class Canvas extends Component {
                   path={tangrams[this.props.level].path}
                   pathX={tangrams[this.props.level].pathX}
                   strokeDasharray={tangrams[this.props.level].strokeDasharray}
-                  fill={tangrams[this.props.level].fill}
                 />
               ) : null}
             </svg>
