@@ -9,55 +9,41 @@ import Canvas from "./components/Game/Canvas";
 import Particles from "react-particles-js";
 
 const particlesOptions = {
-  particles: {
-    number: {
-      value: 100,
-      color: "black",
-      density: {
-        enable: true,
-        value_area: 800
+  "particles": {
+    "number": {
+      "value": 30,
+      "density": {
+        "enable": false,
+        "value_area": 0
       }
+    },
+    "opacity": {
+      "value": 1,
+      "random": false,
+      "anim": {
+        "enable": false
+      }
+    },
+    "size": {
+      "value": 0,
+      "random": false,
+      "anim": {
+        "enable": false
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 250,
+      "color": "#ffffff",
+      "opacity": 1,
+      "width": 2.5
+    },
+    "move": {
+      "enable": false,
     }
-  }
+  },
 };
-/*
-const particlesOptions = {
-  particles: {
-    number: {
-      value: 100
-    },
-    size: {
-      value: 5
-    },
-    line_linked: {
-      shadow: {
-        enable: true,
-        color: "yellow",
-        blur: 2
-      }
-    }
-  },
-  move: {
-    speed: 50
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: true,
-        mode: "repulse"
-      }
-    }
-  },
 
-  Number: {
-    value: 190,
-    density: {
-      enable: true,
-      value_area: 900
-    }
-  }
-};
-*/
 class App extends Component {
   constructor() {
     super();
@@ -123,11 +109,11 @@ class App extends Component {
     return (
       <Fragment>
         <div className="App">
-          {/* <Particles
+          <Particles
             style={{ color: "red" }}
             className="particles"
             params={particlesOptions}
-          /> */}
+          />
           <Navigation
             isSignedIn={this.state.isSignedIn}
             onRouteChange={this.onRouteChange}
