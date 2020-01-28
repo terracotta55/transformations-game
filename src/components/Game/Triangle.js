@@ -1,6 +1,9 @@
+import { evaluateBoundary } from './evaluate.js'
+const cloneDeep = require('lodash/cloneDeep');
+
 export class Triangle {
     constructor(coordinates) {
-        const [ ax, ay, bx, by, cx, cy ] = coordinates;
+        const [ax, ay, bx, by, cx, cy] = coordinates;
 
         this.a = { x: ax, y: ay };
         this.b = { x: bx, y: by };
@@ -17,7 +20,7 @@ export class Triangle {
         this.c.y = this.c.y + ty;
     }
 
-    rotate(px, py, degrees) {
+    rotate(degrees, px = 0, py = 0) {
         const ax = this.a.x;
         const ay = this.a.y;
         const bx = this.b.x;
@@ -36,7 +39,7 @@ export class Triangle {
     }
 
     reflect(axis) {
-        if (axis === "x" ) {
+        if (axis === "x") {
             this.a.y = this.a.y * -1;
             this.b.y = this.b.y * -1;
             this.c.y = this.c.y * -1;
@@ -45,5 +48,26 @@ export class Triangle {
             this.b.x = this.b.x * -1;
             this.c.x = this.c.x * -1;
         }
+    }
+
+    randomizeLocation() {
+        const transformations = [
+            { method: "rotate", params: 90 },
+            { method: "rotate", params: -90 },
+            { method: "reflect", params: "x" },
+            { method: "reflect", params: "y" }];
+
+            const clone = cloneDeep(this);
+        do {
+            const trans = transformations[Math.floor(Math.random() * 4)];
+            console.log(trans)
+        
+            clone[trans.method](trans.params);
+            clone.translate((Math.round(Math.random() - 0.5) * 6), (Math.round(Math.random() - 0.5) * 6));
+            console.log(clone.a, clone.b, clone.c);
+        } while (evaluateBoundary(this));
+        this.a = clone.a;
+        this.b = clone.b;
+        this.c = clone.c;
     }
 }
