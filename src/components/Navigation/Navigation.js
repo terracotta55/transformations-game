@@ -8,13 +8,13 @@ export const Navigation = ({ onRouteChange, isSignedIn }) => {
         <nav style={{ display: "flex", justifyContent: "flex-end" }}>
           <p
             onClick={() => onRouteChange("home")}
-            className="f3 dim pointer link underline fw6 ph0 mh0  mh3"
+            className="f3 dim pointer link underline fw6 ph0 mh0  mh3 black"
           >
             Go Home
           </p>
           <p
             onClick={() => onRouteChange("signout")}
-            className="f3 dim pointer link underline fw6 ph0 mh0  mh3"
+            className="f3 dim pointer link underline fw6 ph0 mh0  mh3 black"
           >
             Sign Out
           </p>
@@ -27,13 +27,13 @@ export const Navigation = ({ onRouteChange, isSignedIn }) => {
         <nav style={{ display: "flex", justifyContent: "flex-end" }}>
           <p
             onClick={() => onRouteChange("signin")}
-            className="f3 dim pointer link underline fw6 ph0 mh0 white mh3"
+            className="f3 dim pointer link underline fw6 ph0 mh0 black mh3"
           >
             Sign In
           </p>
           <p
             onClick={() => onRouteChange("register")}
-            className="f3 dim pointer link underline fw6 ph0 mh0 white mh3"
+            className="f3 dim pointer link underline fw6 ph0 mh0 black mh3"
           >
             Register
           </p>

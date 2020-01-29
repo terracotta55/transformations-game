@@ -3,8 +3,8 @@ import TriangleShape from "./TriangleShape.js";
 import { Triangle } from "./Triangle.js";
 import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
 import tangrams, { colorPalette, shuffle } from "./tangrams.js";
-import drop2 from "../Game/sounds/drop2.mp3";
-import move from "../Game/sounds/move.mp3";
+import drop from "../Game/sounds/drop.mp3";
+import move3 from "../Game/sounds/move3.mp3";
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
 import Tilt from "react-tilt";
@@ -77,7 +77,7 @@ class Canvas extends Component {
   };
 
   handleTranslate = () => {
-    this.playAudio(move);
+    this.playAudio(move3);
     this.setState({
       animate: "translate"
     });
@@ -121,7 +121,7 @@ class Canvas extends Component {
   };
 
   handleRotate = deg => {
-    this.playAudio(move);
+    this.playAudio(move3);
     this.setState(state => ({
       animate: "rotate",
       rotateDeg: deg
@@ -138,7 +138,7 @@ class Canvas extends Component {
   };
 
   handleReflect = axis => {
-    this.playAudio(move);
+    this.playAudio(move3);
     this.setState(state => ({
       animate: "reflect",
       reflectAxis: axis
@@ -254,7 +254,7 @@ class Canvas extends Component {
           goal.completed = true;
 
           this.addScore();
-          this.playAudio(drop2);
+          this.playAudio(drop);
           this.player = this.reInitializePlayer();
           break;
         }
@@ -415,6 +415,7 @@ class Canvas extends Component {
               <button
                 className="f8 link ph3 pv2 mb2 dib black rotate-c"
                 href="#0"
+                id="idRotPlus"
                 onClick={() => this.handleRotate(90)}
                 disabled={this.state.animate || win ? true : false}
               >
@@ -423,6 +424,7 @@ class Canvas extends Component {
               <button
                 className="f8 link ph3 pv2 mb2 dib black rotate-cc"
                 href="#0"
+                id="idRotMin"
                 onClick={() => this.handleRotate(-90)}
                 disabled={this.state.animate || win ? true : false}
               >
@@ -431,6 +433,7 @@ class Canvas extends Component {
               <button
                 className="f8 link ph3 pv2 mb2 dib black reflect-x"
                 href="#0"
+                id="idRefX"
                 onClick={() => this.handleReflect("x")}
                 disabled={this.state.animate || win ? true : false}
               >
@@ -439,6 +442,7 @@ class Canvas extends Component {
               <button
                 className="f8 link ph3 pv2 mb2 dib black reflect-y"
                 href="#0"
+                id="idRefY"
                 onClick={() => this.handleReflect("y")}
                 disabled={this.state.animate || win ? true : false}
               >
