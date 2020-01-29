@@ -72,8 +72,8 @@ const tangrams = {
     ],
     path:
       "M550 500 L 650 550 L 750 500 L 750 600 L 650 650 L 800 800 L 800 1000 L 900 900 L 1000 900 L 900 1000 L 600 1000 L 650 950 L 650 800 L 550 700 L650 650 L 550 600 Z",
-    pathX: 2100,
-    strokeDasharray: 2200
+    pathX: 2300,
+    strokeDasharray: 2400
   }
 };
 
@@ -97,12 +97,11 @@ export const colorPalette = [
   "#EE2737FF"
 ];
 
-export const shuffle = (array) => {
+export const shuffle = array => {
   let array2 = array.slice();
   for (let i = array2.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array2[i], array2[j]] = [array2[j], array2[i]];
   }
   return array2;
-}
-
+};

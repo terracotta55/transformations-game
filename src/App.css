@@ -21,6 +21,7 @@ body {
   font-weight: bold;
   margin-left: 15px;
   align-items: center;
+  color: #95dbe5ff;
 }
 
 .moves {
@@ -129,6 +130,14 @@ box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 
 .svg-div {
   background-image: url("./components/Game/images/sand.jpg");
   background-size: cover;
+}
+
+.f3 {
+  color: #95dbe5ff;
+}
+.f6,
+.pa3 {
+  background-color: #95dbe5ff;
 }
 
 .highscores {
