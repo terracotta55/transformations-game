@@ -9,7 +9,7 @@ import fire3 from "../Game/sounds/fire3.mp3";
 class ReactExplode extends Component {
   constructor(props) {
     super(props);
-    this.sounds = [fire1, fire2, fire3]
+    this.sounds = [fire1, fire2, fire3];
   }
 
   playAudio = sound => {
@@ -19,11 +19,28 @@ class ReactExplode extends Component {
 
   render() {
     setTimeout(() => {
-      if (this.props.rank) {
-        this.playAudio(this.sounds[this.props.rank - 1])
+      switch (this.props.rank) {
+        case 1:
+          this.playAudio(this.sounds[this.props.rank - 1]);
+          return;
+        case 2:
+          this.playAudio(this.sounds[this.props.rank - 1]);
+          setTimeout(() => {
+            this.playAudio(this.sounds[this.props.rank - 1]);
+          }, 2000);
+          return;
+        case 3:
+          this.playAudio(this.sounds[this.props.rank - 1]);
+          setTimeout(() => {
+            this.playAudio(this.sounds[this.props.rank - 1]);
+          }, 2000);
+          setTimeout(() => {
+            this.playAudio(this.sounds[this.props.rank - 1]);
+          }, 4000);
+          return;
       }
     }, 3000);
-  
+
     return (
       <svg x="100" y="100">
         {this.props.rank === 1 ? (
