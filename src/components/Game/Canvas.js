@@ -4,7 +4,7 @@ import { Triangle } from "./Triangle.js";
 import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
 import tangrams, { colorPalette, shuffle } from "./tangrams.js";
 import drop from "../Game/sounds/drop.mp3";
-import move from "../Game/sounds/move.mp3";
+import move3 from "../Game/sounds/move3.mp3";
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
 import Tilt from "react-tilt";
@@ -77,7 +77,7 @@ class Canvas extends Component {
   };
 
   handleTranslate = () => {
-    // this.playAudio(move);
+    this.playAudio(move3);
     this.setState({
       animate: "translate"
     });
@@ -121,7 +121,7 @@ class Canvas extends Component {
   };
 
   handleRotate = deg => {
-    // this.playAudio(move);
+    this.playAudio(move3);
     this.setState(state => ({
       animate: "rotate",
       rotateDeg: deg
@@ -138,7 +138,7 @@ class Canvas extends Component {
   };
 
   handleReflect = axis => {
-    // this.playAudio(move);
+    this.playAudio(move3);
     this.setState(state => ({
       animate: "reflect",
       reflectAxis: axis
