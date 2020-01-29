@@ -137,14 +137,40 @@ class App extends Component {
             <div>
               <Logo onRouteChange={this.onRouteChange} />
               <Rank name={this.state.username} totalScore={this.state.totalScore} />
-              <div className="highscores">
-                <h3>Best Scores:</h3>
-                <p>House: {this.state.houseScore}</p>
-                <p>Tree: {this.state.treeScore}</p>
-                <p>Boat: {this.state.boatScore}</p>
-                <p>Fish: {this.state.fishScore}</p>
-                <p>Cat: {this.state.catScore}</p>
-              </div>
+              <h2 style={{ color: "white" }}>Best Scores:</h2>
+              <table className="highscores">
+                <tr style={{ backgroundColor: "#EE2737FF", height: "40px" }}>
+                  <th>Level</th>
+                  <th>Scores</th>
+                  <th>Bonus</th>
+                </tr>
+                <tr style={{ backgroundColor: "#339E66FF", height: "40px" }}>
+                  <td>House:</td>
+                  <td> {this.state.houseScore} </td>
+                </tr>
+                <tr style={{ backgroundColor: "#BA0020FF", height: "40px" }}>
+                  <td>Tree: </td>
+                  <td>
+                    {this.state.treeScore}
+                  </td>
+                </tr>
+                <tr style={{ backgroundColor: "#078282FF", height: "40px" }}>
+                  <td>Boat: </td>
+                  <td>
+                    {this.state.boatScore}</td>
+                </tr>
+                <tr style={{ backgroundColor: "#E683A9FF", height: "40px" }}>
+                  <td>Fish:
+                </td>
+                  <td>
+                    {this.state.fishScore}</td>
+                </tr>
+                <tr style={{ backgroundColor: "#28334AFF", height: "40px" }}>
+                  <td>Cat:
+                </td>
+                  <td>{this.state.catScore}</td>
+                </tr>
+              </table>
             </div>
           ) : this.state.route === "signin" ? (
             <SignIn
