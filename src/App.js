@@ -11,7 +11,7 @@ import Particles from "react-particles-js";
 const particlesOptions = {
   "particles": {
     "number": {
-      "value": 30,
+      "value": 50,
       "density": {
         "enable": false,
         "value_area": 0
@@ -34,7 +34,7 @@ const particlesOptions = {
     "line_linked": {
       "enable": true,
       "distance": 250,
-      "color": "#ffffff",
+      "color": "#000000",
       "opacity": 1,
       "width": 2.5
     },
@@ -53,11 +53,11 @@ class App extends Component {
       // name: "Jimmy",
       username: "",
       totalScore: 0,
-      houseScore: { score: 0, rank: 0 },
-      treeScore: { score: 0, rank: 0 },
-      boatScore: { score: 0, rank: 0 },
-      fishScore: { score: 0, rank: 0 },
-      catScore: { score: 0, rank: 0 },
+      houseScore: { score: 0, rank: "" },
+      treeScore: { score: 0, rank: "" },
+      boatScore: { score: 0, rank: "" },
+      fishScore: { score: 0, rank: "" },
+      catScore: { score: 0, rank: "" },
       level: 0,
       user: {
         id: "",
@@ -119,10 +119,12 @@ class App extends Component {
       scoreCopy.score = Number(newScore);
       scoreCopy.rank = this.rankIcons[newRank];
 
-      this.setState(state => ({
-        [`${state.level}Score`]: scoreCopy,
-        totalScore: this.state.houseScore.score + this.state.treeScore.score + this.state.boatScore.score + this.state.fishScore.score + this.state.catScore.score
-      }));
+      setTimeout(() => {
+        this.setState(state => ({
+          [`${state.level}Score`]: scoreCopy,
+          totalScore: this.state.houseScore.score + this.state.treeScore.score + this.state.boatScore.score + this.state.fishScore.score + this.state.catScore.score
+        }));
+      }, 650);
     }
   }
 
@@ -130,11 +132,11 @@ class App extends Component {
     return (
       <Fragment>
         <div className="App">
-          <Particles
+          {/* <Particles
             style={{ color: "red" }}
             className="particles"
             params={particlesOptions}
-          />
+          /> */}
           <Navigation
             isSignedIn={this.state.isSignedIn}
             onRouteChange={this.onRouteChange}
@@ -147,33 +149,33 @@ class App extends Component {
               {/* <h2 style={{ color: "white" }}>Best Scores:</h2> */}
 
               <table className="highscores">
-                <tr style={{ backgroundColor: "#EE2737FF", height: "40px" }}>
+                <tr style={{ backgroundColor: "#28334AFF", height: "40px", opacity: 1, color: "white" }}>
                   <th>Level</th>
                   <th>Scores</th>
                   <th>Bonus</th>
                 </tr>
-                <tr style={{ backgroundColor: "#339E66FF", height: "40px" }}>
+                <tr style={{ backgroundColor: "rgb(233, 233, 233)", height: "40px" }}>
                   <td>House:</td>
                   <td> {this.state.houseScore.score} </td>
                   <td> {this.state.houseScore.rank} </td>
                 </tr>
-                <tr style={{ backgroundColor: "#BA0020FF", height: "40px" }}>
+                <tr style={{ backgroundColor: "rgb(209, 209, 209)", height: "40px" }}>
                   <td>Tree: </td>
                   <td>{this.state.treeScore.score}</td>
                   <td>{this.state.treeScore.rank}</td>
                 </tr>
-                <tr style={{ backgroundColor: "#078282FF", height: "40px" }}>
+                <tr style={{ backgroundColor: "rgb(233, 233, 233)", height: "40px" }}>
                   <td>Boat: </td>
                   <td>{this.state.boatScore.score}</td>
                   <td>{this.state.boatScore.rank}</td>
                 </tr>
-                <tr style={{ backgroundColor: "#E683A9FF", height: "40px" }}>
+                <tr style={{ backgroundColor: "rgb(209, 209, 209)", height: "40px" }}>
                   <td>Fish:
                 </td>
                   <td>{this.state.fishScore.score}</td>
                   <td>{this.state.fishScore.rank}</td>
                 </tr>
-                <tr style={{ backgroundColor: "#28334AFF", height: "40px" }}>
+                <tr style={{ backgroundColor: "rgb(233, 233, 233)", height: "40px" }}>
                   <td>Cat:
                 </td>
                   <td>{this.state.catScore.score}</td>
@@ -194,6 +196,7 @@ class App extends Component {
               level={this.state.level}
               username={this.state.username}
               bestScore={this.state[`${this.state.level}Score`].score}
+              levelRank={this.state[`${this.state.level}Score`].rank}
               updateScore={(score, rank) => this.updateScore(score, rank)}
             />
           ) : (

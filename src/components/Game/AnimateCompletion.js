@@ -16,8 +16,8 @@ class AnimateCompletion extends Component {
           {props => (
             <animated.svg
               fill="none"
-              stroke="white"
-              strokeWidth="5"
+              stroke="rgb(255, 79, 67)"
+              strokeWidth="10"
               strokeDasharray={this.props.strokeDasharray}
               strokeDashoffset={props.x}
             >

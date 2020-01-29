@@ -8,7 +8,7 @@ const tangrams = {
     path: "M850 700 L750 800 L 750 900 L 950 900 L 950 800 Z",
     pathX: 850,
     strokeDasharray: 900,
-    stars: [200, 350, 450]
+    stars: [0, 350, 450]
   },
 
   tree: {
@@ -23,7 +23,7 @@ const tangrams = {
       "M250 600 L200 650 L250 650 L 150 750 L250 750 L 100 900 L 200 900 L 200 1000 L300 1000 L 300 900 L 400 900 L 250 750 L350 750 L 250 650 L 300 650 Z",
     pathX: 2100,
     strokeDasharray: 2200,
-    stars: [400, 600, 800]
+    stars: [0, 600, 800]
   },
 
   boat: {
@@ -40,7 +40,7 @@ const tangrams = {
       "M800 0 L800 150 L 1000 350 L 950 350 L 800 500 L 700 500 L 550 350 L 800 350 L 800 300 L 500 300 Z",
     pathX: 2100,
     strokeDasharray: 2200,
-    stars: [550, 850, 1150]
+    stars: [0, 850, 1150]
   },
 
   fish: {
@@ -60,7 +60,7 @@ const tangrams = {
       "M750 50 L 750 100 L850 200 L 950 100 L 950 400 L 850 300 L 750 400 L 750 450 L 550 250 Z",
     pathX: 1500,
     strokeDasharray: 1600,
-    stars: [850, 1250, 1650]
+    stars: [0, 1250, 1650]
   },
 
   cat: {
@@ -79,7 +79,7 @@ const tangrams = {
       "M550 500 L 650 550 L 750 500 L 750 600 L 650 650 L 800 800 L 800 1000 L 900 900 L 1000 900 L 900 1000 L 600 1000 L 650 950 L 650 800 L 550 700 L650 650 L 550 600 Z",
     pathX: 2300,
     strokeDasharray: 2400,
-    stars: [650, 1050, 1450]
+    stars: [0, 1050, 1450]
   }
 };
 
@@ -100,7 +100,7 @@ export const colorPalette = [
   "#339E66FF",
   "#643E46FF",
   "#BA0020FF",
-  "#EE2737FF"
+  // "#EE2737FF"
 ];
 
 export const shuffle = array => {

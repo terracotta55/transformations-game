@@ -282,13 +282,14 @@ class Canvas extends Component {
       <>
         <div className="container">
           <div className="info-div">
-            <p>Player Info:</p>
+            <p style={{ color: "#EE2737FF" }}>Current Score: {this.state.score}</p>
             <Tilt
               className="new-tilt br3"
               options={{ max: 55 }}
-              style={{ height: 280, width: 250 }}
+              style={{ height: 280, width: 250, }}
             >
-              <article className="flex flex-column mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
+              <article className="flex flex-column mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10"
+                style={{ background: "rgb(250, 250, 250)", opacity: 0.9 }}>
                 <div className="tc">
                   <img
                     src="https://udayton.edu/0/img/generic-profile.png"
@@ -299,11 +300,14 @@ class Canvas extends Component {
                   <h1 className="f4 black">{this.props.username}</h1>
                   <hr className="mw3 bb bw1 b--black-10" />
                 </div>
-                <p className="lh-copy measure center f6 gray">
-                  Current Score: {this.state.score}
+                <p className="lh-copy measure center f5 black">
+                  Level: {this.props.level.charAt(0).toUpperCase() + this.props.level.slice(1)}
                 </p>
-                <p className="lh-copy measure center f6 gray">
+                <p className="lh-copy measure center f5 black">
                   Best Score: {this.props.bestScore}
+                </p>
+                <p className="lh-copy measure center f5 black">
+                  Rank: {this.props.levelRank}
                 </p>
               </article>
             </Tilt>
@@ -371,7 +375,19 @@ class Canvas extends Component {
             </svg>
           </div>
           <div className="buttons-div">
+
             <div className="buttons">
+              <p style={{ fontSize: "2rem" }}>Transformations:</p>
+
+              <button
+                // className="f8 link dim ph3 pv2 mb2 dib black translate"
+                className="f8 link ph3 pv2 mb2 dib black translate"
+                href="#0"
+                onClick={() => this.handleTranslate()}
+                disabled={this.state.animate || win ? true : false}
+              >
+                Translate
+              </button>
               <div className="btn-txt-div">
                 <div className="flex flex-row">
                   <div className="btn-txt pr2">x-move:</div>
@@ -397,15 +413,7 @@ class Canvas extends Component {
               </div>
 
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black "
-                href="#0"
-                onClick={() => this.handleTranslate()}
-                disabled={this.state.animate || win ? true : false}
-              >
-                Translate
-              </button>
-              <button
-                className="f6 link dim ph3 pv2 mb2 dib black "
+                className="f8 link ph3 pv2 mb2 dib black rotate-c"
                 href="#0"
                 onClick={() => this.handleRotate(90)}
                 disabled={this.state.animate || win ? true : false}
@@ -413,7 +421,7 @@ class Canvas extends Component {
                 Rotate +90° &#8635;
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black "
+                className="f8 link ph3 pv2 mb2 dib black rotate-cc"
                 href="#0"
                 onClick={() => this.handleRotate(-90)}
                 disabled={this.state.animate || win ? true : false}
@@ -421,7 +429,7 @@ class Canvas extends Component {
                 Rotate -90° &#8634;
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black "
+                className="f8 link ph3 pv2 mb2 dib black reflect-x"
                 href="#0"
                 onClick={() => this.handleReflect("x")}
                 disabled={this.state.animate || win ? true : false}
@@ -429,22 +437,22 @@ class Canvas extends Component {
                 Reflect on x-axis
               </button>
               <button
-                className="f6 link dim ph3 pv2 mb2 dib black "
+                className="f8 link ph3 pv2 mb2 dib black reflect-y"
                 href="#0"
                 onClick={() => this.handleReflect("y")}
                 disabled={this.state.animate || win ? true : false}
               >
                 Reflect on y-axis
               </button>
-              <article className="mw5 mw6-ns hidden mv4 moves">
-                <h1 className="f5 bg-gray white mv0 pv2 ph3">
-                  Number of Moves
+              <article className="mw5 mw6-ns hidden mv4 moves" style={{textAlign: "left", color: "#EE2737FF" }}>
+                <h1 className="f5 mv0 pv2 ph3">
+                  Number of Moves: {this.state.totalMoves}
                 </h1>
-                <div className="pa3">
+                {/* <div className="pa3">
                   <p className="f6 f5-ns lh-copy measure mv0">
-                    {this.state.totalMoves}
+                    
                   </p>
-                </div>
+                </div> */}
               </article>
             </div>
           </div>
