@@ -9,39 +9,39 @@ import Canvas from "./components/Game/Canvas";
 import Particles from "react-particles-js";
 
 const particlesOptions = {
-  "particles": {
-    "number": {
-      "value": 30,
-      "density": {
-        "enable": false,
-        "value_area": 0
+  particles: {
+    number: {
+      value: 30,
+      density: {
+        enable: false,
+        value_area: 0
       }
     },
-    "opacity": {
-      "value": 1,
-      "random": false,
-      "anim": {
-        "enable": false
+    opacity: {
+      value: 1,
+      random: false,
+      anim: {
+        enable: false
       }
     },
-    "size": {
-      "value": 0,
-      "random": false,
-      "anim": {
-        "enable": false
+    size: {
+      value: 0,
+      random: false,
+      anim: {
+        enable: false
       }
     },
-    "line_linked": {
-      "enable": true,
-      "distance": 250,
-      "color": "#ffffff",
-      "opacity": 1,
-      "width": 2.5
+    line_linked: {
+      enable: true,
+      distance: 250,
+      color: "#ffffff",
+      opacity: 1,
+      width: 2.5
     },
-    "move": {
-      "enable": false,
+    move: {
+      enable: false
     }
-  },
+  }
 };
 
 class App extends Component {
@@ -50,7 +50,7 @@ class App extends Component {
     this.state = {
       route: "signin", // there are 4 routes: signin (default), signout, home, game
       isSignedIn: false,
-      // name: "Jimmy",
+      name: "",
       username: "",
       totalScore: 0,
       houseScore: { score: 0, rank: 0 },
@@ -67,7 +67,7 @@ class App extends Component {
         joined: ""
       }
     };
-    this.rankIcons = ["", "⭐", "⭐⭐", "⭐⭐⭐"]
+    this.rankIcons = ["", "⭐", "⭐⭐", "⭐⭐⭐"];
   }
 
   addUser = data => {
@@ -96,8 +96,9 @@ class App extends Component {
     this.setState({ route: route });
   };
 
-  getUsername = dataFromSignIn => {
-    this.setState({ username: dataFromSignIn });
+  getUsername = dataUser => {
+    this.setState({ username: dataUser });
+    this.setState({ name: dataUser });
   };
   /*
   onRouteChange = route => {
@@ -113,18 +114,23 @@ class App extends Component {
 */
 
   updateScore = (newScore, newRank) => {
-    console.log(newScore)
+    console.log(newScore);
     if (newScore > this.state[`${this.state.level}Score`].score) {
-      var scoreCopy = { ...this.state[`${this.state.level}Score`] }
+      var scoreCopy = { ...this.state[`${this.state.level}Score`] };
       scoreCopy.score = Number(newScore);
       scoreCopy.rank = this.rankIcons[newRank];
 
       this.setState(state => ({
         [`${state.level}Score`]: scoreCopy,
-        totalScore: this.state.houseScore.score + this.state.treeScore.score + this.state.boatScore.score + this.state.fishScore.score + this.state.catScore.score
+        totalScore:
+          this.state.houseScore.score +
+          this.state.treeScore.score +
+          this.state.boatScore.score +
+          this.state.fishScore.score +
+          this.state.catScore.score
       }));
     }
-  }
+  };
 
   render() {
     return (
@@ -142,7 +148,10 @@ class App extends Component {
           {this.state.route === "home" ? (
             <div>
               <Logo onRouteChange={this.onRouteChange} />
-              <Rank name={this.state.username} totalScore={this.state.totalScore} />
+              <Rank
+                name={this.state.username}
+                totalScore={this.state.totalScore}
+              />
 
               {/* <h2 style={{ color: "white" }}>Best Scores:</h2> */}
 
@@ -168,14 +177,12 @@ class App extends Component {
                   <td>{this.state.boatScore.rank}</td>
                 </tr>
                 <tr style={{ backgroundColor: "#E683A9FF", height: "40px" }}>
-                  <td>Fish:
-                </td>
+                  <td>Fish:</td>
                   <td>{this.state.fishScore.score}</td>
                   <td>{this.state.fishScore.rank}</td>
                 </tr>
                 <tr style={{ backgroundColor: "#28334AFF", height: "40px" }}>
-                  <td>Cat:
-                </td>
+                  <td>Cat:</td>
                   <td>{this.state.catScore.score}</td>
                   <td>{this.state.catScore.rank}</td>
                 </tr>
@@ -197,11 +204,12 @@ class App extends Component {
               updateScore={(score, rank) => this.updateScore(score, rank)}
             />
           ) : (
-                  <Register
-                    addUser={this.addUser}
-                    onRouteChange={this.onRouteChange}
-                  />
-                )}
+            <Register
+              addUser={this.addUser}
+              onRouteChange={this.onRouteChange}
+              getUsername={this.getUsername}
+            />
+          )}
         </div>
       </Fragment>
     );

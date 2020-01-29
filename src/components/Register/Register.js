@@ -21,6 +21,7 @@ class Register extends React.Component {
   };
   onSubmitRegister = () => {
     this.props.onRouteChange("home");
+    this.props.getUsername(this.state.name);
   };
   render() {
     return (
