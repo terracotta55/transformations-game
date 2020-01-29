@@ -5,6 +5,7 @@ import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
 import tangrams, { colorPalette, shuffle } from "./tangrams.js";
 import drop from "../Game/sounds/drop.mp3";
 import move3 from "../Game/sounds/move3.mp3";
+import bounce2 from "../Game/sounds/bounce2.mp3";
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
 import Tilt from "react-tilt";
@@ -97,6 +98,7 @@ class Canvas extends Component {
 
     setTimeout(() => {
       if (this.state.outside) {
+        this.playAudio(bounce2);
         this.setState(state => ({
           animate: "translate"
         }));
