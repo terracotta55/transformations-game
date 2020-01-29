@@ -53,11 +53,11 @@ class App extends Component {
       // name: "Jimmy",
       username: "",
       totalScore: 0,
-      houseScore: 0,
-      treeScore: 0,
-      boatScore: 0,
-      fishScore: 0,
-      catScore: 0,
+      houseScore: { score: 0, rank: 0 },
+      treeScore: { score: 0, rank: 0 },
+      boatScore: { score: 0, rank: 0 },
+      fishScore: { score: 0, rank: 0 },
+      catScore: { score: 0, rank: 0 },
       level: 0,
       user: {
         id: "",
@@ -67,6 +67,7 @@ class App extends Component {
         joined: ""
       }
     };
+    this.rankIcons = ["", "⭐", "⭐⭐", "⭐⭐⭐"]
   }
 
   addUser = data => {
@@ -111,11 +112,16 @@ class App extends Component {
   };
 */
 
-  updateScore = (score) => {
-    console.log(score)
-    if (score > this.state[`${this.state.level}Score`]) {
+  updateScore = (newScore, newRank) => {
+    console.log(newScore)
+    if (newScore > this.state[`${this.state.level}Score`].score) {
+      var scoreCopy = { ...this.state[`${this.state.level}Score`] }
+      scoreCopy.score = Number(newScore);
+      scoreCopy.rank = this.rankIcons[newRank];
+
       this.setState(state => ({
-        [`${state.level}Score`]: score
+        [`${state.level}Score`]: scoreCopy,
+        totalScore: this.state.houseScore.score + this.state.treeScore.score + this.state.boatScore.score + this.state.fishScore.score + this.state.catScore.score
       }));
     }
   }
@@ -137,7 +143,9 @@ class App extends Component {
             <div>
               <Logo onRouteChange={this.onRouteChange} />
               <Rank name={this.state.username} totalScore={this.state.totalScore} />
-              <h2 style={{ color: "white" }}>Best Scores:</h2>
+
+              {/* <h2 style={{ color: "white" }}>Best Scores:</h2> */}
+
               <table className="highscores">
                 <tr style={{ backgroundColor: "#EE2737FF", height: "40px" }}>
                   <th>Level</th>
@@ -146,29 +154,30 @@ class App extends Component {
                 </tr>
                 <tr style={{ backgroundColor: "#339E66FF", height: "40px" }}>
                   <td>House:</td>
-                  <td> {this.state.houseScore} </td>
+                  <td> {this.state.houseScore.score} </td>
+                  <td> {this.state.houseScore.rank} </td>
                 </tr>
                 <tr style={{ backgroundColor: "#BA0020FF", height: "40px" }}>
                   <td>Tree: </td>
-                  <td>
-                    {this.state.treeScore}
-                  </td>
+                  <td>{this.state.treeScore.score}</td>
+                  <td>{this.state.treeScore.rank}</td>
                 </tr>
                 <tr style={{ backgroundColor: "#078282FF", height: "40px" }}>
                   <td>Boat: </td>
-                  <td>
-                    {this.state.boatScore}</td>
+                  <td>{this.state.boatScore.score}</td>
+                  <td>{this.state.boatScore.rank}</td>
                 </tr>
                 <tr style={{ backgroundColor: "#E683A9FF", height: "40px" }}>
                   <td>Fish:
                 </td>
-                  <td>
-                    {this.state.fishScore}</td>
+                  <td>{this.state.fishScore.score}</td>
+                  <td>{this.state.fishScore.rank}</td>
                 </tr>
                 <tr style={{ backgroundColor: "#28334AFF", height: "40px" }}>
                   <td>Cat:
                 </td>
-                  <td>{this.state.catScore}</td>
+                  <td>{this.state.catScore.score}</td>
+                  <td>{this.state.catScore.rank}</td>
                 </tr>
               </table>
             </div>
@@ -184,8 +193,8 @@ class App extends Component {
               onRouteChange={this.onRouteChange}
               level={this.state.level}
               username={this.state.username}
-              bestScore={this.state[`${this.state.level}Score`]}
-              updateScore={(score) => this.updateScore(score)}
+              bestScore={this.state[`${this.state.level}Score`].score}
+              updateScore={(score, rank) => this.updateScore(score, rank)}
             />
           ) : (
                   <Register

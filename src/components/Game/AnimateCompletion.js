@@ -25,7 +25,7 @@ class AnimateCompletion extends Component {
             </animated.svg>
           )}
         </Spring>
-        <ReactExplode />
+        <ReactExplode rank={this.props.rank}/>
       </>
     );
   }

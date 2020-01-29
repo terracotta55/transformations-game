@@ -9,7 +9,7 @@ const Rank = ({ name, totalScore }) => {
         // style={{ color: "#FFD700" }}
         style={{ color: "#95dbe5ff" }}
         className="f2 white"
-      >{`Your score is: ${totalScore}`}</div>
+      >{`Your total score is: ${totalScore}`}</div>
     </Fragment>
   );
 };

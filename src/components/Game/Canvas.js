@@ -245,6 +245,7 @@ class Canvas extends Component {
 
   render() {
     let win = true;
+    let rank = 0;
 
     for (let goal of this.goals) {
       if (!goal.completed) {
@@ -262,7 +263,19 @@ class Canvas extends Component {
     }
 
     if (win) {
-      this.props.updateScore(this.state.score);
+      //Probably don't need to tally more score based on total moves
+      // this.setState(state => ({
+      //   score: state.score + (500 - 50 * (this.state.moveCounter))
+      // }));
+
+      let counter = 0;
+      for (let star of tangrams[this.props.level].stars) {
+        counter = counter + 1;
+        if (this.state.score >= star) {
+          rank = counter;
+        }
+      }
+      this.props.updateScore(this.state.score, rank);
     }
 
     return (
@@ -352,6 +365,7 @@ class Canvas extends Component {
                   path={tangrams[this.props.level].path}
                   pathX={tangrams[this.props.level].pathX}
                   strokeDasharray={tangrams[this.props.level].strokeDasharray}
+                  rank={rank}
                 />
               ) : null}
             </svg>
