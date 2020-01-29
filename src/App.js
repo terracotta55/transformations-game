@@ -143,7 +143,9 @@ class App extends Component {
             <div>
               <Logo onRouteChange={this.onRouteChange} />
               <Rank name={this.state.username} totalScore={this.state.totalScore} />
+
               {/* <h2 style={{ color: "white" }}>Best Scores:</h2> */}
+
               <table className="highscores">
                 <tr style={{ backgroundColor: "#EE2737FF", height: "40px" }}>
                   <th>Level</th>

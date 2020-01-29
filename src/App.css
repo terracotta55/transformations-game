@@ -144,10 +144,9 @@ box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 
   color: white;
   font-size: larger;
   /* background-image: url("https://images.app.goo.gl/87JMuyATUGcjJWhs7"); */
-  /* margin-left: 40%;
-  margin-right: 50%; */
   margin: auto;
   margin-top: 20px;
+
   
   padding: 25px;
   width: 20%;
@@ -159,7 +158,6 @@ box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 
 .highscores > * {
   text-decoration-color:white;
   font-size: larger;
-
   text-align: left;
  border-bottom: 1px transparent; 
 }
