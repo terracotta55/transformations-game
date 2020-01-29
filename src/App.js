@@ -53,11 +53,11 @@ class App extends Component {
       // name: "Jimmy",
       username: "",
       totalScore: 0,
-      houseScore: 0,
-      treeScore: 0,
-      boatScore: 0,
-      fishScore: 0,
-      catScore: 0,
+      houseScore: { score: 0, rank: 0 },
+      treeScore: { score: 0, rank: 0 },
+      boatScore: { score: 0, rank: 0 },
+      fishScore: { score: 0, rank: 0 },
+      catScore: { score: 0, rank: 0 },
       level: 0,
       user: {
         id: "",
@@ -67,6 +67,7 @@ class App extends Component {
         joined: ""
       }
     };
+    this.rankIcons = ["", "⭐", "⭐⭐", "⭐⭐⭐"]
   }
 
   addUser = data => {
@@ -111,11 +112,16 @@ class App extends Component {
   };
 */
 
-  updateScore = (score) => {
-    console.log(score)
-    if (score > this.state[`${this.state.level}Score`]) {
+  updateScore = (newScore, newRank) => {
+    console.log(newScore)
+    if (newScore > this.state[`${this.state.level}Score`].score) {
+      var scoreCopy = { ...this.state[`${this.state.level}Score`] }
+      scoreCopy.score = Number(newScore);
+      scoreCopy.rank = this.rankIcons[newRank];
+
       this.setState(state => ({
-        [`${state.level}Score`]: score
+        [`${state.level}Score`]: scoreCopy,
+        totalScore: this.state.houseScore.score + this.state.treeScore.score + this.state.boatScore.score + this.state.fishScore.score + this.state.catScore.score
       }));
     }
   }
@@ -139,11 +145,11 @@ class App extends Component {
               <Rank name={this.state.username} totalScore={this.state.totalScore} />
               <div className="highscores">
                 <h3>Best Scores:</h3>
-                <p>House: {this.state.houseScore}</p>
-                <p>Tree: {this.state.treeScore}</p>
-                <p>Boat: {this.state.boatScore}</p>
-                <p>Fish: {this.state.fishScore}</p>
-                <p>Cat: {this.state.catScore}</p>
+                <p>House: {this.state.houseScore.score} {this.state.houseScore.rank}</p>
+                <p>Tree: {this.state.treeScore.score} {this.state.treeScore.rank}</p>
+                <p>Boat: {this.state.boatScore.score} {this.state.boatScore.rank}</p>
+                <p>Fish: {this.state.fishScore.score} {this.state.fishScore.rank}</p>
+                <p>Cat: {this.state.catScore.score} {this.state.catScore.rank}</p>
               </div>
             </div>
           ) : this.state.route === "signin" ? (
@@ -158,8 +164,8 @@ class App extends Component {
               onRouteChange={this.onRouteChange}
               level={this.state.level}
               username={this.state.username}
-              bestScore={this.state[`${this.state.level}Score`]}
-              updateScore={(score) => this.updateScore(score)}
+              bestScore={this.state[`${this.state.level}Score`].score}
+              updateScore={(score, rank) => this.updateScore(score, rank)}
             />
           ) : (
                   <Register
