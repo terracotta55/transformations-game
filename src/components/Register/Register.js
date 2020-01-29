@@ -30,10 +30,10 @@ class Register extends React.Component {
           <main className="pa2 black-80 w-60">
             <div className="measure">
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                <legend className="f2 fw6 ph0 mh0 white">Register</legend>
-                <div className="mt3">
-                  <label className="db fw6 lh-copy f4 white" htmlFor="name">
-                    Name
+                <legend className="f2 fw6 ph0 mh0 black">Register</legend>
+                {/* <div className="mt3">
+                  <label className="db fw6 lh-copy f4 white pr2" htmlFor="name">
+                    Name:
                   </label>
                   <input
                     className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
@@ -42,16 +42,28 @@ class Register extends React.Component {
                     id="name"
                     onChange={this.onNameChange}
                   />
+                </div> */}
+                <div className="mt3">
+                  <label className="db fw6 lh-copy f4 black pr2" htmlFor="name">
+                    Username
+                  </label>
+                  <input
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--black-90"
+                    type="text"
+                    name="name"
+                    id="name"
+                    onChange={this.onNameChange}
+                  />
                 </div>
                 <div className="mv1">
                   <label
-                    className="db fw6 lh-copy f4 white"
+                    className="db fw6 lh-copy f4 black pr2"
                     htmlFor="email-address"
                   >
                     Email
                   </label>
                   <input
-                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--black-90"
                     type="email"
                     name="email-address"
                     id="email-address"
@@ -59,11 +71,14 @@ class Register extends React.Component {
                   />
                 </div>
                 <div className="mv1">
-                  <label className="db fw6 lh-copy f4 white" htmlFor="password">
+                  <label
+                    className="db fw6 lh-copy f4 black pr2"
+                    htmlFor="password"
+                  >
                     Password
                   </label>
                   <input
-                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--white-90"
+                    className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 b--black-90"
                     type="password"
                     name="password"
                     id="password"
@@ -74,7 +89,7 @@ class Register extends React.Component {
               <div className="">
                 <input
                   onClick={this.onSubmitRegister}
-                  className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib white b--white-90"
+                  className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib black b--black-90"
                   type="submit"
                   value="Register"
                 />

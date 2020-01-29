@@ -49,7 +49,7 @@ class ReactExplode extends Component {
             delay={3}
             repeatDelay={0}
             repeat={0}
-            color="white"
+            color="rgb(255, 79, 67)"
           />
         ) : this.props.rank === 2 ? (
           <Explosion3
@@ -57,7 +57,7 @@ class ReactExplode extends Component {
             delay={3}
             repeatDelay={0}
             repeat={1}
-            color="white"
+            color="rgb(255, 79, 67)"
           />
         ) : this.props.rank === 3 ? (
           <Explosion4
@@ -65,7 +65,7 @@ class ReactExplode extends Component {
             delay={3}
             repeatDelay={0}
             repeat={2}
-            color="white"
+            color="rgb(255, 79, 67)"
           />
         ) : null}
       </svg>
