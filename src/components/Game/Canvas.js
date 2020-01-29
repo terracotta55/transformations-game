@@ -3,7 +3,8 @@ import TriangleShape from "./TriangleShape.js";
 import { Triangle } from "./Triangle.js";
 import { evaluateMatch, evaluateBoundary } from "./evaluate.js";
 import tangrams, { colorPalette, shuffle } from "./tangrams.js";
-
+import drop2 from "../Game/sounds/drop2.mp3";
+import move from "../Game/sounds/move.mp3";
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
 import Tilt from "react-tilt";
@@ -28,6 +29,11 @@ class Canvas extends Component {
     this.player = this.players.pop();
     this.colors = [];
   }
+
+  playAudio = sound => {
+    let audio = new Audio(sound);
+    audio.play();
+  };
 
   initializeGoals = level => {
     return tangrams[level].pieces.map(goal => {
@@ -71,10 +77,10 @@ class Canvas extends Component {
   };
 
   handleTranslate = () => {
+    this.playAudio(move);
     this.setState({
       animate: "translate"
     });
-
     setTimeout(() => {
       this.player.translate(
         Number(this.state.translateX),
@@ -115,6 +121,7 @@ class Canvas extends Component {
   };
 
   handleRotate = deg => {
+    this.playAudio(move);
     this.setState(state => ({
       animate: "rotate",
       rotateDeg: deg
@@ -131,6 +138,7 @@ class Canvas extends Component {
   };
 
   handleReflect = axis => {
+    this.playAudio(move);
     this.setState(state => ({
       animate: "reflect",
       reflectAxis: axis
@@ -245,7 +253,7 @@ class Canvas extends Component {
           goal.completed = true;
 
           this.addScore();
-
+          this.playAudio(drop2);
           this.player = this.reInitializePlayer();
           break;
         }

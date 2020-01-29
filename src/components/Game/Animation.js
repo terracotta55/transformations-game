@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Spring } from "react-spring/renderprops";
 
 class Animation extends Component {
-
   render() {
     const cax = (10 + this.props.a.x) * 50;
     const cay = (10 - this.props.a.y) * 50;
@@ -22,15 +21,17 @@ class Animation extends Component {
     switch (transformName) {
       case "translate":
         transformFrom = `${transformName}(0, 0)`;
-        transformTo = `${transformName}(${transX}, ${transY})`
+        transformTo = `${transformName}(${transX}, ${transY})`;
         break;
       case "rotate":
         transformFrom = `${transformName}(0)`;
-        transformTo = `${transformName}(${deg})`
+        transformTo = `${transformName}(${deg})`;
         break;
       case "reflect":
         transformFrom = `scale(1, 1)`;
-        transformTo = `scale(${this.props.reflectAxis === "x" ? "1, -1" : "-1, 1" })`
+        transformTo = `scale(${
+          this.props.reflectAxis === "x" ? "1, -1" : "-1, 1"
+        })`;
         break;
       default:
         break;
@@ -43,7 +44,8 @@ class Animation extends Component {
           to={{ transform: transformTo }}
         >
           {props => (
-            <polygon className={this.props.triangleClassName}
+            <polygon
+              className={this.props.triangleClassName}
               points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}
               fill={this.props.color}
               transform={props.transform}
