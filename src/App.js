@@ -143,14 +143,41 @@ class App extends Component {
             <div>
               <Logo onRouteChange={this.onRouteChange} />
               <Rank name={this.state.username} totalScore={this.state.totalScore} />
-              <div className="highscores">
-                <h3>Best Scores:</h3>
-                <p>House: {this.state.houseScore.score} {this.state.houseScore.rank}</p>
-                <p>Tree: {this.state.treeScore.score} {this.state.treeScore.rank}</p>
-                <p>Boat: {this.state.boatScore.score} {this.state.boatScore.rank}</p>
-                <p>Fish: {this.state.fishScore.score} {this.state.fishScore.rank}</p>
-                <p>Cat: {this.state.catScore.score} {this.state.catScore.rank}</p>
-              </div>
+              {/* <h2 style={{ color: "white" }}>Best Scores:</h2> */}
+              <table className="highscores">
+                <tr style={{ backgroundColor: "#EE2737FF", height: "40px" }}>
+                  <th>Level</th>
+                  <th>Scores</th>
+                  <th>Bonus</th>
+                </tr>
+                <tr style={{ backgroundColor: "#339E66FF", height: "40px" }}>
+                  <td>House:</td>
+                  <td> {this.state.houseScore.score} </td>
+                  <td> {this.state.houseScore.rank} </td>
+                </tr>
+                <tr style={{ backgroundColor: "#BA0020FF", height: "40px" }}>
+                  <td>Tree: </td>
+                  <td>{this.state.treeScore.score}</td>
+                  <td>{this.state.treeScore.rank}</td>
+                </tr>
+                <tr style={{ backgroundColor: "#078282FF", height: "40px" }}>
+                  <td>Boat: </td>
+                  <td>{this.state.boatScore.score}</td>
+                  <td>{this.state.boatScore.rank}</td>
+                </tr>
+                <tr style={{ backgroundColor: "#E683A9FF", height: "40px" }}>
+                  <td>Fish:
+                </td>
+                  <td>{this.state.fishScore.score}</td>
+                  <td>{this.state.fishScore.rank}</td>
+                </tr>
+                <tr style={{ backgroundColor: "#28334AFF", height: "40px" }}>
+                  <td>Cat:
+                </td>
+                  <td>{this.state.catScore.score}</td>
+                  <td>{this.state.catScore.rank}</td>
+                </tr>
+              </table>
             </div>
           ) : this.state.route === "signin" ? (
             <SignIn
