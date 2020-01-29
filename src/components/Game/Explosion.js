@@ -36,7 +36,7 @@ class ReactExplode extends Component {
           }, 2000);
           setTimeout(() => {
             this.playAudio(this.sounds[this.props.rank - 1]);
-          }, 4000);
+          }, 3500);
           return;
       }
     }, 3000);

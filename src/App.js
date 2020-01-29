@@ -125,7 +125,7 @@ class App extends Component {
           [`${state.level}Score`]: scoreCopy,
           totalScore: this.state.houseScore.score + this.state.treeScore.score + this.state.boatScore.score + this.state.fishScore.score + this.state.catScore.score
         }));
-      }, 650);
+      }, 1);
     }
   };
 
