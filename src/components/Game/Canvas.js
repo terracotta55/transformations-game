@@ -44,7 +44,7 @@ class Canvas extends Component {
 
   initializePlayers = level => {
     return tangrams[level].pieces.map(player => {
-      return new Triangle(player.map(coordinates => -coordinates));
+      return new Triangle(player.map(coordinates => -coordinates)); //Reverse coordinates
     });
   };
 
@@ -58,7 +58,7 @@ class Canvas extends Component {
   };
 
   reInitializePlayer = () => {
-    if (this.players.length) {
+    if (this.players.length) { //Check if there are any player triangles left
       const player = this.players.pop();
       player.randomizeLocation();
 
@@ -66,7 +66,6 @@ class Canvas extends Component {
         color: this.colors.pop(),
         moveCounter: 0
       });
-
       return player;
     }
   };
@@ -82,6 +81,8 @@ class Canvas extends Component {
     this.setState({
       animate: "translate"
     });
+
+    //Wait until animation is finished, then perform actual transform on player Triangle
     setTimeout(() => {
       this.player.translate(
         Number(this.state.translateX),
@@ -96,6 +97,7 @@ class Canvas extends Component {
       }));
     }, 650);
 
+    //If the translation moves the Triangle outside of the boundary, then reverse translation
     setTimeout(() => {
       if (this.state.outside) {
         this.playAudio(bounce2);
@@ -129,6 +131,7 @@ class Canvas extends Component {
       rotateDeg: deg
     }));
 
+    //Wait until animation is finished, then perform actual transform on player Triangle
     setTimeout(() => {
       this.player.rotate(deg);
       this.setState(state => ({
@@ -146,6 +149,7 @@ class Canvas extends Component {
       reflectAxis: axis
     }));
 
+    //Wait until animation is finished, then perform actual transform on player Triangle
     setTimeout(() => {
       this.player.reflect(axis);
       this.setState(state => ({
@@ -210,7 +214,7 @@ class Canvas extends Component {
     let yNumbers = [];
     let counter = 10;
     for (let i = -2; i <= 1000; i = i + 50) {
-      if (counter !== 0) {
+      if (counter !== 0) { //Prevent double 0s
         yNumbers.push(
           <text key={i} x="505" y={i} fontWeight="bold">
             {counter}
@@ -318,6 +322,8 @@ class Canvas extends Component {
             <svg width="1000" height="1000">
               {this.renderColumns()}
               {this.renderRows()}
+
+              {/*y-axis*/}
               <line
                 x1="500"
                 x2="500"
@@ -326,6 +332,8 @@ class Canvas extends Component {
                 stroke="black"
                 strokeWidth="3"
               />
+
+              {/*x-axis*/}
               <line
                 x1="0"
                 x2="1000"
@@ -334,14 +342,18 @@ class Canvas extends Component {
                 stroke="black"
                 strokeWidth="3"
               />
+
               {this.renderXNumbers()}
               {this.renderYNumbers()}
+
+              {/*The 10s are offset so they don't get cutoff*/}
               <text x="505" y="15" fontWeight="bold">
                 10
               </text>
               <text x="980" y="515" fontWeight="bold">
                 10
               </text>
+              
               {this.rendergoals()}
               {!this.state.animate && !win ? (
                 <TriangleShape
