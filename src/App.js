@@ -6,43 +6,7 @@ import Rank from "./components/Rank/Rank";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Canvas from "./components/Game/Canvas";
-import Particles from "react-particles-js";
 
-const particlesOptions = {
-  "particles": {
-    "number": {
-      "value": 50,
-      "density": {
-        "enable": false,
-        "value_area": 0
-      }
-    },
-    opacity: {
-      value: 1,
-      random: false,
-      anim: {
-        enable: false
-      }
-    },
-    size: {
-      value: 0,
-      random: false,
-      anim: {
-        enable: false
-      }
-    },
-    "line_linked": {
-      "enable": true,
-      "distance": 250,
-      "color": "#000000",
-      "opacity": 1,
-      "width": 2.5
-    },
-    move: {
-      enable: false
-    }
-  }
-};
 
 class App extends Component {
   constructor() {
@@ -100,26 +64,14 @@ class App extends Component {
     this.setState({ username: dataUser });
     this.setState({ name: dataUser });
   };
-  /*
-  onRouteChange = route => {
-    if (route === "signout") {
-      this.setState({ isSignedIn: false });
-    } else if (route === "home") {
-      this.setState({ isSignedIn: true });
-    } else if (route === "game") {
-      this.setState({ isSignedIn: true });
-    }
-    this.setState({ route: route });
-  };
-*/
 
   updateScore = (newScore, newRank) => {
-    console.log(newScore);
     if (newScore > this.state[`${this.state.level}Score`].score) {
       var scoreCopy = { ...this.state[`${this.state.level}Score`] };
       scoreCopy.score = Number(newScore);
       scoreCopy.rank = this.rankIcons[newRank];
 
+      //Refactor
       setTimeout(() => {
         this.setState(state => ({
           [`${state.level}Score`]: scoreCopy,
@@ -133,11 +85,6 @@ class App extends Component {
     return (
       <Fragment>
         <div className="App">
-          {/* <Particles
-            style={{ color: "red" }}
-            className="particles"
-            params={particlesOptions}
-          /> */}
           <Navigation
             isSignedIn={this.state.isSignedIn}
             onRouteChange={this.onRouteChange}
