@@ -64,7 +64,9 @@ export class Triangle {
             console.log(trans)
 
             clone[trans.method](trans.params);
-            // clone.translate(Math.round((Math.random() - 0.5) * 6), Math.round((Math.random() - 0.5) * 6));
+
+            //Commented out for easier matching
+            //clone.translate(Math.round((Math.random() - 0.5) * 6), Math.round((Math.random() - 0.5) * 6));
             console.log(clone.a, clone.b, clone.c);
         } while (evaluateBoundary(clone));
         this.a = clone.a;
