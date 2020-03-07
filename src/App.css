@@ -13,19 +13,13 @@ body {
 .buttons-div * {
   display: flex;
   flex-direction: column;
-  align-items: left;
 }
 
 .info-div {
-  display: flex;
-  flex-direction: column;
   font-size: 2rem;
   font-weight: bold;
-  margin-left: 15px;
-  text-align: right;
-  align-items: flex-end;
-  color: black;
-  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .moves {
@@ -75,12 +69,11 @@ body {
   flex-direction: column;
 }
 
-
 .btn-txt {
   margin-left: 16px;
   font-weight: normal;
   font-size: 1.2rem;
-  color:black;
+  color: black;
   margin-top: -10px;
 }
 
@@ -155,7 +148,7 @@ box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 
 
 .svg-div {
   /* background-image: url("./components/Game/images/sand.jpg"); */
-  background-color:  rgb(236, 238, 232);
+  background-color: rgb(236, 238, 232);
   background-size: cover;
 }
 
@@ -179,29 +172,28 @@ button {
 
 .translate:hover {
   border: none;
-  background-color:  #783937FF;
+  background-color: #783937ff;
 }
 
 .rotate-c:hover {
   border: none;
-  background-color:#078282FF;
+  background-color: #078282ff;
 }
 
 .rotate-cc:hover {
   border: none;
-  background-color:#339E66FF;
+  background-color: #339e66ff;
 }
 
 .reflect-x:hover {
   border: none;
-  background-color: #FFBE7BFF;
+  background-color: #ffbe7bff;
 }
 
 .reflect-y:hover {
   border: none;
-  background-color: #EED971FF;
+  background-color: #eed971ff;
 }
-
 
 /* 
 .translate {
@@ -244,13 +236,47 @@ button {
 }
 
 .highscores > * {
-  color:black;
+  color: black;
   font-size: larger;
   text-align: left;
   border-bottom: 1px transparent;
-  opacity:1;
+  opacity: 1;
 }
 
 .highscores > * > * {
   padding-left: 10px;
+}
+
+/* ------ Help CSS ------ */
+.help {
+  /* content: ""; */
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  cursor: pointer;
+  /* z-index: 9; */
+}
+
+#idHelp {
+  position: absolute;
+  height: 100vh;
+  width: 30vw;
+  overflow-y: auto;
+  color: white;
+  font-size: 1.6rem;
+  background-color: black;
+  text-align: left;
+  transform: translateX(-100%);
+  transition: transform 300ms;
+}
+
+#idHelp.isopen {
+  transform: none;
+}
+
+#help {
+  position: relative;
+  float: left;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
 }
