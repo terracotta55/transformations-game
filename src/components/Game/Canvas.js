@@ -8,6 +8,7 @@ import move3 from "../Game/sounds/move3.mp3";
 import bounce2 from "../Game/sounds/bounce2.mp3";
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
+import Help from "./Help.js";
 import Tilt from "react-tilt";
 
 class Canvas extends Component {
@@ -23,12 +24,14 @@ class Canvas extends Component {
       totalMoves: 0,
       score: 0,
       outside: false,
-      color: ""
+      color: "",
+      helpOpen: false
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
     this.player = this.players.pop();
     this.colors = [];
+    this.helpToggle = this.helpToggle.bind(this);
   }
 
   playAudio = sound => {
@@ -249,6 +252,12 @@ class Canvas extends Component {
     }));
   };
 
+  helpToggle(e) {
+    this.setState({
+      helpOpen: !this.state.helpOpen
+    });
+  }
+
   render() {
     let win = true;
     let rank = 0;
@@ -284,39 +293,51 @@ class Canvas extends Component {
       this.props.updateScore(this.state.score, rank);
     }
 
+    let helpStatus = this.state.helpOpen ? "isopen" : "";
+
     return (
       <>
         <div className="container">
+          <div className="help">
+            <p id="help" className={helpStatus} onClick={this.helpToggle}>
+              Help
+            </p>
+          </div>
+          <Help helpStatus={helpStatus} />
           <div className="info-div">
-            <p style={{ color: "#EE2737FF" }}>Current Score: {this.state.score}</p>
-            <Tilt
+            <p style={{ color: "#EE2737FF" }}>
+              Current Score: {this.state.score}
+            </p>
+            {/* <Tilt
               className="new-tilt br3"
               options={{ max: 55 }}
-              style={{ height: 280, width: 250, }}
-            >
-              <article className="flex flex-column mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10"
-                style={{ background: "rgb(250, 250, 250)", opacity: 0.9 }}>
-                <div className="tc">
-                  <img
-                    src="https://udayton.edu/0/img/generic-profile.png"
-                    className="br-100 h3 w3 dib"
-                    title="Profile Photo"
-                    alt="Profile"
-                  />
-                  <h1 className="f4 black">{this.props.username}</h1>
-                  <hr className="mw3 bb bw1 b--black-10" />
-                </div>
-                <p className="lh-copy measure center f5 black">
-                  Level: {this.props.level.charAt(0).toUpperCase() + this.props.level.slice(1)}
-                </p>
-                <p className="lh-copy measure center f5 black">
-                  Best Score: {this.props.bestScore}
-                </p>
-                <p className="lh-copy measure center f5 black">
-                  Rank: {this.props.levelRank}
-                </p>
-              </article>
-            </Tilt>
+              style={{ height: 280, width: 250 }}
+            > */}
+            {/* <article
+                className="flex flex-column mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10"
+                style={{ background: "rgb(250, 250, 250)", opacity: 0.9 }}
+              > */}
+            <div className="tc">
+              <img
+                src="https://udayton.edu/0/img/generic-profile.png"
+                className="br-100 h3 w3 dib"
+                title="Profile Photo"
+                alt="Profile"
+              />
+              <h1 className="f4 black">{this.props.username}</h1>
+              <hr className="mw3 bb bw1 b--black-10" />
+            </div>
+            <p className="lh-copy measure center f5 black">
+              Level:{" "}
+              {this.props.level.charAt(0).toUpperCase() +
+                this.props.level.slice(1)}
+            </p>
+            <p className="lh-copy measure center f5 black">
+              Best Score: {this.props.bestScore}
+            </p>
+            <p className="lh-copy measure center f5 black">
+              Rank: {this.props.levelRank}
+            </p>
           </div>
           <div className="svg-div">
             <svg width="1000" height="1000">
@@ -389,7 +410,6 @@ class Canvas extends Component {
             </svg>
           </div>
           <div className="buttons-div">
-
             <div className="buttons">
               <p style={{ fontSize: "2rem" }}>Transformations:</p>
 
@@ -462,7 +482,10 @@ class Canvas extends Component {
               >
                 Reflect on y-axis
               </button>
-              <article className="mw5 mw6-ns hidden mv4 moves" style={{textAlign: "left", color: "#EE2737FF" }}>
+              <article
+                className="mw5 mw6-ns hidden mv4 moves"
+                style={{ textAlign: "left", color: "#EE2737FF" }}
+              >
                 <h1 className="f5 mv0 pv2 ph3">
                   Number of Moves: {this.state.totalMoves}
                 </h1>
