@@ -6,6 +6,7 @@ import Rank from "./components/Rank/Rank";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Canvas from "./components/Game/Canvas";
+import fetchFunctions from "./api/javascript/fetchFunctions.js";
 
 
 class App extends Component {
@@ -27,21 +28,22 @@ class App extends Component {
         id: "",
         name: "",
         email: "",
-        entries: 0,
-        joined: ""
+        // entries: 0,
+        // joined: ""
       }
     };
     this.rankIcons = ["", "⭐", "⭐⭐", "⭐⭐⭐"];
   }
 
-  addUser = data => {
+
+  loadUser = data => {
     this.setState({
       user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        totalScore: data.totalScore,
-        joined: data.joined
+        id: data.UserID,
+        name: data.UserName,
+        email: data.UserEmail,
+        // totalScore: data.totalScore,
+        // joined: data.joined
       }
     });
   };
@@ -63,6 +65,24 @@ class App extends Component {
   getUsername = dataUser => {
     this.setState({ username: dataUser });
     this.setState({ name: dataUser });
+  };
+
+  registerUser = async (userData) => {
+    // *Temporary* format userData for "database"
+    const registrationData = {
+      "UserName": userData.name,
+      "UserEmail": userData.email,
+      "UserPassword": userData.password
+    }
+
+    console.log(registrationData)
+
+    //register in "database" first
+    const newUser = await fetchFunctions.registerUser(registrationData)
+
+    //load User
+    console.log(newUser)
+    this.loadUser(newUser)
   };
 
   updateScore = (newScore, newRank) => {
@@ -136,7 +156,7 @@ class App extends Component {
             </div>
           ) : this.state.route === "signin" ? (
             <SignIn
-              addUser={this.addUser}
+              loadUser={this.loadUser}
               onRouteChange={this.onRouteChange}
               getUsername={this.getUsername}
             />
@@ -152,9 +172,10 @@ class App extends Component {
             />
           ) : (
             <Register
-              addUser={this.addUser}
+              loadUser={this.loadUser}
               onRouteChange={this.onRouteChange}
               getUsername={this.getUsername}
+              registerUser={this.registerUser}
             />
           )}
         </div>
