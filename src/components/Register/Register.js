@@ -1,4 +1,5 @@
 import React from "react";
+import fetchFunctions from "../../api/javascript/fetchFunctions.js";
 const Fragment = React.Fragment;
 
 class Register extends React.Component {
@@ -22,8 +23,25 @@ class Register extends React.Component {
   onSubmitRegister = () => {
     this.props.onRouteChange("home");
     this.props.getUsername(this.state.name);
-    this.props.registerUser(this.state);
+    this.registerUser(this.state);
   };
+
+  registerUser = async (userData) => {
+    // *Temporary* format userData for "database"
+    const registrationData = {
+      "UserName": userData.name,
+      "UserEmail": userData.email,
+      "UserPassword": userData.password
+    };
+
+    //register in "database" first
+    const newUser = await fetchFunctions.registerUser(registrationData);
+
+    //load User
+    console.log(newUser);
+    this.props.loadUser(newUser);
+  };
+
   render() {
     return (
       <Fragment>

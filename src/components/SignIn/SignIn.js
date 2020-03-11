@@ -1,4 +1,5 @@
 import React from "react";
+import fetchFunctions from "../../api/javascript/fetchFunctions.js";
 const Fragment = React.Fragment;
 
 class SignIn extends React.Component {
@@ -7,7 +8,8 @@ class SignIn extends React.Component {
     this.state = {
       signInUser: "",
       signInEmail: "",
-      signInPassword: ""
+      signInPassword: "",
+      signInError: ""
     };
   }
   onUserChange = e => {
@@ -19,10 +21,32 @@ class SignIn extends React.Component {
   onPasswordChange = e => {
     this.setState({ signInPassword: e.target.value });
   };
-  onSubmitSignIn = () => {
-    this.props.onRouteChange("home");
-    this.props.getUsername(this.state.signInUser);
+  onSubmitSignIn = (dev) => {
+    // this.props.getUsername(this.state.signInUser);
+    this.loginUser(this.state);
   };
+  onDevSignIn = () => {
+    const devUser = {
+      UserID: "0",
+      UserName: "Dev",
+      UserEmail: "Dev@transfomations.com"
+    }
+    this.props.loadUser(devUser);
+    this.props.onRouteChange("home");
+  };
+
+  loginUser = async (user) => {
+    const userResponse = await fetchFunctions.loadData(user.signInUser)
+    if (user.signInPassword === userResponse.UserPassword) {
+      await fetchFunctions.loginUser(userResponse.UserName);
+      console.log(userResponse)
+      this.props.loadUser(userResponse);
+      this.props.onRouteChange("home");
+    } else {
+      this.setState({ signInError: "Username or Password is incorrect" });
+    }
+  };
+
   render() {
     // const { onRouteChange } = this.props;
     return (
@@ -80,6 +104,19 @@ class SignIn extends React.Component {
                   value="Sign in"
                 />
               </div>
+              <div style={{margin: "10px"}}>
+                <input
+                  onClick={this.onDevSignIn}
+                  className="b ph2 pv1 input-reset ba b--gray bg-transparent grow pointer f7 dib gray b--gray-90"
+                  type="submit"
+                  value="Dev"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="db fw6 lh-copy f5 red">
+                {this.state.signInError}
+              </label>
             </div>
           </main>
         </article>

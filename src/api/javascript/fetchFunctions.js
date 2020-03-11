@@ -46,15 +46,17 @@ const fetchFunctions = {
         return json;
     },
 
-    async loadData(user) {
-        return await this.getData(url + 'user/' + user.name);
+    async loadData(userName) {
+        return await this.getData(url + 'user/' + userName);
     },
 
     async registerUser(user) {
         return await this.postData(url + 'user', user);
     },
-    // let data = await getData(url + 'user/My user');
-    // console.log(data)
+
+    async loginUser(userName) {
+        return await this.postData(url + 'user/' + userName + '/login'); //this could be a get (we don't provide request data)
+    },
 }
 
 export default fetchFunctions;

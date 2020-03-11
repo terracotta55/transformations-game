@@ -6,7 +6,7 @@ import Rank from "./components/Rank/Rank";
 import SignIn from "./components/SignIn/SignIn";
 import Register from "./components/Register/Register";
 import Canvas from "./components/Game/Canvas";
-import fetchFunctions from "./api/javascript/fetchFunctions.js";
+// import fetchFunctions from "./api/javascript/fetchFunctions.js";
 
 
 class App extends Component {
@@ -15,8 +15,8 @@ class App extends Component {
     this.state = {
       route: "signin", // there are 4 routes: signin (default), signout, home, game
       isSignedIn: false,
-      name: "",
-      username: "",
+      // name: "",
+      // username: "",
       totalScore: 0,
       houseScore: { score: 0, rank: "" },
       treeScore: { score: 0, rank: "" },
@@ -62,29 +62,13 @@ class App extends Component {
     this.setState({ route: route });
   };
 
+  //depreciate eventually
   getUsername = dataUser => {
     this.setState({ username: dataUser });
     this.setState({ name: dataUser });
   };
 
-  registerUser = async (userData) => {
-    // *Temporary* format userData for "database"
-    const registrationData = {
-      "UserName": userData.name,
-      "UserEmail": userData.email,
-      "UserPassword": userData.password
-    }
-
-    console.log(registrationData)
-
-    //register in "database" first
-    const newUser = await fetchFunctions.registerUser(registrationData)
-
-    //load User
-    console.log(newUser)
-    this.loadUser(newUser)
-  };
-
+ 
   updateScore = (newScore, newRank) => {
     if (newScore > this.state[`${this.state.level}Score`].score) {
       var scoreCopy = { ...this.state[`${this.state.level}Score`] };
@@ -113,7 +97,7 @@ class App extends Component {
             <div>
               <Logo onRouteChange={this.onRouteChange} />
               <Rank
-                name={this.state.username}
+                name={this.state.user.name}
                 totalScore={this.state.totalScore}
               />
 
@@ -165,7 +149,7 @@ class App extends Component {
               style={{ backgroundColor: "white" }}
               onRouteChange={this.onRouteChange}
               level={this.state.level}
-              username={this.state.username}
+              username={this.state.user.name}
               bestScore={this.state[`${this.state.level}Score`].score}
               levelRank={this.state[`${this.state.level}Score`].rank}
               updateScore={(score, rank) => this.updateScore(score, rank)}
