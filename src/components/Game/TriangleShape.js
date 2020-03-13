@@ -23,11 +23,22 @@ class TriangleShape extends Component {
           fill={this.props.color}
           points={`${cax} ${cay}, ${cbx} ${cby}, ${ccx} ${ccy}`}
         ></polygon>
-
-        {/* point labels */}
-        {/* <text fontWeight="bold" x={cax} y={cay - (Math.sign(this.props.a.y) * 10)}>{`(${this.props.a.x}, ${this.props.a.y})`}</text> */}
-        {/* <text font-weight="bold" x={cbx} y={cby - (Math.sign(this.props.b.y) * 10)}>{`(${this.props.b.x}, ${this.props.b.y})`}</text>
-        <text font-weight="bold" x={ccx} y={ccy - (Math.sign(this.props.c.y) * 10)}>{`(${this.props.c.x}, ${this.props.c.y})`}</text> */}
+        {/* point labels
+        <text
+          fontWeight="bold"
+          x={cax}
+          y={cay - Math.sign(this.props.a.y) * 10}
+        >{`(${this.props.a.x}, ${this.props.a.y})`}</text>
+        <text
+          font-weight="bold"
+          x={cbx}
+          y={cby - Math.sign(this.props.b.y) * 10}
+        >{`(${this.props.b.x}, ${this.props.b.y})`}</text>
+        <text
+          font-weight="bold"
+          x={ccx}
+          y={ccy - Math.sign(this.props.c.y) * 10}
+        >{`(${this.props.c.x}, ${this.props.c.y})`}</text> */}
       </>
     );
   }
