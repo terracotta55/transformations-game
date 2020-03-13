@@ -80,27 +80,50 @@ const tangrams = {
     pathX: 2300,
     strokeDasharray: 2400,
     stars: [0, 1050, 1450]
+  },
+  houseBP: {
+    pieces: [
+      [9, -6, 5, -8, 9, -8],
+      [5, -6, 5, -8, 9, -6],
+      [7, -4, 5, -6, 9, -6]
+    ],
+    path: "M850 700 L750 800 L 750 900 L 950 900 L 950 800 Z",
+    pathX: 850,
+    strokeDasharray: 900,
+    stars: [0, 350, 450]
   }
 };
 
 export default tangrams;
 
 export const colorPalette = [
-  "#FC766AFF",
-  "#783937FF",
-  "#F1AC88FF",
-  "#F6EA7BFF",
-  "#FFBA52FF",
-  "#E683A9FF",
-  "#F65058FF",
-  "#FBDE44FF",
-  "#28334AFF",
-  "#95DBE5FF",
-  "#078282FF",
-  "#339E66FF",
-  "#643E46FF",
-  "#BA0020FF",
+  /* old list of colors*/
+  // "#FC766AFF",
+  // "#783937FF",
+  // "#F1AC88FF",
+  // "#F6EA7BFF",
+  // "#FFBA52FF",
+  // "#E683A9FF",
+  // "#F65058FF",
+  // "#FBDE44FF",
+  // "#28334AFF",
+  // "#95DBE5FF",
+  // "#078282FF",
+  // "#339E66FF",
+  // "#643E46FF",
+  // "#BA0020FF"
   // "#EE2737FF"
+
+  /*new list of colors*/
+  "#E94B44",
+  "#FFE651",
+  "#4F7CCB",
+  "#399D68",
+  "#CE3BFF",
+  "#0046FF",
+  "#00FF46",
+  "#FF8000",
+  "#4BACC6"
 ];
 
 export const shuffle = array => {
