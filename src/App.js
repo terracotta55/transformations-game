@@ -13,8 +13,8 @@ class App extends Component {
     this.state = {
       route: "signin", // there are 4 routes: signin (default), signout, home, game
       isSignedIn: false,
-      name: "",
-      username: "",
+      // name: "",
+      // username: "",
       totalScore: 0,
       houseScore: { score: 0, rank: "" },
       treeScore: { score: 0, rank: "" },
@@ -26,22 +26,22 @@ class App extends Component {
       user: {
         id: "",
         name: "",
-        email: "",
-        entries: 0,
-        joined: ""
+        email: ""
+        // entries: 0,
+        // joined: ""
       }
     };
     this.rankIcons = ["", "⭐", "⭐⭐", "⭐⭐⭐"];
   }
 
-  addUser = data => {
+  loadUser = data => {
     this.setState({
       user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        totalScore: data.totalScore,
-        joined: data.joined
+        id: data.UserID,
+        name: data.UserName,
+        email: data.UserEmail
+        // totalScore: data.totalScore,
+        // joined: data.joined
       }
     });
   };
@@ -60,30 +60,19 @@ class App extends Component {
     this.setState({ route: route });
   };
 
+  //depreciate eventually
   getUsername = dataUser => {
     this.setState({ username: dataUser });
     this.setState({ name: dataUser });
   };
-  /*
-  onRouteChange = route => {
-    if (route === "signout") {
-      this.setState({ isSignedIn: false });
-    } else if (route === "home") {
-      this.setState({ isSignedIn: true });
-    } else if (route === "game") {
-      this.setState({ isSignedIn: true });
-    }
-    this.setState({ route: route });
-  };
-*/
 
   updateScore = (newScore, newRank) => {
-    console.log(newScore);
     if (newScore > this.state[`${this.state.level}Score`].score) {
       var scoreCopy = { ...this.state[`${this.state.level}Score`] };
       scoreCopy.score = Number(newScore);
       scoreCopy.rank = this.rankIcons[newRank];
 
+      //Refactor
       setTimeout(() => {
         this.setState(state => ({
           [`${state.level}Score`]: scoreCopy,
@@ -111,7 +100,7 @@ class App extends Component {
             <div>
               <Logo onRouteChange={this.onRouteChange} />
               <Rank
-                name={this.state.username}
+                name={this.state.user.name}
                 totalScore={this.state.totalScore}
               />
 
@@ -194,7 +183,7 @@ class App extends Component {
             </div>
           ) : this.state.route === "signin" ? (
             <SignIn
-              addUser={this.addUser}
+              loadUser={this.loadUser}
               onRouteChange={this.onRouteChange}
               getUsername={this.getUsername}
             />
@@ -203,16 +192,17 @@ class App extends Component {
               style={{ backgroundColor: "white" }}
               onRouteChange={this.onRouteChange}
               level={this.state.level}
-              username={this.state.username}
+              username={this.state.user.name}
               bestScore={this.state[`${this.state.level}Score`].score}
               levelRank={this.state[`${this.state.level}Score`].rank}
               updateScore={(score, rank) => this.updateScore(score, rank)}
             />
           ) : (
             <Register
-              addUser={this.addUser}
+              loadUser={this.loadUser}
               onRouteChange={this.onRouteChange}
               getUsername={this.getUsername}
+              registerUser={this.registerUser}
             />
           )}
         </div>

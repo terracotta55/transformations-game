@@ -281,3 +281,37 @@ body {
   background-color: green;
   opacity: 0.9;
 }
+
+/* ------ Help CSS ------ */
+.help {
+  /* content: ""; */
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  cursor: pointer;
+  /* z-index: 9; */
+}
+
+#idHelp {
+  position: absolute;
+  height: 100vh;
+  width: 30vw;
+  overflow-y: auto;
+  color: white;
+  font-size: 1.6rem;
+  background-color: black;
+  text-align: left;
+  transform: translateX(-100%);
+  transition: transform 300ms;
+}
+
+#idHelp.isopen {
+  transform: none;
+}
+
+#help {
+  position: relative;
+  float: left;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}

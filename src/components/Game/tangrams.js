@@ -8,7 +8,7 @@ const tangrams = {
     path: "M850 700 L750 800 L 750 900 L 950 900 L 950 800 Z",
     pathX: 850,
     strokeDasharray: 900,
-    stars: [0, 350, 450]
+    stars: [0, 350, 450] //These are the ranges for the score cutoffss
   },
 
   tree: {
