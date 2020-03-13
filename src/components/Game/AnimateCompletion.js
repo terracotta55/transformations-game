@@ -16,8 +16,9 @@ class AnimateCompletion extends Component {
           {props => (
             <animated.svg
               fill="none"
-              stroke="rgb(255, 79, 67)"
-              strokeWidth="10"
+              stroke="rgb(0,0,0)"
+              // stroke="rgb(255, 79, 67)"
+              strokeWidth="5"
               strokeDasharray={this.props.strokeDasharray}
               strokeDashoffset={props.x}
             >
@@ -25,7 +26,7 @@ class AnimateCompletion extends Component {
             </animated.svg>
           )}
         </Spring>
-        <ReactExplode rank={this.props.rank}/>
+        <ReactExplode rank={this.props.rank} />
       </>
     );
   }

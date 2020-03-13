@@ -16,7 +16,7 @@ class Help extends Component {
           Example: to say the shape gets moved 14 Units in the "X" direction, we
           can write: (x,y) -> (x+14,y)
         </p>
-        <img src={translationX}></img>
+        <img src={translationX} alt=""></img>
         <h2>Rotation</h2>
         <p>
           Rotating an object about a fixed point without changing its size or
@@ -26,14 +26,14 @@ class Help extends Component {
           <img src={rotation90CounterClockwise}></img>
           <br></br>
           To rotate an object 90° clockwise the rule is (x, y) → (y, -x)
-          <img src={rotation90Clockwise}></img>
+          <img src={rotation90Clockwise} alt=""></img>
           <br></br>
         </p>
         <h2>Reflection</h2>
         <p>
           Flipping an object across a line without changing its size or shape
           Example of reflection on the X axis:
-          <img src={reflectX}></img>
+          <img src={reflectX} alt=""></img>
         </p>
       </div>
     );

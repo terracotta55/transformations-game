@@ -9,7 +9,12 @@ import bounce2 from "../Game/sounds/bounce2.mp3";
 import Animation from "./Animation.js";
 import AnimateCompletion from "./AnimateCompletion.js";
 import Help from "./Help.js";
-import Tilt from "react-tilt";
+import CommandsList from "./CommandsList";
+import translate from "../Game/images/translate.png";
+import rotateMin from "../Game/images/rotateMin.png";
+import rotatePlus from "../Game/images/rotatePlus.png";
+import reflectionX from "../Game/images/reflectionX.png";
+import reflectionY from "../Game/images/reflectionY.png";
 
 class Canvas extends Component {
   constructor(props) {
@@ -25,13 +30,15 @@ class Canvas extends Component {
       score: 0,
       outside: false,
       color: "",
-      helpOpen: false
+      helpOpen: false,
+      commands: []
     };
     this.goals = this.initializeGoals(this.props.level);
     this.players = this.initializePlayers(this.props.level);
     this.player = this.players.pop();
     this.colors = [];
     this.helpToggle = this.helpToggle.bind(this);
+    this.posiCommand = 0;
   }
 
   playAudio = sound => {
@@ -61,7 +68,8 @@ class Canvas extends Component {
   };
 
   reInitializePlayer = () => {
-    if (this.players.length) { //Check if there are any player triangles left
+    if (this.players.length) {
+      //Check if there are any player triangles left
       const player = this.players.pop();
       player.randomizeLocation();
 
@@ -217,7 +225,8 @@ class Canvas extends Component {
     let yNumbers = [];
     let counter = 10;
     for (let i = -2; i <= 1000; i = i + 50) {
-      if (counter !== 0) { //Prevent double 0s
+      if (counter !== 0) {
+        //Prevent double 0s
         yNumbers.push(
           <text key={i} x="505" y={i} fontWeight="bold">
             {counter}
@@ -257,6 +266,75 @@ class Canvas extends Component {
       helpOpen: !this.state.helpOpen
     });
   }
+
+  addSteps = e => {
+    let command;
+    let position;
+    this.posiCommand += 1;
+    if (e.target.id === "idTranslate") {
+      command = "Translate";
+      position = this.posiCommand;
+    }
+
+    if (e.target.id === "idRotPlus") {
+      command = "Rotate +90";
+      position = this.posiCommand;
+    }
+
+    if (e.target.id === "idRotMin") {
+      command = "Rotate -90";
+      position = this.posiCommand;
+    }
+
+    if (e.target.id === "idRefY") {
+      command = "Reflection on Y-axis";
+      position = this.posiCommand;
+    }
+
+    if (e.target.id === "idRefX") {
+      command = "Reflection on X-axis";
+      position = this.posiCommand;
+    }
+    this.state.commands.push({
+      command: command,
+      position: position
+    });
+    this.setState(state => ({
+      commands: this.state.commands
+    }));
+  };
+
+  playList = () => {
+    this.state.commands.map(command => {
+      if (command.command === "Translate") this.handleTranslate();
+
+      if (command.command === "Rotate +90") this.handleRotate(90);
+
+      if (command.command === "Rotate -90") this.handleRotate(-90);
+
+      if (command.command === "Reflection on Y-axis") this.handleReflect("y");
+
+      if (command.command === "Reflection on X-axis") this.handleReflect("x");
+    });
+    this.setState({
+      commands: []
+    });
+  };
+
+  deleteCommand = pos => {
+    const newCommands = this.state.commands.filter(
+      command => command.position !== pos
+    );
+    this.setState({
+      commands: newCommands
+    });
+  };
+
+  clearList = () => {
+    this.setState({
+      commands: []
+    });
+  };
 
   render() {
     let win = true;
@@ -299,45 +377,58 @@ class Canvas extends Component {
       <>
         <div className="container">
           <div className="help">
-            <p id="help" className={helpStatus} onClick={this.helpToggle}>
+            <p
+              id="help"
+              className={helpStatus}
+              onClick={this.helpToggle}
+              style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+            >
               Help
             </p>
           </div>
           <Help helpStatus={helpStatus} />
           <div className="info-div">
-            <p style={{ color: "#EE2737FF" }}>
-              Current Score: {this.state.score}
-            </p>
-            {/* <Tilt
-              className="new-tilt br3"
-              options={{ max: 55 }}
-              style={{ height: 280, width: 250 }}
-            > */}
-            {/* <article
-                className="flex flex-column mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10"
-                style={{ background: "rgb(250, 250, 250)", opacity: 0.9 }}
-              > */}
-            <div className="tc">
-              <img
-                src="https://udayton.edu/0/img/generic-profile.png"
-                className="br-100 h3 w3 dib"
-                title="Profile Photo"
-                alt="Profile"
-              />
-              <h1 className="f4 black">{this.props.username}</h1>
-              <hr className="mw3 bb bw1 b--black-10" />
+            <div
+              style={{
+                width: "35%"
+              }}
+            >
+              {/* <p style={{ color: "#EE2737FF" }}> */}
+              <p
+                style={{
+                  color: "#FFFFFF",
+                  backgroundColor: "#000000",
+                  borderRadius: "12px"
+                }}
+              >
+                Current Score: {this.state.score}
+              </p>
+
+              <div className="tc">
+                <img
+                  src="https://udayton.edu/0/img/generic-profile.png"
+                  className="br-100 h3 w3 dib"
+                  title="Profile Photo"
+                  alt="Profile"
+                />
+
+                <h1 className="f4 black">{this.props.username}</h1>
+
+                <hr className="mw3 bb bw1 b--black-10" />
+              </div>
+
+              <p className="lh-copy measure center f5 black">
+                Level:{" "}
+                {this.props.level.charAt(0).toUpperCase() +
+                  this.props.level.slice(1)}
+              </p>
+              <p className="lh-copy measure center f5 black">
+                Best Score: {this.props.bestScore}
+              </p>
+              <p className="lh-copy measure center f5 black">
+                Rank: {this.props.levelRank}
+              </p>
             </div>
-            <p className="lh-copy measure center f5 black">
-              Level:{" "}
-              {this.props.level.charAt(0).toUpperCase() +
-                this.props.level.slice(1)}
-            </p>
-            <p className="lh-copy measure center f5 black">
-              Best Score: {this.props.bestScore}
-            </p>
-            <p className="lh-copy measure center f5 black">
-              Rank: {this.props.levelRank}
-            </p>
           </div>
           <div className="svg-div">
             <svg width="1000" height="1000">
@@ -374,7 +465,7 @@ class Canvas extends Component {
               <text x="980" y="515" fontWeight="bold">
                 10
               </text>
-              
+
               {this.rendergoals()}
               {!this.state.animate && !win ? (
                 <TriangleShape
@@ -385,7 +476,7 @@ class Canvas extends Component {
                   c={this.player.c}
                 />
               ) : null}
-              {this.state.animate ? (
+              {this.state.animate && this.props.level !== "houseBP" ? (
                 <Animation
                   triangleClassName={"player"}
                   color={this.state.color}
@@ -409,84 +500,210 @@ class Canvas extends Component {
               ) : null}
             </svg>
           </div>
-          <div className="buttons-div">
-            <div className="buttons">
-              <p style={{ fontSize: "2rem" }}>Transformations:</p>
-
-              <button
-                // className="f8 link dim ph3 pv2 mb2 dib black translate"
-                className="f8 link ph3 pv2 mb2 dib black translate"
-                href="#0"
-                onClick={() => this.handleTranslate()}
-                disabled={this.state.animate || win ? true : false}
-              >
-                Translate
-              </button>
-              <div className="btn-txt-div">
-                <div className="flex flex-row">
-                  <div className="btn-txt pr2">x-move:</div>
-                  <input
-                    className="input"
-                    type="number"
-                    onChange={this.handleOnChange}
-                    name={"translateX"}
-                    value={this.state.translateX}
+          {this.props.level === "houseBP" ? (
+            <div className="buttons-divBP">
+              <div>
+                <h1>Transformations in Block</h1>
+                <p style={{ fontSize: "1.5rem" }}>
+                  Click on the transformation buttons to add them to the list of
+                  steps.<br></br> To run the block of commands click on the
+                  Transform button.
+                </p>
+              </div>
+              <div className="btnDiv">
+                <p style={{ fontSize: "2rem" }}>Transformations:</p>
+                <div className="buttonsBP">
+                  <img
+                    src={translate}
+                    id="idTranslate"
+                    alt="translate"
+                    title="Translate (x,y)"
+                    onClick={this.addSteps}
+                    disabled={this.state.animate || win ? true : false}
                   />
-                </div>
-                <br />
-                <div className="flex flex-row">
-                  <div className="btn-txt pr2">y-move:</div>
-                  <input
-                    className="input"
-                    type="number"
-                    onChange={this.handleOnChange}
-                    name={"translateY"}
-                    value={this.state.translateY}
+                  <div className="btn-txt-div">
+                    <div className="flex flex-row">
+                      <div className="btn-txt pr2">x-move:</div>
+                      <input
+                        className="input"
+                        type="number"
+                        onChange={this.handleOnChange}
+                        name={"translateX"}
+                        value={this.state.translateX}
+                      />
+                    </div>
+                    <br />
+                    <div className="flex flex-row">
+                      <div className="btn-txt pr2">y-move:</div>
+                      <input
+                        className="input"
+                        type="number"
+                        onChange={this.handleOnChange}
+                        name={"translateY"}
+                        value={this.state.translateY}
+                      />
+                    </div>
+                  </div>
+                  <img
+                    src={rotateMin}
+                    id="idRotMin"
+                    alt="rotate-90"
+                    title="Rotate -90° around origin"
+                    onClick={this.addSteps}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <img
+                    src={rotatePlus}
+                    id="idRotPlus"
+                    alt="rotate+90"
+                    title="Rotate +90° around origin"
+                    onClick={this.addSteps}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <img
+                    src={reflectionX}
+                    id="idRefX"
+                    alt="reflectX"
+                    title="Reflect on X axis"
+                    onClick={this.addSteps}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <img
+                    src={reflectionY}
+                    id="idRefY"
+                    alt="reflectY"
+                    title="Reflect on Y axis"
+                    onClick={this.addSteps}
+                    disabled={this.state.animate || win ? true : false}
                   />
                 </div>
               </div>
+              <div className="steps">
+                <p style={{ fontSize: "1.5rem" }}>List of steps</p>
+                <div className="stepsList">
+                  <div className="commands">
+                    <CommandsList
+                      commands={this.state.commands}
+                      deleteCommand={this.deleteCommand}
+                    />
+                  </div>
+                </div>
 
-              <button
-                className="f8 link ph3 pv2 mb2 dib black rotate-c"
-                href="#0"
-                id="idRotPlus"
-                onClick={() => this.handleRotate(90)}
-                disabled={this.state.animate || win ? true : false}
-              >
-                Rotate +90° &#8635;
-              </button>
-              <button
-                className="f8 link ph3 pv2 mb2 dib black rotate-cc"
-                href="#0"
-                id="idRotMin"
-                onClick={() => this.handleRotate(-90)}
-                disabled={this.state.animate || win ? true : false}
-              >
-                Rotate -90° &#8634;
-              </button>
-              <button
-                className="f8 link ph3 pv2 mb2 dib black reflect-x"
-                href="#0"
-                id="idRefX"
-                onClick={() => this.handleReflect("x")}
-                disabled={this.state.animate || win ? true : false}
-              >
-                Reflect on x-axis
-              </button>
-              <button
-                className="f8 link ph3 pv2 mb2 dib black reflect-y"
-                href="#0"
-                id="idRefY"
-                onClick={() => this.handleReflect("y")}
-                disabled={this.state.animate || win ? true : false}
-              >
-                Reflect on y-axis
-              </button>
+                <div className="divButton">
+                  <button className="listButton trans" onClick={this.playList}>
+                    Transform
+                  </button>
+                  <button className="listButton clear" onClick={this.clearList}>
+                    Clear List
+                  </button>
+                </div>
+              </div>
               <article
                 className="mw5 mw6-ns hidden mv4 moves"
-                style={{ textAlign: "left", color: "#EE2737FF" }}
+                style={{
+                  textAlign: "left",
+                  color: "#FFFFFF",
+                  backgroundColor: "#000000",
+                  fontWeight: "bold",
+                  width: "210px",
+                  borderRadius: "12px"
+                }}
               >
                 <h1 className="f5 mv0 pv2 ph3">
+                  Number of Moves: {this.state.totalMoves}
+                </h1>
+              </article>
+            </div>
+          ) : (
+            <div className="buttons-div">
+              <div>
+                <h1>Individual Transformations</h1>
+                <p style={{ fontSize: "1.5rem" }}>
+                  Click on the transformation buttons to move the piece to the
+                  correct position.
+                </p>
+              </div>
+              <div className="btnDiv">
+                <p style={{ fontSize: "2rem" }}>Transformations:</p>
+                <div className="buttonsBP">
+                  <img
+                    src={translate}
+                    id="idTranslate"
+                    alt="translate"
+                    title="Translate (x,y)"
+                    onClick={() => this.handleTranslate()}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <div className="btn-txt-div">
+                    <div className="flex flex-row">
+                      <div className="btn-txt pr2">x-move:</div>
+                      <input
+                        className="input"
+                        type="number"
+                        onChange={this.handleOnChange}
+                        name={"translateX"}
+                        value={this.state.translateX}
+                      />
+                    </div>
+                    <br />
+                    <div className="flex flex-row">
+                      <div className="btn-txt pr2">y-move:</div>
+                      <input
+                        className="input"
+                        type="number"
+                        onChange={this.handleOnChange}
+                        name={"translateY"}
+                        value={this.state.translateY}
+                      />
+                    </div>
+                  </div>
+                  <img
+                    src={rotateMin}
+                    id="idRotMin"
+                    alt="rotate-90"
+                    title="Rotate -90° around origin"
+                    onClick={() => this.handleRotate(-90)}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <img
+                    src={rotatePlus}
+                    id="idRotPlus"
+                    alt="rotate+90"
+                    title="Rotate +90° around origin"
+                    onClick={() => this.handleRotate(90)}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <img
+                    src={reflectionX}
+                    id="idRefX"
+                    alt="reflectX"
+                    title="Reflect on X axis"
+                    onClick={() => this.handleReflect("x")}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                  <img
+                    src={reflectionY}
+                    id="idRefY"
+                    alt="reflectY"
+                    title="Reflect on Y axis"
+                    onClick={() => this.handleReflect("y")}
+                    disabled={this.state.animate || win ? true : false}
+                  />
+                </div>
+              </div>
+              <article
+                // className="mw5 mw6-ns hidden mv4 moves"
+                className="movesDown"
+                style={{
+                  textAlign: "left",
+                  color: "#FFFFFF",
+                  backgroundColor: "#000000",
+                  width: "210px",
+                  borderRadius: "12px",
+                  marginTop: "auto"
+                }}
+              >
+                <h1 className="f5 mv0 pv2 ph3" style={{ fontWeight: "bold" }}>
                   Number of Moves: {this.state.totalMoves}
                 </h1>
                 {/* <div className="pa3">
@@ -496,7 +713,7 @@ class Canvas extends Component {
                 </div> */}
               </article>
             </div>
-          </div>
+          )}
         </div>
       </>
     );

@@ -6,6 +6,7 @@ import game_logo_2 from "./Logo2.png";
 import game_logo_3 from "./Logo3.png";
 import game_logo_4 from "./Logo4.png";
 import game_logo_5 from "./Logo5.png";
+import game_logo_6 from "./Logo6.png";
 const Fragment = React.Fragment;
 
 export const Logo = ({ onRouteChange }) => {
@@ -112,6 +113,26 @@ export const Logo = ({ onRouteChange }) => {
               alt="logo"
               src={game_logo_5}
               onClick={() => onRouteChange("game", "cat")}
+            />
+          </div>
+        </Tilt>
+        <Tilt
+          className="Tilt br3 shadow-5 pa1"
+          options={{ max: 55 }}
+          style={{ height: 240, width: 250 }}
+        >
+          <div className="Tilt-inner">
+            {" "}
+            <img
+              style={{
+                paddingTop: "5px",
+                paddingBottom: "5px",
+                height: 220,
+                width: 230
+              }}
+              alt="logo"
+              src={game_logo_6}
+              onClick={() => onRouteChange("game", "houseBP")}
             />
           </div>
         </Tilt>
