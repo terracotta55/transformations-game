@@ -305,20 +305,24 @@ class Canvas extends Component {
   };
 
   playList = () => {
-    this.state.commands.map(command => {
-      if (command.command === "Translate") this.handleTranslate();
+    if (this.state.commands.length > 0) {
+      this.state.commands.map(command => {
+        if (command.command === "Translate") this.handleTranslate();
 
-      if (command.command === "Rotate +90") this.handleRotate(90);
+        if (command.command === "Rotate +90") this.handleRotate(90);
 
-      if (command.command === "Rotate -90") this.handleRotate(-90);
+        if (command.command === "Rotate -90") this.handleRotate(-90);
 
-      if (command.command === "Reflection on Y-axis") this.handleReflect("y");
+        if (command.command === "Reflection on Y-axis") this.handleReflect("y");
 
-      if (command.command === "Reflection on X-axis") this.handleReflect("x");
-    });
-    this.setState({
-      commands: []
-    });
+        if (command.command === "Reflection on X-axis") this.handleReflect("x");
+      });
+      this.setState({
+        moveCounter: this.state.moveCounter - this.state.commands.length + 1,
+        totalMoves: this.state.totalMoves - this.state.commands.length + 1,
+        commands: []
+      });
+    }
   };
 
   deleteCommand = pos => {
