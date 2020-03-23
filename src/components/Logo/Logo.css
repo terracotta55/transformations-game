@@ -6,5 +6,33 @@
     rgb(236, 238, 232) 0%,
     rgb(221, 223, 217) 75%
   );
+  /* cursor: pointer; */
+}
+
+.Tilt-inner .logoBtn {
+  width: 40%;
+  background-color: #28334aff;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
   cursor: pointer;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.Tilt-inner .logoBtn .easy {
+  position: absolute;
+  top: 80%;
+  left: 20%;
+}
+.Tilt-inner .logoBtn .medium {
+  position: absolute;
+  top: 80%;
+  right: 20%;
+}
+
+.Tilt-inner .logoBtn:hover {
+  background-color: rgb(209, 209, 209);
+  color: #28334aff;
 }
