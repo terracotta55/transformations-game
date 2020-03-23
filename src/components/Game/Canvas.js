@@ -480,7 +480,7 @@ class Canvas extends Component {
                   c={this.player.c}
                 />
               ) : null}
-              {this.state.animate && this.props.level !== "houseBP" ? (
+              {this.state.animate && this.props.difficulty !== "medium" ? (
                 <Animation
                   triangleClassName={"player"}
                   color={this.state.color}
@@ -504,7 +504,7 @@ class Canvas extends Component {
               ) : null}
             </svg>
           </div>
-          {this.props.level === "houseBP" ? (
+          {this.props.difficulty === "medium" ? (
             <div className="buttons-divBP">
               <div>
                 <h1>Transformations in Block</h1>

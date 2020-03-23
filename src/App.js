@@ -22,7 +22,12 @@ class App extends Component {
       fishScore: { score: 0, rank: "" },
       catScore: { score: 0, rank: "" },
       houseBPScore: { score: 0, rank: "" },
+      treeBPScore: { score: 0, rank: "" },
+      boatBPScore: { score: 0, rank: "" },
+      fishBPScore: { score: 0, rank: "" },
+      catBPScore: { score: 0, rank: "" },
       level: 0,
+      difficulty: "",
       user: {
         id: "",
         name: "",
@@ -46,7 +51,7 @@ class App extends Component {
     });
   };
 
-  onRouteChange = (route, levelSelect) => {
+  onRouteChange = (route, levelSelect, levelDifficulty) => {
     if (route === "signout") {
       this.setState({ isSignedIn: false });
     } else if (route === "home") {
@@ -54,7 +59,8 @@ class App extends Component {
     } else if (route === "game") {
       this.setState({
         isSignedIn: true,
-        level: levelSelect
+        level: levelSelect,
+        difficulty: levelDifficulty
       });
     }
     this.setState({ route: route });
@@ -82,7 +88,11 @@ class App extends Component {
             this.state.boatScore.score +
             this.state.fishScore.score +
             this.state.catScore.score +
-            this.state.houseBPScore.score
+            this.state.houseBPScore.score +
+            this.state.treeBPScore.score +
+            this.state.boatBPScore.score +
+            this.state.fishBPScore.score +
+            this.state.catBPScore.score
         }));
       }, 1);
     }
@@ -192,6 +202,7 @@ class App extends Component {
               style={{ backgroundColor: "white" }}
               onRouteChange={this.onRouteChange}
               level={this.state.level}
+              difficulty={this.state.difficulty}
               username={this.state.user.name}
               bestScore={this.state[`${this.state.level}Score`].score}
               levelRank={this.state[`${this.state.level}Score`].rank}
